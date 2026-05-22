@@ -335,6 +335,19 @@ npm run start
 
 ---
 
+## Standing Rules
+
+### Keep `resume.html` in sync
+Whenever any of the following are modified, **always update `public/resume.html` at the end of the task** to match:
+- `lib/data.ts` — experiences, projects, or skillCards
+- `components/hero.tsx` — bio text or subtitle roles
+- `components/contact.tsx` — email address or social links
+- Any other content that appears on the resume (phone number, summary, etc.)
+
+This ensures the live resume page at `/resume.html` always reflects the latest portfolio content without needing a manual reminder.
+
+---
+
 ## Out of Scope (v2)
 - Blog / notes section
 - CMS integration
