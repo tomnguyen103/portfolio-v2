@@ -115,7 +115,7 @@ exports.handler = async function (event) {
       },
       body: JSON.stringify({
         from: "Portfolio Contact <noreply@tomnguyen.me>",
-        to: ["tom.nguyen.nht@gmail.com"],
+        to: ["huuthong103@gmail.com"],
         reply_to: email,
         subject: `New message from ${name} — ${subject}`,
         html: `
