@@ -17,7 +17,7 @@ Personal portfolio built with Next.js 14 App Router, showcasing my projects, ski
 | Icons | Lucide React + React Icons |
 | Font | Inter (next/font/google) |
 | Theme | next-themes (dark/light) |
-| Contact form | Netlify Forms |
+| Contact form | Netlify Forms + Resend Email |
 | Hosting | Netlify + Namecheap domain |
 
 ---
