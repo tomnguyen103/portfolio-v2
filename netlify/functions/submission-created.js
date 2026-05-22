@@ -3,8 +3,18 @@ exports.handler = async function (event) {
     const payload = JSON.parse(event.body).payload;
     const { name, email, subject, message } = payload.data;
 
+    // Drop honeypot-triggered submissions
+    if (payload.data["bot-field"]) {
+      return { statusCode: 200, body: "Bot detected — skipping" };
+    }
+
     if (!email) {
       return { statusCode: 200, body: "No email address — skipping auto-reply" };
+    }
+
+    // Basic content sanity checks
+    if (!name || name.trim().length < 2 || !message || message.trim().length < 10) {
+      return { statusCode: 200, body: "Invalid submission — skipping" };
     }
 
     const res = await fetch("https://api.resend.com/emails", {
