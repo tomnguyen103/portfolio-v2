@@ -14,7 +14,10 @@ export default function ThemeToggle() {
 
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => {
+        try { localStorage.setItem("theme-user-set", "true"); } catch {}
+        setTheme(theme === "dark" ? "light" : "dark");
+      }}
       className="p-2 rounded-lg hover:bg-surface transition-colors cursor-pointer"
       aria-label="Toggle theme"
     >
