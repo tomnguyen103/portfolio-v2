@@ -375,6 +375,15 @@ Always use a plain hyphen `-` as a separator or dash in all files across the pro
 ### All links in `resume.html` and `resume-vi.html` open in a new tab
 Both `resume.html` and `resume-vi.html` include an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script from either file — it ensures the resume page stays open when a visitor clicks any link.
 
+### Print pagination in `resume.html` and `resume-vi.html`
+Both resume files include `@media print` rules to prevent awkward page breaks. Key rules:
+- `break-inside: avoid` + `page-break-inside: avoid` on `.entry` — keeps each job/project block whole (pushes it to the next page rather than splitting mid-entry)
+- `break-after: avoid` + `page-break-after: avoid` on `.section-title` — prevents section headings from orphaning at the bottom of a page
+- `break-inside: avoid` + `page-break-inside: avoid` on `.edu-entry` — keeps education entries whole
+- `orphans: 2; widows: 2` on `li` and `p` — prevents single lines stranding at page edges
+
+Always include both the modern (`break-*`) and legacy (`page-break-*`) properties — Chrome's print engine responds more reliably to the legacy form.
+
 ---
 
 ## Out of Scope (v2)

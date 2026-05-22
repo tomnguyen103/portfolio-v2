@@ -69,7 +69,33 @@
     .edu-detail { font-size: 10pt; color: #333; margin-top: 1px; }
 
     @page { size: letter; margin: 0.55in 0.7in; }
-    @media print { body { padding: 0; } a { color: #1a1a1a !important; text-decoration: none !important; } }
+
+    @media print {
+      body { padding: 0; }
+      a { color: #1a1a1a !important; text-decoration: none !important; }
+
+      /* Keep each job/project entry as a unit — push entirely to next page rather than split */
+      .entry {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Keep section title glued to its first entry */
+      .section-title {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      /* Prevent education entries from splitting */
+      .edu-entry {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Prevent a single bullet line from being stranded at top/bottom of page */
+      li { orphans: 2; widows: 2; }
+      p  { orphans: 2; widows: 2; }
+    }
   </style>
 </head>
 <body>
