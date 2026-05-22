@@ -16,9 +16,9 @@ exports.handler = async function (event) {
       return { statusCode: 200, body: "No email address — skipping auto-reply" };
     }
 
-    // Basic content sanity checks
-    if (!name || name.trim().length < 2 || !message || message.trim().length < 10) {
-      console.log("[submission-created] BLOCKED: name length", name?.trim().length, "message length", message?.trim().length);
+    // Guard against missing fields (belt-and-suspenders — form has required attributes)
+    if (!name || !message) {
+      console.log("[submission-created] BLOCKED: missing name or message");
       return { statusCode: 200, body: "Invalid submission — skipping" };
     }
 
