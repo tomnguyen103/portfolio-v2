@@ -6,10 +6,12 @@ import { FaGithub } from "react-icons/fa";
 import { ExternalLink, ArrowDown } from "lucide-react";
 import { projects, tagColor } from "@/lib/data";
 import { trackEvent } from "@/lib/analytics";
+import { useInViewTracking } from "@/lib/useInViewTracking";
 
 export default function Projects() {
+  const sectionRef = useInViewTracking("projects");
   return (
-    <section id="projects" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24 bg-surface/30">
+    <section ref={sectionRef} id="projects" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24 bg-surface/30">
       <div className="max-w-6xl mx-auto w-full">
         <motion.h2
           className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { skillCards, tagColor } from "@/lib/data";
+import { useInViewTracking } from "@/lib/useInViewTracking";
 
 const container = {
   hidden: {},
@@ -15,8 +16,9 @@ const item = {
 };
 
 export default function Skills() {
+  const sectionRef = useInViewTracking("skills");
   return (
-    <section id="skills" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
+    <section ref={sectionRef} id="skills" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
       <div className="max-w-6xl mx-auto w-full">
         <motion.h2
           className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"

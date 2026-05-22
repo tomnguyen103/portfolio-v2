@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { experiences } from "@/lib/data";
+import { useInViewTracking } from "@/lib/useInViewTracking";
 
 export default function Experience() {
+  const sectionRef = useInViewTracking("experience");
   return (
-    <section id="experience" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
+    <section ref={sectionRef} id="experience" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
       <div className="max-w-3xl mx-auto w-full">
         <motion.h2
           className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"

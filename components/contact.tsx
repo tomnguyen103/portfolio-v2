@@ -5,11 +5,13 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { Send } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { useInViewTracking } from "@/lib/useInViewTracking";
 
 const inputClass =
   "w-full px-4 py-3 bg-surface border border-foreground/10 rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40 placeholder:text-muted transition";
 
 export default function Contact() {
+  const sectionRef = useInViewTracking("contact");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -40,7 +42,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="min-h-screen flex flex-col justify-center px-6 py-20">
+    <section ref={sectionRef} id="contact" className="min-h-screen flex flex-col justify-center px-6 py-20">
       <div className="max-w-2xl mx-auto w-full">
         <motion.div
           className="text-center mb-8"
