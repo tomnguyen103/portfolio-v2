@@ -7,12 +7,13 @@ export default function TimeBasedTheme() {
   const { setTheme } = useTheme();
 
   useEffect(() => {
-    try {
-      if (localStorage.getItem("theme-user-set")) return;
+    let userSet = false;
+    try { userSet = !!localStorage.getItem("theme-user-set"); } catch {}
+    if (!userSet) {
       const hour = new Date().getHours();
       setTheme(hour >= 6 && hour < 18 ? "light" : "dark");
-    } catch {}
-  }, []);
+    }
+  }, [setTheme]);
 
   return null;
 }
