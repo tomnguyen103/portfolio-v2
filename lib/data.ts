@@ -24,6 +24,16 @@ export interface Project {
   demo?: string;
 }
 
+export interface Experience {
+  company: string;
+  type: string;
+  title: string;
+  start: string;
+  end: string;
+  location: string;
+  bullets: string[];
+}
+
 export const tagColor: Record<string, string> = {
   // AI / ML — violet
   "AI Agent Architecture":  "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
@@ -147,5 +157,51 @@ export const projects: Project[] = [
     tech: ["JavaScript", "HTML/CSS", "Neural Network", "Genetic Algorithm", "Reinforcement Learning"],
     github: "https://github.com/tomnguyen103/AI_Flappy_Bird",
     demo: "https://youtu.be/uf1wSdsGWUs",
+  },
+];
+
+export const experiences: Experience[] = [
+  {
+    company: "Texas Regional Physicians",
+    type: "Full-time",
+    title: "Software Developer",
+    start: "Apr 2024",
+    end: "Present",
+    location: "Houston, Texas · Remote",
+    bullets: [
+      "Architect, develop, and deploy high-performing Mendix applications aligned with business objectives; optimize for performance, scalability, and maintainability.",
+      "Design and build engaging UIs using HTML, CSS, SASS, and JavaScript delivering exceptional user experiences.",
+      "Manage and optimize databases (SQL, PostgreSQL, MySQL), ensuring data integrity, security, and robust backup strategies.",
+      "Integrate third-party RESTful services into Mendix applications; optimize API calls for performance and reliability.",
+      "Collaborate with executive leadership and clients to translate business needs into actionable digital solutions.",
+    ],
+  },
+  {
+    company: "Memorial MRI and Diagnostic",
+    type: "Full-time",
+    title: "Software Developer",
+    start: "Nov 2021",
+    end: "Apr 2024",
+    location: "Houston, Texas",
+    bullets: [
+      "Implemented solutions on the Mendix platform scoped to business and technical requirements across the full project lifecycle.",
+      "Designed and maintained four major company websites using HTML, CSS, SASS, and JavaScript.",
+      "Managed database backups and integrity using SQL, PostgreSQL, and MySQL.",
+      "Coordinated with third parties to connect RESTful services to Mendix platform applications.",
+      "Engaged with executive team and customers to drive innovation and resolve technical issues.",
+    ],
+  },
+  {
+    company: "Coding Dojo",
+    type: "Full-time",
+    title: "Resident Full Stack Developer",
+    start: "Sep 2019",
+    end: "Nov 2021",
+    location: "Greater Los Angeles Area",
+    bullets: [
+      "Built and shipped multiple full-stack projects including AI Flappy Bird (Neural Network + Genetic Algorithm), a School Library Platform (Django/SQLite), and a Paint HTML App (Canvas/JS).",
+      "Applied Reinforcement Learning and Neural Network concepts to train autonomous game agents using Genetic Algorithms.",
+      "Developed full-stack web applications using Python, Django, HTML/CSS, JavaScript, and AWS.",
+    ],
   },
 ];
