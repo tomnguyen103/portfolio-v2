@@ -2,7 +2,8 @@
 <html>
   <body>
     <!-- Static form declaration so Netlify detects it at build time for the Next.js SPA -->
-    <form name="contact" data-netlify="true" hidden>
+    <form name="contact" method="POST" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="contact" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="subject" />
