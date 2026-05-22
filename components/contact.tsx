@@ -136,6 +136,7 @@ export default function Contact() {
           <div className="mt-8 text-center">
             <a
               href="mailto:tom.nguyen.nht@gmail.com"
+              onClick={() => trackEvent("email_click")}
               className="inline-block text-sm text-accent hover:underline mb-4"
             >
               tom.nguyen.nht@gmail.com
