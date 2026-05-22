@@ -1,0 +1,361 @@
+# Language Toggle (EN ↔ VI) — Design Spec
+
+**Date:** 2026-05-22  
+**Status:** Approved  
+**Scope:** Add an English / Vietnamese language toggle to the portfolio with localStorage persistence and a separate Vietnamese resume page.
+
+---
+
+## Overview
+
+Add a language toggle to the portfolio nav that switches all visible text between English and Vietnamese. English is always the default. The user's choice is persisted to `localStorage` so it survives page refreshes and return visits. No URL routing changes — the page URL stays `/` regardless of locale.
+
+---
+
+## Architecture
+
+### New files
+
+| File | Purpose |
+|---|---|
+| `lib/translations.ts` | Single source of truth for all translated strings — both `en` and `vi` keys |
+| `components/language-provider.tsx` | `LanguageProvider` component and `useLanguage()` hook |
+| `components/language-toggle.tsx` | `EN / VI` toggle button rendered in the nav |
+| `public/resume-vi.html` | Full Vietnamese translation of `resume.html` |
+
+### Modified files
+
+| File | Change |
+|---|---|
+| `app/layout.tsx` | Wrap tree with `LanguageProvider` (inside `ThemeProvider`) |
+| `components/nav.tsx` | Add `LanguageToggle`, translate nav labels, locale-aware resume link |
+| `components/hero.tsx` | Translate greeting, bio, roles array, CTA button labels |
+| `components/skills.tsx` | Translate section heading, subheading, card titles |
+| `components/experience.tsx` | Translate section heading, subheading, bullet points |
+| `components/projects.tsx` | Translate section heading, subheading, project descriptions |
+| `components/contact.tsx` | Translate heading, subheading, form labels, placeholders, success/error messages, footer |
+
+---
+
+## Data Strategy
+
+`lib/data.ts` is **not restructured**. It continues to hold all non-translatable data:
+- Company names, job titles, dates, locations
+- Tech stack arrays
+- Image paths, GitHub URLs, demo URLs
+
+`lib/translations.ts` holds every string that appears on screen, including parallel arrays for experience bullets and project descriptions matched by index to the entries in `data.ts`.
+
+Components merge at render time:
+
+```tsx
+// Example in experience.tsx
+const { t } = useLanguage();
+const localizedExperiences = experiences.map((exp, i) => ({
+  ...exp,
+  bullets: t.experiences[i].bullets,
+}));
+```
+
+Skill tag names (`JavaScript`, `Python`, `Next.js`, etc.) stay in English in both locales — they are proper nouns in the tech industry.
+
+---
+
+## `lib/translations.ts` — Structure
+
+```ts
+export const translations = {
+  en: {
+    nav: {
+      home: 'Home',
+      skills: 'Skills',
+      experience: 'Experience',
+      projects: 'Projects',
+      contact: 'Contact',
+      resume: 'Resume',
+    },
+    hero: {
+      greeting: "Hi. I'm Tom Nguyen.",
+      bio: 'Experienced Software Developer with 4+ years building and maintaining production applications for healthcare providers in Houston. A pragmatic problem-solver across the full stack, from clinical interfaces and enterprise platforms to mobile applications and RESTful integrations, always focused on delivering reliable, scalable software while providing clear technical guidance to users and stakeholders.',
+      roles: ['Mendix Developer', 'Software Developer', 'AI Agent Developer', 'Full Stack Developer'],
+      cta: { skills: 'My Skills', linkedin: 'LinkedIn', github: 'GitHub' },
+    },
+    skills: {
+      heading: 'Skills',
+      subheading: 'Technologies I work with',
+      cards: [
+        { title: 'AI & LLM Integration' },
+        { title: 'Languages & Web' },
+        { title: 'Frameworks' },
+        { title: 'Databases & ORMs' },
+        { title: 'Cloud & DevOps' },
+        { title: 'Modern Infrastructure' },
+      ],
+    },
+    experience: {
+      heading: 'Experience',
+      subheading: "Where I've worked",
+      entries: [
+        { bullets: [ /* Texas Regional Physicians bullets */ ] },
+        { bullets: [ /* Memorial MRI bullets */ ] },
+        { bullets: [ /* Coding Dojo bullets */ ] },
+      ],
+    },
+    projects: {
+      heading: 'Projects',
+      subheading: "Things I've built",
+      items: [
+        { description: [ /* Development Plan Tool lines */ ] },
+        { description: [ /* AI Language Learning App lines */ ] },
+        { description: [ /* AI Flappy Bird lines */ ] },
+      ],
+    },
+    contact: {
+      heading: "Let's Work Together",
+      subheading: "Have a project in mind? I'd love to hear about it.",
+      form: {
+        name: 'Name',
+        email: 'Email',
+        subject: 'Subject',
+        message: 'Message',
+        namePlaceholder: 'Your name',
+        emailPlaceholder: 'your@email.com',
+        subjectPlaceholder: 'What is this about?',
+        messagePlaceholder: 'Tell me about your project...',
+        submit: 'Send Message',
+        submitting: 'Sending...',
+        success: "Message sent! I'll get back to you soon.",
+        error: 'Something went wrong. Please try again.',
+      },
+      footer: '© Tom Nguyen. All rights reserved.',
+    },
+  },
+  vi: {
+    nav: {
+      home: 'Trang Chủ',
+      skills: 'Kỹ Năng',
+      experience: 'Kinh Nghiệm',
+      projects: 'Dự Án',
+      contact: 'Liên Hệ',
+      resume: 'Hồ Sơ',
+    },
+    hero: {
+      greeting: 'Xin chào. Tôi là Tom Nguyen.',
+      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack — từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful — luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
+      roles: ['Lập Trình Viên Mendix', 'Lập Trình Viên Phần Mềm', 'Lập Trình Viên AI Agent', 'Lập Trình Viên Full Stack'],
+      cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
+    },
+    skills: {
+      heading: 'Kỹ Năng',
+      subheading: 'Các công nghệ tôi làm việc',
+      cards: [
+        { title: 'Tích Hợp AI & LLM' },
+        { title: 'Ngôn Ngữ & Web' },
+        { title: 'Frameworks' },
+        { title: 'Cơ Sở Dữ Liệu & ORM' },
+        { title: 'Cloud & DevOps' },
+        { title: 'Hạ Tầng Hiện Đại' },
+      ],
+    },
+    experience: {
+      heading: 'Kinh Nghiệm',
+      subheading: 'Nơi tôi đã làm việc',
+      entries: [
+        {
+          bullets: [
+            'Thiết kế, phát triển và duy trì cổng thông tin lâm sàng phục vụ hơn 30 nhân viên phòng khám, bác sĩ và hơn 10 người dùng luật sư, với hơn 40 cập nhật tính năng và cải tiến giao diện trong 3 tháng qua.',
+            'Thiết kế và xây dựng giao diện người dùng cho nhân viên bằng HTML, CSS/SASS và JavaScript, chuyển đổi quy trình lâm sàng và pháp lý phức tạp thành giao diện trực quan cho người dùng không chuyên kỹ thuật.',
+            'Quản lý và tối ưu hóa cơ sở dữ liệu PostgreSQL với hơn 50 thực thể, bao gồm thêm chỉ mục cho các truy vấn tư vấn nhằm cải thiện đáng kể hiệu suất tải lịch trong môi trường tuân thủ HIPAA.',
+            'Tích hợp API SMS Curogram cho thông báo cuộc hẹn, bao gồm sửa lỗi logic gửi hàng loạt ngăn khảo sát kích hoạt sai trên các cuộc hẹn trong quá khứ.',
+            'Là đầu mối kỹ thuật chính với các Giám đốc, thu thập yêu cầu, đề xuất nhiều giải pháp, thống nhất hướng tiếp cận và triển khai đúng tiến độ đã thông báo.',
+          ],
+        },
+        {
+          bullets: [
+            'Phát triển và duy trì cổng thanh toán tập trung cho 8 chi nhánh, nhận tài liệu HL7 qua SFTP từ hệ thống X-quang và chuyển đổi thành dữ liệu Mendix có cấu trúc cho nhân viên lâm sàng.',
+            'Thiết kế và duy trì bốn website công ty phục vụ bệnh nhân và bác sĩ tuyến trong tại 8 địa điểm chẩn đoán hình ảnh.',
+            'Quản lý cơ sở dữ liệu PostgreSQL với hơn 20 thực thể, duy trì tính toàn vẹn dữ liệu, quy trình sao lưu và hiệu suất truy vấn trên hoạt động nhiều địa điểm.',
+            'Tích hợp hệ thống thông tin X-quang EXA qua giao diện HL7, cho phép truyền dữ liệu tự động giữa hệ thống hình ảnh bên ngoài và cổng Mendix nội bộ.',
+            'Phát hiện thay đổi gây lỗi im lặng khi EXA cập nhật định dạng HL7 mà không thông báo. Xác định dữ liệu bị thiếu qua giám sát log chủ động, báo cáo ngay cho cấp trên và phối hợp trực tiếp với EXA để khôi phục toàn bộ quá trình truyền dữ liệu.',
+          ],
+        },
+        {
+          bullets: [
+            'Xây dựng và ra mắt nhiều dự án full-stack bao gồm AI Flappy Bird (Neural Network + Genetic Algorithm tự viết), Nền tảng Thư viện Trường học (Django/SQLite) và ứng dụng vẽ Canvas, thể hiện khả năng tạo mẫu nhanh trên nhiều lĩnh vực.',
+            'Áp dụng Reinforcement Learning và Neural Network để huấn luyện tác nhân game tự động bằng Genetic Algorithm, tự triển khai toàn bộ pipeline học từ đầu.',
+            'Phát triển và triển khai các ứng dụng web full-stack sử dụng Python, Django, HTML/CSS, JavaScript và AWS, bao quát toàn bộ vòng đời từ phát triển đến sản xuất trên cloud.',
+          ],
+        },
+      ],
+    },
+    projects: {
+      heading: 'Dự Án',
+      subheading: 'Những gì tôi đã xây dựng',
+      items: [
+        {
+          description: [
+            'Công cụ xây dựng kiến trúc hệ thống cộng tác thời gian thực với hỗ trợ AI',
+            'Trình chỉnh sửa sơ đồ React Flow tương tác với con trỏ trực tiếp và avatar hiện diện',
+            'Đề xuất thiết kế do AI hỗ trợ và tự động tạo thông số kỹ thuật qua Gemini',
+          ],
+        },
+        {
+          description: [
+            'Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo',
+            'Cuộc gọi âm thanh thời gian thực với giáo viên AI, chú thích trực tiếp và phản hồi phát âm',
+            'Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc và theo dõi chuỗi XP hàng ngày',
+          ],
+        },
+        {
+          description: [
+            'Viết lại Flappy Bird HTML cơ bản thành phiên bản điều khiển bởi AI',
+            'Áp dụng các khái niệm Reinforcement Learning và Neural Network',
+            'Triển khai Genetic Algorithm cho quá trình tiến hóa tác nhân',
+          ],
+        },
+      ],
+    },
+    contact: {
+      heading: 'Hãy Cùng Hợp Tác',
+      subheading: 'Bạn có dự án trong đầu? Tôi rất muốn nghe.',
+      form: {
+        name: 'Họ Tên',
+        email: 'Email',
+        subject: 'Tiêu Đề',
+        message: 'Tin Nhắn',
+        namePlaceholder: 'Họ tên của bạn',
+        emailPlaceholder: 'email@cua-ban.com',
+        subjectPlaceholder: 'Chủ đề là gì?',
+        messagePlaceholder: 'Hãy cho tôi biết về dự án của bạn...',
+        submit: 'Gửi Tin Nhắn',
+        submitting: 'Đang gửi...',
+        success: 'Tin nhắn đã được gửi! Tôi sẽ phản hồi sớm.',
+        error: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+      },
+      footer: '© Tom Nguyen. Bảo lưu mọi quyền.',
+    },
+  },
+} as const;
+
+export type Translations = typeof translations.en;
+```
+
+---
+
+## `components/language-provider.tsx`
+
+```tsx
+'use client';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { translations, type Translations } from '@/lib/translations';
+
+type Locale = 'en' | 'vi';
+
+interface LanguageContextValue {
+  locale: Locale;
+  setLocale: (l: Locale) => void;
+  t: Translations;
+}
+
+const LanguageContext = createContext<LanguageContextValue>({
+  locale: 'en',
+  setLocale: () => {},
+  t: translations.en,
+});
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocaleState] = useState<Locale>('en'); // English default
+
+  useEffect(() => {
+    const saved = localStorage.getItem('lang');
+    if (saved === 'vi') setLocaleState('vi'); // only switch if user explicitly chose VI
+  }, []);
+
+  const setLocale = (l: Locale) => {
+    setLocaleState(l);
+    localStorage.setItem('lang', l);
+  };
+
+  return (
+    <LanguageContext.Provider value={{ locale, setLocale, t: translations[locale] }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+export function useLanguage() {
+  return useContext(LanguageContext);
+}
+```
+
+---
+
+## `components/language-toggle.tsx`
+
+```tsx
+'use client';
+import { useLanguage } from './language-provider';
+
+export default function LanguageToggle() {
+  const { locale, setLocale } = useLanguage();
+  return (
+    <button
+      onClick={() => setLocale(locale === 'en' ? 'vi' : 'en')}
+      aria-label="Toggle language"
+      className="px-2 py-1 text-sm font-medium text-muted hover:text-foreground transition-colors rounded-lg hover:bg-surface"
+    >
+      {locale === 'en' ? 'VI' : 'EN'}
+    </button>
+  );
+}
+```
+
+---
+
+## Nav — Locale-aware resume link
+
+```tsx
+// In nav.tsx
+import { useLanguage } from './language-provider';
+import LanguageToggle from './language-toggle';
+
+const { locale, t } = useLanguage();
+
+// Nav links use t.nav.*
+// Resume link:
+<a href={locale === 'vi' ? '/resume-vi.html' : '/resume.html'} ...>
+  {t.nav.resume}
+</a>
+
+// In the nav right cluster (desktop):
+// ... nav links ... | Resume | LanguageToggle | ThemeToggle | hamburger
+```
+
+---
+
+## `public/resume-vi.html`
+
+A full Vietnamese translation of `resume.html`:
+- Same HTML structure and inline new-tab script
+- All section headings, job titles, bullet points, and project descriptions translated
+- Company names, dates, tech tags, and masked link labels (`GitHub | Live Demo`) unchanged
+- Added to the same standing sync rule in CLAUDE.md: changes to content must be reflected in **both** `resume.html` and `resume-vi.html`
+
+---
+
+## What does NOT change
+
+- `lib/data.ts` interfaces and exports — untouched
+- Skill tag names — English in both locales (proper nouns)
+- Tech stack pills on project cards — English in both locales
+- Company names, job titles, dates, locations in experience — English in both locales
+- All GA4 `trackEvent` calls — locale-agnostic, event names stay in English
+- Page URL — always `/`, no routing changes
+
+---
+
+## Maintenance rule (CLAUDE.md update)
+
+The standing rule will be extended:
+
+> When content in `lib/data.ts`, `components/hero.tsx`, or `components/contact.tsx` changes, update **`public/resume.html`**, **`public/resume-vi.html`**, and the corresponding strings in **`lib/translations.ts`** (`vi` key) at the end of the task.
