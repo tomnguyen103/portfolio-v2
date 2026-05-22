@@ -21,6 +21,7 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 | Icons | Lucide React (UI icons) + react-icons (brand icons: GitHub, LinkedIn) |
 | Font | Inter via `next/font/google` |
 | Contact form | Netlify Forms |
+| Analytics | Google Analytics 4 (GA4) via `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Deployment config | `netlify.toml` in project root |
 
 ---
@@ -28,8 +29,8 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 ## Design System
 
 ### Theme
-- **Default**: Dark mode
-- **Toggle**: Dark/light switch in the nav bar (persisted via `localStorage` + `next-themes`)
+- **Default**: Time-based — light (6 am–6 pm) / dark (6 pm–6 am), set by `TimeBasedTheme` component on first load
+- **Override**: Dark/light toggle in the nav bar; once the user picks a theme it is persisted via `localStorage` (`theme-user-set` flag) and `next-themes`, overriding time-based logic on future visits
 
 ### Color Palette
 
@@ -69,7 +70,7 @@ Light mode:
 - **Hero background**: Animated sky-blue gradient blobs (CSS `@keyframes blob`)
 - **Card hover**: `whileHover` lift (`y: -6`) + sky-blue box-shadow glow
 - **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px
-- **Scroll indicator**: Bouncing `ArrowDown` at bottom of Hero, Skills, and Projects sections
+- **Scroll indicator**: Bouncing `ArrowDown` at bottom of Hero, Skills, Experience, and Projects sections
 
 ---
 
@@ -86,11 +87,15 @@ portfolio-v2/
 │   ├── nav.tsx             # Fixed nav, scroll behavior, theme toggle, mobile menu
 │   ├── hero.tsx            # Full-viewport hero section
 │   ├── skills.tsx          # Skills grid section
+│   ├── experience.tsx      # Work experience timeline section
 │   ├── projects.tsx        # Projects section
 │   ├── contact.tsx         # Contact form + social links section
-│   └── theme-toggle.tsx    # Dark/light icon button
+│   ├── theme-toggle.tsx    # Dark/light icon button
+│   └── time-based-theme.tsx # Sets theme on first load based on time of day
 ├── lib/
-│   └── data.ts             # All static content: skillCards, projects, tagColor map
+│   ├── data.ts             # All static content: skillCards, projects, experiences, tagColor map
+│   ├── analytics.ts        # trackEvent() wrapper around window.gtag
+│   └── useInViewTracking.ts # IntersectionObserver hook — fires section_viewed GA4 event once
 ├── public/
 │   ├── images/
 │   │   ├── pic00.jpg       # Profile photo
@@ -114,10 +119,10 @@ portfolio-v2/
 ### Navigation (`components/nav.tsx`)
 - Fixed to top, full width, z-50
 - Logo/name: "Tom Nguyen" (left side)
-- Nav links (right side): Home · Skills · Projects · Contact · Resume
+- Nav links (right side): Home · Skills · Experience · Projects · Contact · Resume
   - All section links use smooth anchor scroll (`href="#section-id"`)
-  - Resume opens `/MyResume.pdf` in a new tab
-- Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll
+  - Resume opens `/MyResume.pdf` in a new tab; fires `resume_download` GA4 event
+- Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
 - Mobile: hamburger menu — closes only when a nav link is tapped (not on scroll)
 - Theme toggle icon button (rightmost item)
 
@@ -157,13 +162,32 @@ portfolio-v2/
 **Card data** (defined in `lib/data.ts`):
 
 ```ts
-{ icon: Bot,       title: "AI & LLM Integration",    skills: ["AI Agent Architecture", "Prompt Engineering", "Gemini SDK", "LLM Workflows"] },
-{ icon: Code2,     title: "Languages & Web",          skills: ["JavaScript", "TypeScript", "Python", "Java", "HTML5", "CSS3"] },
-{ icon: Layers,    title: "Frameworks",               skills: ["MEAN Stack", "Django", "Flask", "Spring Framework", "Mendix"] },
-{ icon: Database,  title: "Databases & ORMs",         skills: ["MySQL", "MongoDB", "SQLite", "Prisma Postgres"] },
-{ icon: Cloud,     title: "Cloud & DevOps",           skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub", "Postman", "VS Code"] },
-{ icon: GitBranch, title: "Architecture & Patterns",  skills: ["RESTful API Design", "MVC", "OOP", "CRUD Operations"] },
+{ icon: Bot,      title: "AI & LLM Integration",   skills: ["AI Agent Architecture", "Prompt Engineering", "Gemini SDK", "LLM Workflows"] },
+{ icon: Code2,    title: "Languages & Web",         skills: ["JavaScript", "TypeScript", "Python", "Java", "HTML5", "CSS3"] },
+{ icon: Layers,   title: "Frameworks",              skills: ["MEAN Stack", "Django", "Flask", "Spring Framework", "Mendix"] },
+{ icon: Database, title: "Databases & ORMs",        skills: ["MySQL", "MongoDB", "SQLite", "Prisma Postgres"] },
+{ icon: Cloud,    title: "Cloud & DevOps",          skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub"] },
+{ icon: Zap,      title: "Modern Infrastructure",   skills: ["Clerk", "Liveblocks", "Stream Video SDK", "Zustand", "RESTful API Design"] },
 ```
+
+---
+
+### Experience (`components/experience.tsx`)
+- Section id: `#experience`
+- Heading: "Experience" + subheading: "Where I've worked"
+- Layout: vertical timeline with a sky-blue `0.5px` left border; each entry has a sky-500 dot marker
+- Each entry shows: company + type badge, date-range pill (sky-500 tint), job title, location, bullet list
+- Staggered fade-up entrance (0.1s delay per entry, `whileInView`)
+- Scroll indicator at bottom → `#projects`
+- Uses `useInViewTracking("experience")` to fire `section_viewed` GA4 event
+
+**Experience data** (defined in `lib/data.ts` as `experiences: Experience[]`):
+
+| Company | Title | Period |
+|---|---|---|
+| Texas Regional Physicians | Software Developer | Apr 2024 – Present |
+| Memorial MRI and Diagnostic | Software Developer | Nov 2021 – Apr 2024 |
+| Coding Dojo | Resident Full Stack Developer | Sep 2019 – Nov 2021 |
 
 ---
 
@@ -239,6 +263,28 @@ portfolio-v2/
 
 ---
 
+## Analytics (GA4)
+
+GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractive">` and is gated on the `NEXT_PUBLIC_GA_MEASUREMENT_ID` env var — if the var is absent no scripts are injected and no events fire.
+
+**`lib/analytics.ts`** — exports a single `trackEvent(eventName, params?)` helper that calls `window.gtag("event", ...)` and is a no-op during SSR or when gtag is not initialized.
+
+**`lib/useInViewTracking.ts`** — React hook wrapping `IntersectionObserver` (threshold 0.3). Fires `section_viewed` once per section per page load, then disconnects.
+
+### Tracked events
+
+| Event | Where fired | Extra params |
+|---|---|---|
+| `resume_download` | Nav — Resume link (desktop + mobile) | — |
+| `section_viewed` | Skills, Experience, Projects, Contact | `{ section }` |
+| `linkedin_click` | Hero CTA, Contact social links | `{ location }` |
+| `github_click` | Hero CTA, Projects cards, Contact social links | `{ location }` |
+| `project_demo_click` | Projects — Demo button | `{ project_title }` |
+| `email_click` | Contact — mailto link | — |
+| `contact_form_submit` | Contact — form submit | — |
+
+---
+
 ## Metadata (`app/layout.tsx`)
 
 ```ts
@@ -290,8 +336,6 @@ npm run start
 
 ## Out of Scope (v2)
 - Blog / notes section
-- Work experience / timeline section
 - CMS integration
-- Analytics
 - i18n / localization
 - IE/legacy browser support

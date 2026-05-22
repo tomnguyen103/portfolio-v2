@@ -2,7 +2,7 @@
 
 Live site: **[tomnguyen.me](https://www.tomnguyen.me)**
 
-Personal portfolio built with Next.js 14 App Router, showcasing my projects, skills, and contact information.
+Personal portfolio built with Next.js 14 App Router, showcasing my experience, projects, skills, and contact information.
 
 ---
 
@@ -17,7 +17,8 @@ Personal portfolio built with Next.js 14 App Router, showcasing my projects, ski
 | Icons | Lucide React + React Icons |
 | Font | Inter (next/font/google) |
 | Theme | next-themes (dark/light) |
-| Contact form | Netlify Forms + Resend Email |
+| Contact form | Netlify Forms |
+| Analytics | Google Analytics 4 (GA4) |
 | Hosting | Netlify + Namecheap domain |
 
 ---
@@ -31,7 +32,9 @@ Personal portfolio built with Next.js 14 App Router, showcasing my projects, ski
 - Responsive layout — mobile-first with hamburger nav
 - Color-coded skill tags per technology category
 - Project cards with GitHub and live demo links
+- Work experience timeline section
 - Contact form via Netlify Forms with loading and error states
+- GA4 analytics: tracks page events (resume download, section views, link clicks, form submit)
 
 ---
 
@@ -49,10 +52,13 @@ portfolio-v2/
 │   ├── hero.tsx            # Full-viewport hero with typing effect
 │   ├── skills.tsx          # Skills grid with animated cards
 │   ├── projects.tsx        # Projects section
+│   ├── experience.tsx      # Work experience timeline section
 │   ├── contact.tsx         # Contact form + social links
-│   └── theme-toggle.tsx    # Dark/light icon button
+│   ├── theme-toggle.tsx    # Dark/light icon button
+│   └── time-based-theme.tsx # (utility) time-aware theme helper
 ├── lib/
-│   └── data.ts             # All static content: skills, projects, tag colors
+│   ├── data.ts             # All static content: skills, projects, experience, tag colors
+│   └── useInViewTracking.ts # IntersectionObserver hook for GA4 section_viewed events
 ├── public/
 │   ├── images/             # Profile photo + project screenshots
 │   └── MyResume.pdf        # Resume download
