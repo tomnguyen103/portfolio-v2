@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { Send } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 const inputClass =
   "w-full px-4 py-3 bg-surface border border-foreground/10 rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40 placeholder:text-muted transition";
@@ -26,6 +27,7 @@ export default function Contact() {
       });
       if (res.ok) {
         setSubmitted(true);
+        trackEvent("contact_form_submit");
         form.reset();
       } else {
         setError(true);
@@ -143,6 +145,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
+                onClick={() => trackEvent("github_click", { location: "contact" })}
                 className="p-3 bg-surface hover:bg-accent hover:text-white rounded-xl transition-colors border border-foreground/10 text-foreground"
               >
                 <FaGithub className="w-5 h-5" />
@@ -152,6 +155,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
+                onClick={() => trackEvent("linkedin_click", { location: "contact" })}
                 className="p-3 bg-surface hover:bg-accent hover:text-white rounded-xl transition-colors border border-foreground/10 text-foreground"
               >
                 <FaLinkedinIn className="w-5 h-5" />
