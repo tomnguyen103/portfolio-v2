@@ -337,14 +337,14 @@ npm run start
 
 ## Standing Rules
 
-### Keep `resume.html` in sync
-Whenever any of the following are modified, **always update `public/resume.html` at the end of the task** to match:
+### Keep `resume.html` and `resume-vi.html` in sync
+Whenever any of the following are modified, **always update `public/resume.html`**, **`public/resume-vi.html`**, and the relevant strings in **`lib/translations.ts`** (`vi` key) at the end of the task:
 - `lib/data.ts` — experiences, projects, or skillCards
 - `components/hero.tsx` — bio text or subtitle roles
 - `components/contact.tsx` — email address or social links
 - Any other content that appears on the resume (phone number, summary, etc.)
 
-This ensures the live resume page at `/resume.html` always reflects the latest portfolio content without needing a manual reminder.
+This ensures both resume pages and the live site always reflect the latest portfolio content without needing a manual reminder.
 
 ### Project links in `resume.html`
 Each project entry shows masked link text — never raw URLs:

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tom Nguyen — Hồ Sơ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 0.65in 0.75in;
+      max-width: 8.5in;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    .header { text-align: center; margin-bottom: 10px; }
+    .header h1 { font-size: 22pt; font-weight: 700; letter-spacing: 0.02em; }
+    .contact { margin-top: 4px; font-size: 9.5pt; color: #333; }
+    .contact a { color: #1a1a1a; text-decoration: none; }
+    .contact span { margin: 0 4px; color: #888; }
+
+    .section { margin-top: 12px; }
+    .section-title {
+      font-size: 11.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1.5px solid #1a1a1a;
+      padding-bottom: 2px;
+      margin-bottom: 6px;
+    }
+
+    .summary p { font-size: 10pt; line-height: 1.5; }
+
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
+    .skill-row { font-size: 10pt; line-height: 1.6; }
+    .skill-row strong { display: inline-block; min-width: 130px; }
+
+    .entry { margin-bottom: 10px; }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .entry-left { flex: 1; }
+    .entry-title { font-weight: 700; font-size: 10.5pt; }
+    .entry-company { font-size: 10pt; color: #333; }
+    .entry-date { font-size: 9.5pt; color: #444; white-space: nowrap; }
+    .entry-location { font-size: 9.5pt; color: #555; font-style: italic; }
+
+    ul { padding-left: 18px; margin-top: 3px; }
+    li { font-size: 10pt; line-height: 1.55; margin-bottom: 1px; }
+
+    .tech-line { margin-top: 4px; font-size: 9.5pt; color: #333; }
+    .tech-line strong { font-weight: 600; }
+
+    .edu-entry { margin-bottom: 6px; }
+    .edu-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .edu-school { font-weight: 700; font-size: 10.5pt; }
+    .edu-date { font-size: 9.5pt; color: #444; }
+    .edu-detail { font-size: 10pt; color: #333; margin-top: 1px; }
+
+    @page { size: letter; margin: 0.55in 0.7in; }
+    @media print { body { padding: 0; } a { color: #1a1a1a !important; text-decoration: none !important; } }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Tom Nguyen</h1>
+    <div class="contact">
+      <a href="mailto:tom.nguyen.nht@gmail.com">tom.nguyen.nht@gmail.com</a>
+      <span>|</span>
+      832-359-6679
+      <span>|</span>
+      <a href="https://github.com/tomnguyen103">GitHub</a>
+      <span>|</span>
+      <a href="https://linkedin.com/in/tomnguyen103">LinkedIn</a>
+      <span>|</span>
+      <a href="https://www.tomnguyen.me">tomnguyen.me</a>
+    </div>
+  </div>
+
+  <div class="section summary">
+    <div class="section-title">Tóm Tắt</div>
+    <p>
+      Lập trình viên Full Stack &amp; Kỹ sư AI với hơn 1.000 giờ kinh nghiệm thực hành trải dài
+      từ hệ thống doanh nghiệp truyền thống đến quy trình LLM hiện đại. Chuyên thiết kế kiến trúc
+      ứng dụng web có khả năng mở rộng, giải pháp tự động hóa lâm sàng và kinh doanh, cùng các
+      pipeline AI agent. Có kinh nghiệm triển khai phần mềm thực tế trong môi trường y tế tuân thủ
+      HIPAA, là đầu mối kỹ thuật chính với các Giám đốc và các bên liên quan đa chức năng. Tốt
+      nghiệp Khoa học Máy tính tại Cal State LA.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Kỹ Năng Kỹ Thuật</div>
+    <div class="skills-grid">
+      <div class="skill-row"><strong>AI &amp; LLM:</strong> AI Agent Architecture, Prompt Engineering, Gemini SDK, LLM Workflows</div>
+      <div class="skill-row"><strong>Cloud &amp; DevOps:</strong> AWS EC2, Vercel, Netlify, Trigger.dev, Git / GitHub</div>
+      <div class="skill-row"><strong>Ngôn ngữ:</strong> JavaScript, TypeScript, Python, Java, HTML5, CSS3 / SASS</div>
+      <div class="skill-row"><strong>Hạ tầng:</strong> Clerk, Liveblocks, Stream Video SDK, Zustand, RESTful API Design</div>
+      <div class="skill-row"><strong>Frameworks:</strong> Next.js, React Native, MEAN Stack, Django, Flask, Spring Framework, Mendix, Expo</div>
+      <div class="skill-row"><strong>Cơ sở dữ liệu &amp; ORM:</strong> PostgreSQL, MySQL, MongoDB, SQLite, Prisma Postgres</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Kinh Nghiệm</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Lập Trình Viên Phần Mềm &mdash; <span style="font-weight:400">Texas Regional Physicians</span></div>
+          <div class="entry-location">Houston, Texas &middot; Remote</div>
+        </div>
+        <div class="entry-date">Apr 2024 &ndash; Hiện tại</div>
+      </div>
+      <ul>
+        <li>Thiết kế, phát triển và duy trì cổng thông tin lâm sàng phục vụ hơn 30 nhân viên phòng khám, bác sĩ và hơn 10 người dùng luật sư, với hơn 40 cập nhật tính năng và cải tiến giao diện trong 3 tháng qua.</li>
+        <li>Thiết kế và xây dựng giao diện người dùng cho nhân viên bằng HTML, CSS/SASS và JavaScript, chuyển đổi quy trình lâm sàng và pháp lý phức tạp thành giao diện trực quan cho người dùng không chuyên kỹ thuật.</li>
+        <li>Quản lý và tối ưu hóa cơ sở dữ liệu PostgreSQL với hơn 50 thực thể, bao gồm thêm chỉ mục cho các truy vấn tư vấn nhằm cải thiện đáng kể hiệu suất tải lịch trong môi trường tuân thủ HIPAA.</li>
+        <li>Tích hợp API SMS Curogram cho thông báo cuộc hẹn, bao gồm sửa lỗi logic gửi hàng loạt ngăn khảo sát kích hoạt sai trên các cuộc hẹn trong quá khứ.</li>
+        <li>Là đầu mối kỹ thuật chính với các Giám đốc, thu thập yêu cầu, đề xuất nhiều giải pháp, thống nhất hướng tiếp cận và triển khai đúng tiến độ đã thông báo.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Lập Trình Viên Phần Mềm &mdash; <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
+          <div class="entry-location">Houston, Texas</div>
+        </div>
+        <div class="entry-date">Nov 2021 &ndash; Apr 2024</div>
+      </div>
+      <ul>
+        <li>Phát triển và duy trì cổng thanh toán tập trung cho 8 chi nhánh, nhận tài liệu HL7 qua SFTP từ hệ thống X-quang và chuyển đổi thành dữ liệu Mendix có cấu trúc cho nhân viên lâm sàng.</li>
+        <li>Thiết kế và duy trì bốn website công ty phục vụ bệnh nhân và bác sĩ tuyến trong tại 8 địa điểm chẩn đoán hình ảnh.</li>
+        <li>Quản lý cơ sở dữ liệu PostgreSQL với hơn 20 thực thể, duy trì tính toàn vẹn dữ liệu, quy trình sao lưu và hiệu suất truy vấn trên hoạt động nhiều địa điểm.</li>
+        <li>Tích hợp hệ thống thông tin X-quang EXA qua giao diện HL7, cho phép truyền dữ liệu tự động giữa hệ thống hình ảnh bên ngoài và cổng Mendix nội bộ.</li>
+        <li>Phát hiện thay đổi gây lỗi im lặng khi EXA cập nhật định dạng HL7 mà không thông báo — xác định dữ liệu bị thiếu qua giám sát log chủ động, báo cáo ngay cho cấp trên và phối hợp trực tiếp với EXA để khôi phục toàn bộ quá trình truyền dữ liệu.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Lập Trình Viên Full Stack Thường Trú &mdash; <span style="font-weight:400">Coding Dojo</span></div>
+          <div class="entry-location">Greater Los Angeles Area</div>
+        </div>
+        <div class="entry-date">Sep 2019 &ndash; Nov 2021</div>
+      </div>
+      <ul>
+        <li>Xây dựng và ra mắt nhiều dự án full-stack bao gồm AI Flappy Bird (Neural Network + Genetic Algorithm tự viết), Nền tảng Thư viện Trường học (Django/SQLite) và ứng dụng vẽ Canvas, thể hiện khả năng tạo mẫu nhanh trên nhiều lĩnh vực.</li>
+        <li>Áp dụng Reinforcement Learning và Neural Network để huấn luyện tác nhân game tự động bằng Genetic Algorithm, tự triển khai toàn bộ pipeline học từ đầu.</li>
+        <li>Phát triển và triển khai các ứng dụng web full-stack sử dụng Python, Django, HTML/CSS, JavaScript và AWS EC2, bao quát toàn bộ vòng đời từ phát triển đến sản xuất trên cloud.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Dự Án</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Development Plan Tool</div>
+        </div>
+        <div class="entry-date">
+          <a href="https://github.com/tomnguyen103/Development-Plan-Tool">GitHub</a>
+          <span style="margin:0 4px;color:#888;">|</span>
+          <a href="https://development-tool.tomnguyen.me/">Live Demo</a>
+        </div>
+      </div>
+      <ul>
+        <li>Công cụ xây dựng kiến trúc hệ thống cộng tác thời gian thực với hỗ trợ AI và trình chỉnh sửa sơ đồ React Flow tương tác với con trỏ trực tiếp và avatar hiện diện.</li>
+        <li>Đề xuất thiết kế do AI hỗ trợ và tự động tạo thông số kỹ thuật qua Gemini.</li>
+      </ul>
+      <div class="tech-line"><strong>Công nghệ:</strong> Next.js, TypeScript, Prisma Postgres, Liveblocks, Trigger.dev, Gemini SDK, Clerk, Vercel</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">AI Language Learning App</div>
+        </div>
+        <div class="entry-date">
+          <a href="https://github.com/tomnguyen103/MyFirstMobileApp">GitHub</a>
+        </div>
+      </div>
+      <ul>
+        <li>Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo với cuộc gọi âm thanh thời gian thực cùng giáo viên AI.</li>
+        <li>Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc, chú thích trực tiếp, phản hồi phát âm và theo dõi chuỗi XP hàng ngày.</li>
+      </ul>
+      <div class="tech-line"><strong>Công nghệ:</strong> React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">AI Flappy Bird</div>
+        </div>
+        <div class="entry-date">
+          <a href="https://github.com/tomnguyen103/AI_Flappy_Bird">GitHub</a>
+          <span style="margin:0 4px;color:#888;">|</span>
+          <a href="https://youtu.be/uf1wSdsGWUs">Demo Video</a>
+        </div>
+      </div>
+      <ul>
+        <li>Viết lại Flappy Bird HTML cơ bản thành phiên bản điều khiển bởi AI, áp dụng Reinforcement Learning và Neural Network tự xây dựng từ đầu.</li>
+        <li>Triển khai Genetic Algorithm cho quá trình tiến hóa tác nhân với hàm tái tạo quần thể đột biến các cá thể tốt nhất mỗi thế hệ.</li>
+      </ul>
+      <div class="tech-line"><strong>Công nghệ:</strong> JavaScript, HTML Canvas, Neural Network, Genetic Algorithm, Reinforcement Learning</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Học Vấn</div>
+
+    <div class="edu-entry">
+      <div class="edu-header">
+        <div class="edu-school">California State University, Los Angeles</div>
+        <div class="edu-date">May 2019</div>
+      </div>
+      <div class="edu-detail">Cử nhân Khoa học Máy tính</div>
+    </div>
+
+    <div class="edu-entry">
+      <div class="edu-header">
+        <div class="edu-school">Coding Dojo &mdash; Full-Stack Developer Bootcamp</div>
+        <div class="edu-date">Sep 2019 &ndash; Dec 2019</div>
+      </div>
+      <div class="edu-detail">Chứng chỉ Full-Stack về Django, MEAN Stack và Java Spring Framework &middot; 800+ giờ đào tạo chuyên sâu</div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('a').forEach(function(a) {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    });
+  </script>
+</body>
+</html>
