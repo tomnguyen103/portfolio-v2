@@ -169,11 +169,11 @@ export const experiences: Experience[] = [
     end: "Present",
     location: "Houston, Texas · Remote",
     bullets: [
-      "Architect, develop, and deploy high-performing Mendix applications aligned with business objectives; optimize for performance, scalability, and maintainability.",
-      "Design and build engaging UIs using HTML, CSS, SASS, and JavaScript delivering exceptional user experiences.",
-      "Manage and optimize databases (SQL, PostgreSQL, MySQL), ensuring data integrity, security, and robust backup strategies.",
-      "Integrate third-party RESTful services into Mendix applications; optimize API calls for performance and reliability.",
-      "Collaborate with executive leadership and clients to translate business needs into actionable digital solutions.",
+      "Architect, develop, and deploy Mendix applications that power clinical and administrative operations for a regional healthcare provider, with a focus on performance, scalability, and long-term maintainability.",
+      "Design and build patient-facing UIs using HTML, CSS/SASS, and JavaScript, translating complex clinical workflows into intuitive interfaces for non-technical staff.",
+      "Manage and optimize databases (PostgreSQL, MySQL), ensuring data integrity, security, and robust backup standards in a HIPAA-sensitive environment.",
+      "Integrate third-party RESTful services into Mendix applications, connecting external healthcare systems and eliminating manual data hand-offs between platforms.",
+      "Collaborate with executive leadership and clients to translate business needs into digital solutions, serving as the primary technical liaison between stakeholders and end users.",
     ],
   },
   {
@@ -184,11 +184,11 @@ export const experiences: Experience[] = [
     end: "Apr 2024",
     location: "Houston, Texas",
     bullets: [
-      "Implemented solutions on the Mendix platform scoped to business and technical requirements across the full project lifecycle.",
-      "Designed and maintained four major company websites using HTML, CSS, SASS, and JavaScript.",
-      "Managed database backups and integrity using SQL, PostgreSQL, and MySQL.",
-      "Coordinated with third parties to connect RESTful services to Mendix platform applications.",
-      "Engaged with executive team and customers to drive innovation and resolve technical issues.",
+      "Developed and delivered Mendix solutions across the full project lifecycle — from requirements and architecture through testing and deployment — for a multi-location diagnostic imaging group.",
+      "Designed and maintained four company websites serving patients and referring physicians, using HTML, CSS/SASS, and JavaScript.",
+      "Managed and optimized databases (SQL, PostgreSQL, MySQL), maintaining backup procedures, integrity checks, and query performance.",
+      "Coordinated with third parties to integrate RESTful services into Mendix applications, enabling reliable data exchange between internal systems and external vendors.",
+      "Engaged with the executive team and clients to resolve technical issues and deliver pragmatic solutions, often under urgent clinical timelines.",
     ],
   },
   {
@@ -199,9 +199,9 @@ export const experiences: Experience[] = [
     end: "Nov 2021",
     location: "Greater Los Angeles Area",
     bullets: [
-      "Built and shipped multiple full-stack projects including AI Flappy Bird (Neural Network + Genetic Algorithm), a School Library Platform (Django/SQLite), and a Paint HTML App (Canvas/JS).",
-      "Applied Reinforcement Learning and Neural Network concepts to train autonomous game agents using Genetic Algorithms.",
-      "Developed full-stack web applications using Python, Django, HTML/CSS, JavaScript, and AWS.",
+      "Built and shipped multiple full-stack projects — including an AI Flappy Bird (Neural Network + Genetic Algorithm built from scratch), a School Library Platform (Django/SQLite), and a Canvas drawing app — demonstrating rapid prototyping across diverse domains.",
+      "Applied Reinforcement Learning and Neural Network concepts to train autonomous game agents using Genetic Algorithms, implementing the full learning pipeline from scratch.",
+      "Developed and deployed full-stack web applications using Python, Django, HTML/CSS, JavaScript, and AWS, covering the full lifecycle from development to cloud production.",
     ],
   },
 ];
