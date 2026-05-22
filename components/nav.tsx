@@ -3,19 +3,14 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
+import LanguageToggle from "./language-toggle";
+import { useLanguage } from "./language-provider";
 import { trackEvent } from "@/lib/analytics";
-
-const navLinks = [
-  { label: "Home", href: "#top" },
-  { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { locale, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +19,16 @@ export default function Nav() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navLinks = [
+    { label: t.nav.home, href: "#top" },
+    { label: t.nav.skills, href: "#skills" },
+    { label: t.nav.experience, href: "#experience" },
+    { label: t.nav.projects, href: "#projects" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
+
+  const resumeHref = locale === "vi" ? "/resume-vi.html" : "/resume.html";
 
   return (
     <nav
@@ -52,16 +57,17 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="/resume.html"
+              href={resumeHref}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent("resume_view")}
               className="ml-1 px-3 py-1.5 text-base font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg"
             >
-              Resume
+              {t.nav.resume}
             </a>
           </div>
 
+          <LanguageToggle />
           <ThemeToggle />
 
           {/* Mobile hamburger */}
@@ -89,13 +95,13 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="/resume.html"
+            href={resumeHref}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => { setMenuOpen(false); trackEvent("resume_view"); }}
             className="mt-1 px-3 py-2.5 text-sm font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg text-center"
           >
-            Resume
+            {t.nav.resume}
           </a>
         </div>
       )}
