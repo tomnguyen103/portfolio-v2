@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { ArrowDown } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 const roles = ["Mendix Developer", "Software Developer", "AI Agent Developer", "Full Stack Developer"];
 
@@ -99,6 +100,7 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/tomnguyen103/"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("linkedin_click")}
                 className="px-6 py-3 bg-surface hover:bg-surface/80 border border-foreground/10 rounded-xl font-medium transition-colors flex items-center gap-2 text-foreground"
               >
                 <FaLinkedinIn className="w-4 h-4" /> LinkedIn
@@ -107,6 +109,7 @@ export default function Hero() {
                 href="https://github.com/tomnguyen103"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("github_click")}
                 className="px-6 py-3 bg-surface hover:bg-surface/80 border border-foreground/10 rounded-xl font-medium transition-colors flex items-center gap-2 text-foreground"
               >
                 <FaGithub className="w-4 h-4" /> GitHub
