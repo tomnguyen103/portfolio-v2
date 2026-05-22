@@ -352,6 +352,9 @@ Each project entry shows masked link text — never raw URLs:
 - If the project has a `demo` URL, include it after a `|` separator labeled `"Live Demo"` (or `"Demo Video"` for YouTube links)
 - Example: `GitHub | Live Demo`
 
+### All links in `resume.html` open in a new tab
+`resume.html` includes an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script — it ensures the resume page stays open when a visitor clicks any link.
+
 ---
 
 ## Out of Scope (v2)
