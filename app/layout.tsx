@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import TimeBasedTheme from "@/components/time-based-theme";
+import { LanguageProvider } from "@/components/language-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -27,8 +28,10 @@ export default function RootLayout({
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <TimeBasedTheme />
-          {children}
+          <LanguageProvider>
+            <TimeBasedTheme />
+            {children}
+          </LanguageProvider>
         </ThemeProvider>
         {GA_ID && (
           <>
