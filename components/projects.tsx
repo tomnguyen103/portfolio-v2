@@ -7,9 +7,17 @@ import { ExternalLink, ArrowDown } from "lucide-react";
 import { projects, tagColor } from "@/lib/data";
 import { trackEvent } from "@/lib/analytics";
 import { useInViewTracking } from "@/lib/useInViewTracking";
+import { useLanguage } from "./language-provider";
 
 export default function Projects() {
   const sectionRef = useInViewTracking("projects");
+  const { t } = useLanguage();
+
+  const localizedProjects = projects.map((project, i) => ({
+    ...project,
+    description: t.projects.items[i].description,
+  }));
+
   return (
     <section ref={sectionRef} id="projects" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24 bg-surface/30">
       <div className="max-w-6xl mx-auto w-full">
@@ -20,7 +28,7 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Projects
+          {t.projects.heading}
         </motion.h2>
         <motion.p
           className="text-muted text-center mb-10"
@@ -29,11 +37,11 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Things I&apos;ve built
+          {t.projects.subheading}
         </motion.p>
 
         <div className="flex flex-col gap-6">
-          {projects.map((project, index) => (
+          {localizedProjects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 40 }}
@@ -59,8 +67,8 @@ export default function Projects() {
                   </h3>
 
                   <ul className="space-y-1.5 mb-4">
-                    {project.description.map((desc) => (
-                      <li key={desc} className="text-base text-muted flex gap-2">
+                    {project.description.map((desc, di) => (
+                      <li key={di} className="text-base text-muted flex gap-2">
                         <span className="text-accent mt-0.5 shrink-0">•</span>
                         {desc}
                       </li>
@@ -68,12 +76,12 @@ export default function Projects() {
                   </ul>
 
                   <div className="flex flex-wrap gap-1.5 mb-5">
-                    {project.tech.map((t) => (
+                    {project.tech.map((tech) => (
                       <span
-                        key={t}
-                        className={`px-2.5 py-0.5 rounded-full text-sm font-medium border ${tagColor[t] ?? "bg-accent/10 text-accent border-accent/20"}`}
+                        key={tech}
+                        className={`px-2.5 py-0.5 rounded-full text-sm font-medium border ${tagColor[tech] ?? "bg-accent/10 text-accent border-accent/20"}`}
                       >
-                        {t}
+                        {tech}
                       </span>
                     ))}
                   </div>
