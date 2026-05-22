@@ -115,7 +115,7 @@ export const translations = {
     },
     hero: {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
-      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack — từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful — luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
+      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack - từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful - luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
       roles: ['Lập Trình Viên Mendix', 'Lập Trình Viên Phần Mềm', 'Lập Trình Viên AI Agent', 'Lập Trình Viên Full Stack'],
       cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
     },
@@ -175,7 +175,7 @@ export const translations = {
         },
         {
           description: [
-            'Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo',
+            'Ứng dụng di động học ngôn ngữ bằng AI - giải pháp thay thế hiện đại cho Duolingo',
             'Cuộc gọi âm thanh thời gian thực với giáo viên AI, chú thích trực tiếp và phản hồi phát âm',
             'Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc và theo dõi chuỗi XP hàng ngày',
           ],

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tom Nguyen — Resume</title>
+  <title>Tom Nguyen - Resume</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -45,9 +45,10 @@
     .summary p { font-size: 10pt; line-height: 1.5; }
 
     /* ── Skills ── */
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
-    .skill-row { font-size: 10pt; line-height: 1.6; }
-    .skill-row strong { display: inline-block; min-width: 130px; }
+    .skills-grid { display: table; border-spacing: 0 1px; }
+    .skill-row { display: table-row; font-size: 10pt; line-height: 1.55; }
+    .skill-row strong { display: table-cell; font-weight: 700; white-space: nowrap; padding-right: 10px; vertical-align: top; }
+    .skill-row .skill-value { display: table-cell; vertical-align: top; }
 
     /* ── Experience / Projects ── */
     .entry { margin-bottom: 10px; }
@@ -128,12 +129,12 @@
   <div class="section">
     <div class="section-title">Technical Skills</div>
     <div class="skills-grid">
-      <div class="skill-row"><strong>AI &amp; LLM:</strong> AI Agent Architecture, Prompt Engineering, Gemini SDK, LLM Workflows</div>
-      <div class="skill-row"><strong>Cloud &amp; DevOps:</strong> AWS EC2, Vercel, Netlify, Trigger.dev, Git / GitHub</div>
-      <div class="skill-row"><strong>Languages:</strong> JavaScript, TypeScript, Python, Java, HTML5, CSS3 / SASS</div>
-      <div class="skill-row"><strong>Infrastructure:</strong> Clerk, Liveblocks, Stream Video SDK, Zustand, RESTful API Design</div>
-      <div class="skill-row"><strong>Frameworks:</strong> Next.js, React Native, MEAN Stack, Django, Flask, Spring Framework, Mendix, Expo</div>
-      <div class="skill-row"><strong>Databases &amp; ORMs:</strong> PostgreSQL, MySQL, MongoDB, SQLite, Prisma Postgres</div>
+      <div class="skill-row"><strong>AI &amp; LLM:</strong><span class="skill-value">AI Agent Architecture, Prompt Engineering, Gemini SDK, LLM Workflows</span></div>
+      <div class="skill-row"><strong>Cloud &amp; DevOps:</strong><span class="skill-value">AWS EC2, Vercel, Netlify, Trigger.dev, Git / GitHub</span></div>
+      <div class="skill-row"><strong>Languages:</strong><span class="skill-value">JavaScript, TypeScript, Python, Java, HTML5, CSS3 / SASS</span></div>
+      <div class="skill-row"><strong>Infrastructure:</strong><span class="skill-value">Clerk, Liveblocks, Stream Video SDK, Zustand, RESTful API Design</span></div>
+      <div class="skill-row"><strong>Frameworks:</strong><span class="skill-value">Next.js, React Native, MEAN Stack, Django, Flask, Spring Framework, Mendix, Expo</span></div>
+      <div class="skill-row"><strong>Databases &amp; ORMs:</strong><span class="skill-value">PostgreSQL, MySQL, MongoDB, SQLite, Prisma Postgres</span></div>
     </div>
   </div>
 
@@ -145,17 +146,17 @@
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Software Developer &mdash; <span style="font-weight:400">Texas Regional Physicians</span></div>
+          <div class="entry-title">Software Developer - <span style="font-weight:400">Texas Regional Physicians</span></div>
           <div class="entry-location">Houston, Texas &middot; Remote</div>
         </div>
-        <div class="entry-date">Apr 2024 &ndash; Present</div>
+        <div class="entry-date">Apr 2024 - Present</div>
       </div>
       <ul>
         <li>Architect, develop, and maintain a clinical portal serving 30+ clinic staff, doctors, and 10+ attorney users, with 40+ feature updates and UI enhancements delivered in the last 3 months alone.</li>
         <li>Design and build staff-facing UIs using HTML, CSS/SASS, and JavaScript, translating complex clinical and legal workflows into intuitive interfaces for non-technical users.</li>
         <li>Manage and optimize a PostgreSQL database with 50+ entities, adding indexes on consult queries to significantly improve calendar load performance in a HIPAA-sensitive environment.</li>
         <li>Integrate the Curogram SMS API for appointment communications, including a targeted fix to batch-send logic that prevents surveys from incorrectly triggering on past appointments.</li>
-        <li>Serve as the primary technical liaison to Directors — gathering requirements, proposing solutions, aligning on approach, and delivering implementations on clearly communicated timelines.</li>
+        <li>Serve as the primary technical liaison to Directors - gathering requirements, proposing solutions, aligning on approach, and delivering implementations on clearly communicated timelines.</li>
       </ul>
     </div>
 
@@ -163,17 +164,17 @@
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Software Developer &mdash; <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
+          <div class="entry-title">Software Developer - <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
           <div class="entry-location">Houston, Texas</div>
         </div>
-        <div class="entry-date">Nov 2021 &ndash; Apr 2024</div>
+        <div class="entry-date">Nov 2021 - Apr 2024</div>
       </div>
       <ul>
         <li>Developed and maintained a centralized billing portal across 8 locations, receiving SFTP-transmitted HL7 documents from radiology systems and translating them into structured Mendix data for clinical staff.</li>
         <li>Designed and maintained four company websites serving patients and referring physicians across 8 diagnostic imaging locations.</li>
         <li>Managed a PostgreSQL database with 20+ entities, maintaining data integrity, backup procedures, and query performance across a multi-location imaging operation.</li>
         <li>Integrated the EXA radiology information system via HL7 interface, enabling automated data transmission between external imaging systems and the internal Mendix portal.</li>
-        <li>Detected a silent breaking change when EXA updated their HL7 format without notice — identified missing data through proactive log monitoring, escalated immediately, and coordinated with EXA to restore full data transmission.</li>
+        <li>Detected a silent breaking change when EXA updated their HL7 format without notice - identified missing data through proactive log monitoring, escalated immediately, and coordinated with EXA to restore full data transmission.</li>
       </ul>
     </div>
 
@@ -181,10 +182,10 @@
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Resident Full Stack Developer &mdash; <span style="font-weight:400">Coding Dojo</span></div>
+          <div class="entry-title">Resident Full Stack Developer - <span style="font-weight:400">Coding Dojo</span></div>
           <div class="entry-location">Greater Los Angeles Area</div>
         </div>
-        <div class="entry-date">Sep 2019 &ndash; Nov 2021</div>
+        <div class="entry-date">Sep 2019 - Nov 2021</div>
       </div>
       <ul>
         <li>Built and shipped multiple full-stack projects including an AI Flappy Bird (Neural Network + Genetic Algorithm from scratch), a School Library Platform (Django/SQLite), and a Canvas drawing app across diverse domains.</li>
@@ -228,7 +229,7 @@
         </div>
       </div>
       <ul>
-        <li>AI-powered mobile language learning app — a modern alternative to Duolingo with real-time audio calls with an AI teacher.</li>
+        <li>AI-powered mobile language learning app - a modern alternative to Duolingo with real-time audio calls with an AI teacher.</li>
         <li>Supports 4 languages with 12 structured lessons, live captioning, pronunciation feedback, and daily XP streak tracking.</li>
       </ul>
       <div class="tech-line"><strong>Tech:</strong> React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand</div>
@@ -268,8 +269,8 @@
 
     <div class="edu-entry">
       <div class="edu-header">
-        <div class="edu-school">Coding Dojo &mdash; Full-Stack Developer Bootcamp</div>
-        <div class="edu-date">Sep 2019 &ndash; Dec 2019</div>
+        <div class="edu-school">Coding Dojo - Full-Stack Developer Bootcamp</div>
+        <div class="edu-date">Sep 2019 - Dec 2019</div>
       </div>
       <div class="edu-detail">Full-Stack Certificate in Django, MEAN Stack, and Java Spring Framework &middot; 800+ hours immersive training</div>
     </div>

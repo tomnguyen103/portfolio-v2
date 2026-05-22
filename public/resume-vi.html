@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tom Nguyen — Hồ Sơ</title>
+  <title>Tom Nguyen - Hồ Sơ</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -37,9 +37,10 @@
 
     .summary p { font-size: 10pt; line-height: 1.5; }
 
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
-    .skill-row { font-size: 10pt; line-height: 1.6; }
-    .skill-row strong { display: inline-block; min-width: 130px; }
+    .skills-grid { display: table; border-spacing: 0 1px; }
+    .skill-row { display: table-row; font-size: 10pt; line-height: 1.55; }
+    .skill-row strong { display: table-cell; font-weight: 700; white-space: nowrap; padding-right: 10px; vertical-align: top; }
+    .skill-row .skill-value { display: table-cell; vertical-align: top; }
 
     .entry { margin-bottom: 10px; }
     .entry-header {
@@ -103,12 +104,12 @@
   <div class="section">
     <div class="section-title">Kỹ Năng Kỹ Thuật</div>
     <div class="skills-grid">
-      <div class="skill-row"><strong>AI &amp; LLM:</strong> AI Agent Architecture, Prompt Engineering, Gemini SDK, LLM Workflows</div>
-      <div class="skill-row"><strong>Cloud &amp; DevOps:</strong> AWS EC2, Vercel, Netlify, Trigger.dev, Git / GitHub</div>
-      <div class="skill-row"><strong>Ngôn ngữ:</strong> JavaScript, TypeScript, Python, Java, HTML5, CSS3 / SASS</div>
-      <div class="skill-row"><strong>Hạ tầng:</strong> Clerk, Liveblocks, Stream Video SDK, Zustand, RESTful API Design</div>
-      <div class="skill-row"><strong>Frameworks:</strong> Next.js, React Native, MEAN Stack, Django, Flask, Spring Framework, Mendix, Expo</div>
-      <div class="skill-row"><strong>Cơ sở dữ liệu &amp; ORM:</strong> PostgreSQL, MySQL, MongoDB, SQLite, Prisma Postgres</div>
+      <div class="skill-row"><strong>AI &amp; LLM:</strong><span class="skill-value">AI Agent Architecture, Prompt Engineering, Gemini SDK, LLM Workflows</span></div>
+      <div class="skill-row"><strong>Cloud &amp; DevOps:</strong><span class="skill-value">AWS EC2, Vercel, Netlify, Trigger.dev, Git / GitHub</span></div>
+      <div class="skill-row"><strong>Ngôn ngữ:</strong><span class="skill-value">JavaScript, TypeScript, Python, Java, HTML5, CSS3 / SASS</span></div>
+      <div class="skill-row"><strong>Hạ tầng:</strong><span class="skill-value">Clerk, Liveblocks, Stream Video SDK, Zustand, RESTful API Design</span></div>
+      <div class="skill-row"><strong>Frameworks:</strong><span class="skill-value">Next.js, React Native, MEAN Stack, Django, Flask, Spring Framework, Mendix, Expo</span></div>
+      <div class="skill-row"><strong>Cơ sở dữ liệu &amp; ORM:</strong><span class="skill-value">PostgreSQL, MySQL, MongoDB, SQLite, Prisma Postgres</span></div>
     </div>
   </div>
 
@@ -118,10 +119,10 @@
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Lập Trình Viên Phần Mềm &mdash; <span style="font-weight:400">Texas Regional Physicians</span></div>
+          <div class="entry-title">Lập Trình Viên Phần Mềm - <span style="font-weight:400">Texas Regional Physicians</span></div>
           <div class="entry-location">Houston, Texas &middot; Remote</div>
         </div>
-        <div class="entry-date">Apr 2024 &ndash; Hiện tại</div>
+        <div class="entry-date">Apr 2024 - Hiện tại</div>
       </div>
       <ul>
         <li>Thiết kế, phát triển và duy trì cổng thông tin lâm sàng phục vụ hơn 30 nhân viên phòng khám, bác sĩ và hơn 10 người dùng luật sư, với hơn 40 cập nhật tính năng và cải tiến giao diện trong 3 tháng qua.</li>
@@ -135,10 +136,10 @@
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Lập Trình Viên Phần Mềm &mdash; <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
+          <div class="entry-title">Lập Trình Viên Phần Mềm - <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
           <div class="entry-location">Houston, Texas</div>
         </div>
-        <div class="entry-date">Nov 2021 &ndash; Apr 2024</div>
+        <div class="entry-date">Nov 2021 - Apr 2024</div>
       </div>
       <ul>
         <li>Phát triển và duy trì cổng thanh toán tập trung cho 8 chi nhánh, nhận tài liệu HL7 qua SFTP từ hệ thống X-quang và chuyển đổi thành dữ liệu Mendix có cấu trúc cho nhân viên lâm sàng.</li>
@@ -152,10 +153,10 @@
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Lập Trình Viên Full Stack Thường Trú &mdash; <span style="font-weight:400">Coding Dojo</span></div>
+          <div class="entry-title">Lập Trình Viên Full Stack Thường Trú - <span style="font-weight:400">Coding Dojo</span></div>
           <div class="entry-location">Greater Los Angeles Area</div>
         </div>
-        <div class="entry-date">Sep 2019 &ndash; Nov 2021</div>
+        <div class="entry-date">Sep 2019 - Nov 2021</div>
       </div>
       <ul>
         <li>Xây dựng và ra mắt nhiều dự án full-stack bao gồm AI Flappy Bird (Neural Network + Genetic Algorithm tự viết), Nền tảng Thư viện Trường học (Django/SQLite) và ứng dụng vẽ Canvas, thể hiện khả năng tạo mẫu nhanh trên nhiều lĩnh vực.</li>
@@ -196,7 +197,7 @@
         </div>
       </div>
       <ul>
-        <li>Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo với cuộc gọi âm thanh thời gian thực cùng giáo viên AI.</li>
+        <li>Ứng dụng di động học ngôn ngữ bằng AI - giải pháp thay thế hiện đại cho Duolingo với cuộc gọi âm thanh thời gian thực cùng giáo viên AI.</li>
         <li>Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc, chú thích trực tiếp, phản hồi phát âm và theo dõi chuỗi XP hàng ngày.</li>
       </ul>
       <div class="tech-line"><strong>Công nghệ:</strong> React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand</div>
@@ -234,8 +235,8 @@
 
     <div class="edu-entry">
       <div class="edu-header">
-        <div class="edu-school">Coding Dojo &mdash; Full-Stack Developer Bootcamp</div>
-        <div class="edu-date">Sep 2019 &ndash; Dec 2019</div>
+        <div class="edu-school">Coding Dojo - Full-Stack Developer Bootcamp</div>
+        <div class="edu-date">Sep 2019 - Dec 2019</div>
       </div>
       <div class="edu-detail">Chứng chỉ Full-Stack về Django, MEAN Stack và Java Spring Framework &middot; 800+ giờ đào tạo chuyên sâu</div>
     </div>

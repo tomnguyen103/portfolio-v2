@@ -84,16 +84,19 @@ portfolio-v2/
 │   ├── page.tsx            # Page: composes all section components
 │   └── globals.css         # Tailwind directives + CSS custom properties + blob keyframes
 ├── components/
-│   ├── nav.tsx             # Fixed nav, scroll behavior, theme toggle, mobile menu
+│   ├── nav.tsx             # Fixed nav, scroll behavior, theme/language toggles, mobile menu
 │   ├── hero.tsx            # Full-viewport hero section
 │   ├── skills.tsx          # Skills grid section
 │   ├── experience.tsx      # Work experience timeline section
 │   ├── projects.tsx        # Projects section
 │   ├── contact.tsx         # Contact form + social links section
 │   ├── theme-toggle.tsx    # Dark/light icon button
+│   ├── language-toggle.tsx # EN/VI language switcher button
+│   ├── language-provider.tsx # LanguageProvider context + useLanguage hook
 │   └── time-based-theme.tsx # Sets theme on first load based on time of day
 ├── lib/
 │   ├── data.ts             # All static content: skillCards, projects, experiences, tagColor map
+│   ├── translations.ts     # EN/VI translation strings for all sections
 │   ├── analytics.ts        # trackEvent() wrapper around window.gtag
 │   └── useInViewTracking.ts # IntersectionObserver hook — fires section_viewed GA4 event once
 ├── public/
@@ -104,7 +107,8 @@ portfolio-v2/
 │   │   └── pic06.png       # AI Language Learning App screenshot
 │   ├── netlify.html        # Static form stub for Netlify Forms build-time detection
 │   ├── MyResume.pdf        # Legacy resume PDF (kept for reference)
-│   └── resume.html         # Live HTML resume page (linked from nav Resume button)
+│   ├── resume.html         # Live HTML resume page (English, linked from nav Resume button)
+│   └── resume-vi.html      # Live HTML resume page (Vietnamese, linked when VI locale active)
 ├── CLAUDE.md
 ├── README.md
 ├── netlify.toml
@@ -122,9 +126,10 @@ portfolio-v2/
 - Logo/name: "Tom Nguyen" (left side)
 - Nav links (right side): Home · Skills · Experience · Projects · Contact · Resume
   - All section links use smooth anchor scroll (`href="#section-id"`)
-  - Resume opens `/resume.html` in a new tab; fires `resume_view` GA4 event
+  - Resume opens `/resume.html` (EN) or `/resume-vi.html` (VI) in a new tab; fires `resume_view` GA4 event
 - Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
 - Mobile: hamburger menu — closes only when a nav link is tapped (not on scroll)
+- Language toggle button (EN/VI) — switches locale, persists to localStorage; placed left of theme toggle
 - Theme toggle icon button (rightmost item)
 
 ---
@@ -337,6 +342,18 @@ npm run start
 
 ## Standing Rules
 
+### Keep `CLAUDE.md` up to date
+At the end of every task, before asking to push to GitHub, always update `CLAUDE.md` to reflect what changed:
+- New files or components added - add them to the file structure
+- Removed files - remove them from the file structure
+- New features or behaviors - update or add the relevant section spec
+- New standing rules established during the task - add them to Standing Rules
+- Anything in Out of Scope that is now implemented - remove it
+
+Then tell the user: "CLAUDE.md has been updated to reflect [brief summary of what changed]. Ready to push to GitHub - should I go ahead?"
+
+Do not ask to push without confirming CLAUDE.md was updated first.
+
 ### Keep `resume.html` and `resume-vi.html` in sync
 Whenever any of the following are modified, **always update `public/resume.html`**, **`public/resume-vi.html`**, and the relevant strings in **`lib/translations.ts`** (`vi` key) at the end of the task:
 - `lib/data.ts` — experiences, projects, or skillCards
@@ -352,6 +369,9 @@ Each project entry shows masked link text — never raw URLs:
 - If the project has a `demo` URL, include it after a `|` separator labeled `"Live Demo"` (or `"Demo Video"` for YouTube links)
 - Example: `GitHub | Live Demo`
 
+### Use single dash everywhere
+Always use a plain hyphen `-` as a separator or dash in all files across the project — HTML, TSX, TS, and any other content. Never use `&mdash;`, `&ndash;`, `—`, or `–` (em dash / en dash) anywhere in visible content or string literals.
+
 ### All links in `resume.html` and `resume-vi.html` open in a new tab
 Both `resume.html` and `resume-vi.html` include an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script from either file — it ensures the resume page stays open when a visitor clicks any link.
 
@@ -360,5 +380,4 @@ Both `resume.html` and `resume-vi.html` include an inline script at the bottom t
 ## Out of Scope (v2)
 - Blog / notes section
 - CMS integration
-- i18n / localization
 - IE/legacy browser support
