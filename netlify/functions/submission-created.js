@@ -16,7 +16,6 @@ exports.handler = async function (event) {
       body: JSON.stringify({
         from: "Tom Nguyen <noreply@tomnguyen.me>",
         to: [email],
-        reply_to: "tom.nguyen.nht@gmail.com",
         subject: "Thanks for reaching out!",
         html: `
           <!DOCTYPE html>
