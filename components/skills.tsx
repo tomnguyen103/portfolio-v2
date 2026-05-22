@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { skillCards, tagColor } from "@/lib/data";
 import { useInViewTracking } from "@/lib/useInViewTracking";
+import { useLanguage } from "./language-provider";
 
 const container = {
   hidden: {},
@@ -17,6 +18,8 @@ const item = {
 
 export default function Skills() {
   const sectionRef = useInViewTracking("skills");
+  const { t } = useLanguage();
+
   return (
     <section ref={sectionRef} id="skills" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
       <div className="max-w-6xl mx-auto w-full">
@@ -27,7 +30,7 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Skills
+          {t.skills.heading}
         </motion.h2>
         <motion.p
           className="text-muted text-center mb-10"
@@ -36,7 +39,7 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Technologies I work with
+          {t.skills.subheading}
         </motion.p>
 
         <motion.div
@@ -46,7 +49,7 @@ export default function Skills() {
           whileInView="show"
           viewport={{ once: true }}
         >
-          {skillCards.map((card) => {
+          {skillCards.map((card, index) => {
             const Icon = card.icon;
             return (
               <motion.div
@@ -60,7 +63,7 @@ export default function Skills() {
               >
                 <Icon className="w-10 h-10 text-accent mb-4" />
                 <h3 className="font-bold text-lg mb-3 text-foreground">
-                  {card.title}
+                  {t.skills.cards[index].title}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {card.skills.map((skill) => (
