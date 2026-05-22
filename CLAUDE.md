@@ -103,7 +103,8 @@ portfolio-v2/
 │   │   ├── pic04.png       # Development Plan Tool screenshot
 │   │   └── pic06.png       # AI Language Learning App screenshot
 │   ├── netlify.html        # Static form stub for Netlify Forms build-time detection
-│   └── MyResume.pdf        # Resume download
+│   ├── MyResume.pdf        # Legacy resume PDF (kept for reference)
+│   └── resume.html         # Live HTML resume page (linked from nav Resume button)
 ├── CLAUDE.md
 ├── README.md
 ├── netlify.toml
@@ -121,7 +122,7 @@ portfolio-v2/
 - Logo/name: "Tom Nguyen" (left side)
 - Nav links (right side): Home · Skills · Experience · Projects · Contact · Resume
   - All section links use smooth anchor scroll (`href="#section-id"`)
-  - Resume opens `/MyResume.pdf` in a new tab; fires `resume_download` GA4 event
+  - Resume opens `/resume.html` in a new tab; fires `resume_view` GA4 event
 - Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
 - Mobile: hamburger menu — closes only when a nav link is tapped (not on scroll)
 - Theme toggle icon button (rightmost item)
@@ -275,7 +276,7 @@ GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractiv
 
 | Event | Where fired | Extra params |
 |---|---|---|
-| `resume_download` | Nav — Resume link (desktop + mobile) | — |
+| `resume_view` | Nav — Resume link (desktop + mobile) | — |
 | `section_viewed` | Skills, Experience, Projects, Contact | `{ section }` |
 | `linkedin_click` | Hero CTA, Contact social links | `{ location }` |
 | `github_click` | Hero CTA, Projects cards, Contact social links | `{ location }` |

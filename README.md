@@ -34,7 +34,7 @@ Personal portfolio built with Next.js 14 App Router, showcasing my experience, p
 - Project cards with GitHub and live demo links
 - Work experience timeline section
 - Contact form via Netlify Forms with loading and error states
-- GA4 analytics: tracks page events (resume download, section views, link clicks, form submit)
+- GA4 analytics: tracks page events (resume view, section views, link clicks, form submit)
 
 ---
 
@@ -61,7 +61,8 @@ portfolio-v2/
 │   └── useInViewTracking.ts # IntersectionObserver hook for GA4 section_viewed events
 ├── public/
 │   ├── images/             # Profile photo + project screenshots
-│   └── MyResume.pdf        # Resume download
+│   ├── MyResume.pdf        # Legacy resume PDF
+│   └── resume.html         # Live HTML resume page (linked from nav)
 ├── netlify.toml
 └── CLAUDE.md               # Project spec and requirements
 ```
