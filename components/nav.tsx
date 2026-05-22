@@ -52,10 +52,10 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="/MyResume.pdf"
+              href="/resume.html"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent("resume_download")}
+              onClick={() => trackEvent("resume_view")}
               className="ml-1 px-3 py-1.5 text-base font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg"
             >
               Resume
@@ -89,10 +89,10 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="/MyResume.pdf"
+            href="/resume.html"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => { setMenuOpen(false); trackEvent("resume_download"); }}
+            onClick={() => { setMenuOpen(false); trackEvent("resume_view"); }}
             className="mt-1 px-3 py-2.5 text-sm font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg text-center"
           >
             Resume

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tom Nguyen — Resume</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 0.65in 0.75in;
+      max-width: 8.5in;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 10px; }
+    .header h1 { font-size: 22pt; font-weight: 700; letter-spacing: 0.02em; }
+    .contact {
+      margin-top: 4px;
+      font-size: 9.5pt;
+      color: #333;
+    }
+    .contact a { color: #1a1a1a; text-decoration: none; }
+    .contact span { margin: 0 4px; color: #888; }
+
+    /* ── Section ── */
+    .section { margin-top: 12px; }
+    .section-title {
+      font-size: 11.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1.5px solid #1a1a1a;
+      padding-bottom: 2px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Summary ── */
+    .summary p { font-size: 10pt; line-height: 1.5; }
+
+    /* ── Skills ── */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
+    .skill-row { font-size: 10pt; line-height: 1.6; }
+    .skill-row strong { display: inline-block; min-width: 130px; }
+
+    /* ── Experience / Projects ── */
+    .entry { margin-bottom: 10px; }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .entry-left { flex: 1; }
+    .entry-title { font-weight: 700; font-size: 10.5pt; }
+    .entry-company { font-size: 10pt; color: #333; }
+    .entry-date { font-size: 9.5pt; color: #444; white-space: nowrap; }
+    .entry-location { font-size: 9.5pt; color: #555; font-style: italic; }
+
+    ul { padding-left: 18px; margin-top: 3px; }
+    li { font-size: 10pt; line-height: 1.55; margin-bottom: 1px; }
+
+    /* ── Tech pills (projects) ── */
+    .tech-line { margin-top: 4px; font-size: 9.5pt; color: #333; }
+    .tech-line strong { font-weight: 600; }
+
+    /* ── Education ── */
+    .edu-entry { margin-bottom: 6px; }
+    .edu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .edu-school { font-weight: 700; font-size: 10.5pt; }
+    .edu-date { font-size: 9.5pt; color: #444; }
+    .edu-detail { font-size: 10pt; color: #333; margin-top: 1px; }
+
+    /* ── Print ── */
+    @page {
+      size: letter;
+      margin: 0.55in 0.7in;
+    }
+
+    @media print {
+      body { padding: 0; }
+      a { color: #1a1a1a !important; text-decoration: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────── -->
+  <div class="header">
+    <h1>Tom Nguyen</h1>
+    <div class="contact">
+      <a href="mailto:tom.nguyen.nht@gmail.com">tom.nguyen.nht@gmail.com</a>
+      <span>|</span>
+      832-359-6679
+      <span>|</span>
+      <a href="https://github.com/tomnguyen103">github.com/tomnguyen103</a>
+      <span>|</span>
+      <a href="https://linkedin.com/in/tomnguyen103">linkedin.com/in/tomnguyen103</a>
+      <span>|</span>
+      <a href="https://www.tomnguyen.me">tomnguyen.me</a>
+    </div>
+  </div>
+
+  <!-- ── Summary ─────────────────────────────────────── -->
+  <div class="section summary">
+    <div class="section-title">Summary</div>
+    <p>
+      Full Stack Developer &amp; AI Engineer with 1,000+ hours of hands-on engineering experience spanning
+      traditional enterprise systems and modern LLM workflows. Specializes in architecting scalable web
+      applications, automated clinical and business solutions, and AI agent pipelines. Experienced
+      delivering production software in HIPAA-sensitive healthcare environments, serving as a primary
+      technical liaison to Directors and cross-functional stakeholders. CS graduate from Cal State LA.
+    </p>
+  </div>
+
+  <!-- ── Technical Skills ────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-row"><strong>AI &amp; LLM:</strong> AI Agent Architecture, Prompt Engineering, Gemini SDK, LLM Workflows</div>
+      <div class="skill-row"><strong>Cloud &amp; DevOps:</strong> AWS EC2, Vercel, Netlify, Trigger.dev, Git / GitHub</div>
+      <div class="skill-row"><strong>Languages:</strong> JavaScript, TypeScript, Python, Java, HTML5, CSS3 / SASS</div>
+      <div class="skill-row"><strong>Infrastructure:</strong> Clerk, Liveblocks, Stream Video SDK, Zustand, RESTful API Design</div>
+      <div class="skill-row"><strong>Frameworks:</strong> Next.js, React Native, MEAN Stack, Django, Flask, Spring Framework, Mendix, Expo</div>
+      <div class="skill-row"><strong>Databases &amp; ORMs:</strong> PostgreSQL, MySQL, MongoDB, SQLite, Prisma Postgres</div>
+    </div>
+  </div>
+
+  <!-- ── Experience ──────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">Experience</div>
+
+    <!-- TRP -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Software Developer &mdash; <span style="font-weight:400">Texas Regional Physicians</span></div>
+          <div class="entry-location">Houston, Texas &middot; Remote</div>
+        </div>
+        <div class="entry-date">Apr 2024 &ndash; Present</div>
+      </div>
+      <ul>
+        <li>Architect, develop, and maintain a clinical portal serving 30+ clinic staff, doctors, and 10+ attorney users, with 40+ feature updates and UI enhancements delivered in the last 3 months alone.</li>
+        <li>Design and build staff-facing UIs using HTML, CSS/SASS, and JavaScript, translating complex clinical and legal workflows into intuitive interfaces for non-technical users.</li>
+        <li>Manage and optimize a PostgreSQL database with 50+ entities, adding indexes on consult queries to significantly improve calendar load performance in a HIPAA-sensitive environment.</li>
+        <li>Integrate the Curogram SMS API for appointment communications, including a targeted fix to batch-send logic that prevents surveys from incorrectly triggering on past appointments.</li>
+        <li>Serve as the primary technical liaison to Directors — gathering requirements, proposing solutions, aligning on approach, and delivering implementations on clearly communicated timelines.</li>
+      </ul>
+    </div>
+
+    <!-- Memorial MRI -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Software Developer &mdash; <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
+          <div class="entry-location">Houston, Texas</div>
+        </div>
+        <div class="entry-date">Nov 2021 &ndash; Apr 2024</div>
+      </div>
+      <ul>
+        <li>Developed and maintained a centralized billing portal across 8 locations, receiving SFTP-transmitted HL7 documents from radiology systems and translating them into structured Mendix data for clinical staff.</li>
+        <li>Designed and maintained four company websites serving patients and referring physicians across 8 diagnostic imaging locations.</li>
+        <li>Managed a PostgreSQL database with 20+ entities, maintaining data integrity, backup procedures, and query performance across a multi-location imaging operation.</li>
+        <li>Integrated the EXA radiology information system via HL7 interface, enabling automated data transmission between external imaging systems and the internal Mendix portal.</li>
+        <li>Detected a silent breaking change when EXA updated their HL7 format without notice — identified missing data through proactive log monitoring, escalated immediately, and coordinated with EXA to restore full data transmission.</li>
+      </ul>
+    </div>
+
+    <!-- Coding Dojo -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Resident Full Stack Developer &mdash; <span style="font-weight:400">Coding Dojo</span></div>
+          <div class="entry-location">Greater Los Angeles Area</div>
+        </div>
+        <div class="entry-date">Sep 2019 &ndash; Nov 2021</div>
+      </div>
+      <ul>
+        <li>Built and shipped multiple full-stack projects including an AI Flappy Bird (Neural Network + Genetic Algorithm from scratch), a School Library Platform (Django/SQLite), and a Canvas drawing app across diverse domains.</li>
+        <li>Applied Reinforcement Learning and Neural Network concepts to train autonomous game agents using Genetic Algorithms, implementing the full learning pipeline from scratch.</li>
+        <li>Developed and deployed full-stack web applications using Python, Django, HTML/CSS, JavaScript, and AWS EC2, covering the full lifecycle from local development to cloud production.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── Projects ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">Projects</div>
+
+    <!-- Dev Plan Tool -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">Development Plan Tool</div>
+        </div>
+        <div class="entry-date">
+          <a href="https://github.com/tomnguyen103/Development-Plan-Tool">github.com/tomnguyen103/Development-Plan-Tool</a>
+        </div>
+      </div>
+      <ul>
+        <li>Real-time collaborative system architecture builder with AI assistance and interactive React Flow diagram editor.</li>
+        <li>Live cursors and presence avatars via Liveblocks; AI-powered design suggestions and auto-generated technical specs via Gemini.</li>
+      </ul>
+      <div class="tech-line"><strong>Tech:</strong> Next.js, TypeScript, Prisma Postgres, Liveblocks, Trigger.dev, Gemini SDK, Clerk, Vercel</div>
+    </div>
+
+    <!-- AI Language Learning -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">AI Language Learning App</div>
+        </div>
+        <div class="entry-date">
+          <a href="https://github.com/tomnguyen103/MyFirstMobileApp">github.com/tomnguyen103/MyFirstMobileApp</a>
+        </div>
+      </div>
+      <ul>
+        <li>AI-powered mobile language learning app — a modern alternative to Duolingo with real-time audio calls with an AI teacher.</li>
+        <li>Supports 4 languages with 12 structured lessons, live captioning, pronunciation feedback, and daily XP streak tracking.</li>
+      </ul>
+      <div class="tech-line"><strong>Tech:</strong> React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand</div>
+    </div>
+
+    <!-- AI Flappy Bird -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-left">
+          <div class="entry-title">AI Flappy Bird</div>
+        </div>
+        <div class="entry-date">
+          <a href="https://github.com/tomnguyen103/AI_Flappy_Bird">github.com/tomnguyen103/AI_Flappy_Bird</a>
+        </div>
+      </div>
+      <ul>
+        <li>Rewrote Flappy Bird as an AI-driven version applying Reinforcement Learning and Neural Network concepts built from scratch.</li>
+        <li>Implemented a Genetic Algorithm for agent evolution with a repopulate function that mutates top-performing birds each generation.</li>
+      </ul>
+      <div class="tech-line"><strong>Tech:</strong> JavaScript, HTML Canvas, Neural Network, Genetic Algorithm, Reinforcement Learning</div>
+    </div>
+  </div>
+
+  <!-- ── Education ───────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">Education</div>
+
+    <div class="edu-entry">
+      <div class="edu-header">
+        <div class="edu-school">California State University, Los Angeles</div>
+        <div class="edu-date">May 2019</div>
+      </div>
+      <div class="edu-detail">BS in Computer Science</div>
+    </div>
+
+    <div class="edu-entry">
+      <div class="edu-header">
+        <div class="edu-school">Coding Dojo &mdash; Full-Stack Developer Bootcamp</div>
+        <div class="edu-date">Sep 2019 &ndash; Dec 2019</div>
+      </div>
+      <div class="edu-detail">Full-Stack Certificate in Django, MEAN Stack, and Java Spring Framework &middot; 800+ hours immersive training</div>
+    </div>
+  </div>
+
+</body>
+</html>
