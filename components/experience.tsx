@@ -28,7 +28,7 @@ export default function Experience() {
         </motion.p>
 
         <div className="relative ml-1.5">
-          <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-sky-500/30" />
+          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-sky-500/30" />
 
           {experiences.map((exp, index) => (
             <motion.div
