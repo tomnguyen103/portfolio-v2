@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
+import { trackEvent } from "@/lib/analytics";
 
 const navLinks = [
   { label: "Home", href: "#top" },
@@ -54,6 +55,7 @@ export default function Nav() {
               href="/MyResume.pdf"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("resume_download")}
               className="ml-1 px-3 py-1.5 text-base font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg"
             >
               Resume
@@ -90,7 +92,7 @@ export default function Nav() {
             href="/MyResume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => { setMenuOpen(false); trackEvent("resume_download"); }}
             className="mt-1 px-3 py-2.5 text-sm font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg text-center"
           >
             Resume
