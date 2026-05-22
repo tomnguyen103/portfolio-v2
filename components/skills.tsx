@@ -77,12 +77,12 @@ export default function Skills() {
       </div>
 
       <motion.a
-        href="#projects"
+        href="#experience"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted hover:text-accent transition-colors cursor-pointer"
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
         whileHover={{ scale: 1.3 }}
-        aria-label="Scroll to projects"
+        aria-label="Scroll to experience"
       >
         <ArrowDown className="w-6 h-6" />
       </motion.a>
