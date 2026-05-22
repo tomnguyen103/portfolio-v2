@@ -346,7 +346,7 @@ Whenever any of the following are modified, **always update `public/resume.html`
 
 This ensures both resume pages and the live site always reflect the latest portfolio content without needing a manual reminder.
 
-### Project links in `resume.html`
+### Project links in `resume.html` and `resume-vi.html`
 Each project entry shows masked link text — never raw URLs:
 - Always include a **GitHub** link labeled `"GitHub"`
 - If the project has a `demo` URL, include it after a `|` separator labeled `"Live Demo"` (or `"Demo Video"` for YouTube links)
