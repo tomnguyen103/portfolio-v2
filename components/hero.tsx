@@ -6,13 +6,18 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { ArrowDown } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { useLanguage } from "./language-provider";
 
-const roles = ["Mendix Developer", "Software Developer", "AI Agent Developer", "Full Stack Developer"];
-
-function useTypingEffect() {
+function useTypingEffect(roles: readonly string[]) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
+
+  useEffect(() => {
+    setRoleIndex(0);
+    setDisplayed("");
+    setPhase("typing");
+  }, [roles]);
 
   useEffect(() => {
     const current = roles[roleIndex];
@@ -42,13 +47,14 @@ function useTypingEffect() {
       setRoleIndex((i) => (i + 1) % roles.length);
       setPhase("typing");
     }
-  }, [displayed, phase, roleIndex]);
+  }, [displayed, phase, roleIndex, roles]);
 
   return displayed;
 }
 
 export default function Hero() {
-  const typedText = useTypingEffect();
+  const { t } = useLanguage();
+  const typedText = useTypingEffect(t.hero.roles);
 
   return (
     <section
@@ -72,8 +78,16 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-foreground">
-              Hi. I&apos;m{" "}
-              <span className="text-accent font-extrabold">Tom Nguyen</span>.
+              {t.hero.greeting.split("Tom Nguyen").map((part, i, arr) =>
+                i < arr.length - 1 ? (
+                  <span key={i}>
+                    {part}
+                    <span className="text-accent font-extrabold">Tom Nguyen</span>
+                  </span>
+                ) : (
+                  <span key={i}>{part}</span>
+                )
+              )}
             </h1>
 
             <div className="text-xl sm:text-2xl text-muted mb-6 h-9 flex items-center justify-center md:justify-start gap-1">
@@ -82,13 +96,7 @@ export default function Hero() {
             </div>
 
             <p className="text-foreground/80 text-lg leading-relaxed max-w-xl mx-auto md:mx-0 mb-8 md:border-l-2 md:border-accent/50 md:pl-4">
-              Experienced Software Developer with 4+ years building and
-              maintaining production applications for healthcare providers in
-              Houston. A pragmatic problem-solver across the full stack, from
-              clinical interfaces and enterprise platforms to mobile applications
-              and RESTful integrations, always focused on delivering reliable,
-              scalable software while providing clear technical guidance to users
-              and stakeholders.
+              {t.hero.bio}
             </p>
 
             <div className="flex flex-wrap gap-3 justify-center md:justify-start">
@@ -96,7 +104,7 @@ export default function Hero() {
                 href="#skills"
                 className="px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-medium transition-colors"
               >
-                My Skills
+                {t.hero.cta.skills}
               </a>
               <a
                 href="https://www.linkedin.com/in/tomnguyen103/"
@@ -105,7 +113,7 @@ export default function Hero() {
                 onClick={() => trackEvent("linkedin_click", { location: "hero" })}
                 className="px-6 py-3 bg-surface hover:bg-surface/80 border border-foreground/10 rounded-xl font-medium transition-colors flex items-center gap-2 text-foreground"
               >
-                <FaLinkedinIn className="w-4 h-4" /> LinkedIn
+                <FaLinkedinIn className="w-4 h-4" /> {t.hero.cta.linkedin}
               </a>
               <a
                 href="https://github.com/tomnguyen103"
@@ -114,7 +122,7 @@ export default function Hero() {
                 onClick={() => trackEvent("github_click", { location: "hero" })}
                 className="px-6 py-3 bg-surface hover:bg-surface/80 border border-foreground/10 rounded-xl font-medium transition-colors flex items-center gap-2 text-foreground"
               >
-                <FaGithub className="w-4 h-4" /> GitHub
+                <FaGithub className="w-4 h-4" /> {t.hero.cta.github}
               </a>
             </div>
           </motion.div>
