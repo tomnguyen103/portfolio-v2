@@ -4,9 +4,17 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { experiences } from "@/lib/data";
 import { useInViewTracking } from "@/lib/useInViewTracking";
+import { useLanguage } from "./language-provider";
 
 export default function Experience() {
   const sectionRef = useInViewTracking("experience");
+  const { t } = useLanguage();
+
+  const localizedExperiences = experiences.map((exp, i) => ({
+    ...exp,
+    bullets: t.experience.entries[i].bullets,
+  }));
+
   return (
     <section ref={sectionRef} id="experience" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
       <div className="max-w-3xl mx-auto w-full">
@@ -17,7 +25,7 @@ export default function Experience() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Experience
+          {t.experience.heading}
         </motion.h2>
         <motion.p
           className="text-muted text-center mb-12"
@@ -26,13 +34,13 @@ export default function Experience() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Where I&apos;ve worked
+          {t.experience.subheading}
         </motion.p>
 
         <div className="relative ml-1.5">
           <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-sky-500/30" />
 
-          {experiences.map((exp, index) => (
+          {localizedExperiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${exp.start}`}
               initial={{ opacity: 0, y: 40 }}
@@ -57,8 +65,8 @@ export default function Experience() {
               <p className="text-sm text-muted mb-3">{exp.location}</p>
 
               <ul className="space-y-1.5">
-                {exp.bullets.map((bullet) => (
-                  <li key={bullet} className="text-base text-muted flex gap-2">
+                {exp.bullets.map((bullet, bi) => (
+                  <li key={bi} className="text-base text-muted flex gap-2">
                     <span className="text-accent mt-0.5 shrink-0">•</span>
                     {bullet}
                   </li>
