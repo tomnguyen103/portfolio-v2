@@ -19,20 +19,83 @@ exports.handler = async function (event) {
         reply_to: "tom.nguyen.nht@gmail.com",
         subject: "Thanks for reaching out!",
         html: `
-          <div style="font-family: system-ui, sans-serif; max-width: 560px; margin: 0 auto; color: #0f172a;">
-            <h2 style="color: #0ea5e9;">Hey ${name}, thanks for your message!</h2>
-            <p>I received your message and will get back to you as soon as possible — usually within 24 hours.</p>
-            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;" />
-            <p style="color: #64748b; font-size: 14px;"><strong>Your message:</strong></p>
-            <p style="color: #64748b; font-size: 14px;"><em>${message.replace(/\n/g, "<br/>")}</em></p>
-            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;" />
-            <p>Talk soon,<br/><strong>Tom Nguyen</strong></p>
-            <p style="font-size: 12px; color: #94a3b8;">
-              <a href="https://www.tomnguyen.me" style="color: #0ea5e9;">tomnguyen.me</a> ·
-              <a href="https://github.com/tomnguyen103" style="color: #0ea5e9;">GitHub</a> ·
-              <a href="https://www.linkedin.com/in/tomnguyen103/" style="color: #0ea5e9;">LinkedIn</a>
-            </p>
-          </div>
+          <!DOCTYPE html>
+          <html lang="en">
+          <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>
+          <body style="margin:0; padding:0; background-color:#f1f5f9; font-family: system-ui, -apple-system, sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f1f5f9; padding: 40px 16px;">
+              <tr>
+                <td align="center">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
+
+                    <!-- Header -->
+                    <tr>
+                      <td style="background-color:#0ea5e9; border-radius:12px 12px 0 0; padding: 32px 40px; text-align:center;">
+                        <p style="margin:0; font-size:13px; color:#e0f2fe; letter-spacing:1px; text-transform:uppercase;">Message Received</p>
+                        <h1 style="margin:8px 0 0; font-size:24px; font-weight:700; color:#ffffff;">Tom Nguyen</h1>
+                        <p style="margin:4px 0 0; font-size:13px; color:#bae6fd;">Full Stack & AI Developer</p>
+                      </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                      <td style="background-color:#ffffff; padding: 40px;">
+
+                        <p style="margin:0 0 8px; font-size:16px; color:#0f172a;">Hi <strong>${name}</strong>,</p>
+                        <p style="margin:0 0 24px; font-size:15px; color:#334155; line-height:1.7;">
+                          Thank you for reaching out! I've received your message and will get back to you as soon as possible — typically within <strong>24 hours</strong>.
+                        </p>
+
+                        <!-- Message recap -->
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f8fafc; border-left:4px solid #0ea5e9; border-radius:0 8px 8px 0; margin-bottom:32px;">
+                          <tr>
+                            <td style="padding:20px 24px;">
+                              <p style="margin:0 0 4px; font-size:11px; font-weight:600; color:#94a3b8; letter-spacing:1px; text-transform:uppercase;">Your message</p>
+                              <p style="margin:8px 0 0; font-size:14px; color:#475569; line-height:1.7;">${message.replace(/\n/g, "<br/>")}</p>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="margin:0 0 4px; font-size:15px; color:#334155;">In the meantime, feel free to explore my work:</p>
+
+                        <!-- CTA buttons -->
+                        <table cellpadding="0" cellspacing="0" style="margin: 16px 0 32px;">
+                          <tr>
+                            <td style="padding-right:12px;">
+                              <a href="https://www.tomnguyen.me" style="display:inline-block; background-color:#0ea5e9; color:#ffffff; font-size:13px; font-weight:600; text-decoration:none; padding:10px 20px; border-radius:8px;">My Portfolio</a>
+                            </td>
+                            <td style="padding-right:12px;">
+                              <a href="https://github.com/tomnguyen103" style="display:inline-block; background-color:#f1f5f9; color:#334155; font-size:13px; font-weight:600; text-decoration:none; padding:10px 20px; border-radius:8px;">GitHub</a>
+                            </td>
+                            <td>
+                              <a href="https://www.linkedin.com/in/tomnguyen103/" style="display:inline-block; background-color:#f1f5f9; color:#334155; font-size:13px; font-weight:600; text-decoration:none; padding:10px 20px; border-radius:8px;">LinkedIn</a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="margin:0; font-size:15px; color:#334155; line-height:1.7;">
+                          Talk soon,<br/>
+                          <strong style="color:#0f172a;">Tom Nguyen</strong>
+                        </p>
+                      </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                      <td style="background-color:#f8fafc; border-radius:0 0 12px 12px; padding:20px 40px; text-align:center; border-top:1px solid #e2e8f0;">
+                        <p style="margin:0; font-size:12px; color:#94a3b8;">
+                          You're receiving this because you submitted the contact form at
+                          <a href="https://www.tomnguyen.me" style="color:#0ea5e9; text-decoration:none;">tomnguyen.me</a>
+                        </p>
+                      </td>
+                    </tr>
+
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+          </html>
         `,
       }),
     });
