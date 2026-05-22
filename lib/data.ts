@@ -2,7 +2,7 @@ import {
   Code2,
   Layers,
   Database,
-  GitBranch,
+  Zap,
   Bot,
   Cloud,
 } from "lucide-react";
@@ -112,12 +112,12 @@ export const skillCards: SkillCard[] = [
   {
     icon: Cloud,
     title: "Cloud & DevOps",
-    skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub", "Postman", "VS Code"],
+    skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub"],
   },
   {
-    icon: GitBranch,
-    title: "Architecture & Patterns",
-    skills: ["RESTful API Design", "MVC", "OOP", "CRUD Operations"],
+    icon: Zap,
+    title: "Modern Infrastructure",
+    skills: ["Clerk", "Liveblocks", "Stream Video SDK", "Zustand", "RESTful API Design"],
   },
 ];
 
@@ -169,11 +169,11 @@ export const experiences: Experience[] = [
     end: "Present",
     location: "Houston, Texas · Remote",
     bullets: [
-      "Architect, develop, and deploy Mendix applications that power clinical and administrative operations for a regional healthcare provider, with a focus on performance, scalability, and long-term maintainability.",
-      "Design and build patient-facing UIs using HTML, CSS/SASS, and JavaScript, translating complex clinical workflows into intuitive interfaces for non-technical staff.",
-      "Manage and optimize databases (PostgreSQL, MySQL), ensuring data integrity, security, and robust backup standards in a HIPAA-sensitive environment.",
-      "Integrate third-party RESTful services into Mendix applications, connecting external healthcare systems and eliminating manual data hand-offs between platforms.",
-      "Collaborate with executive leadership and clients to translate business needs into digital solutions, serving as the primary technical liaison between stakeholders and end users.",
+      "Architecting, developing, and maintaining a clinical portal serving 30+ clinic staff, doctors, and 10+ attorney users, with 40+ feature updates and UI enhancements delivered in the last 3 months alone.",
+      "Design and build staff-facing UIs using HTML, CSS/SASS, and JavaScript, translating complex clinical and legal workflows into intuitive interfaces for non-technical users.",
+      "Manage and optimize a PostgreSQL database with 50+ entities, including adding indexes on consult queries to significantly improve calendar load performance in a HIPAA-sensitive environment.",
+      "Integrated Curogram SMS API for appointment communications, including a targeted fix to batch-send logic that prevented surveys from incorrectly triggering on past appointments.",
+      "Serve as the primary technical liaison to Directors, gathering requirements, proposing multiple solutions, aligning on approach, and delivering implementations on clearly communicated timelines.",
     ],
   },
   {
@@ -184,11 +184,11 @@ export const experiences: Experience[] = [
     end: "Apr 2024",
     location: "Houston, Texas",
     bullets: [
-      "Developed and delivered Mendix solutions across the full project lifecycle — from requirements and architecture through testing and deployment — for a multi-location diagnostic imaging group.",
-      "Designed and maintained four company websites serving patients and referring physicians, using HTML, CSS/SASS, and JavaScript.",
-      "Managed and optimized databases (SQL, PostgreSQL, MySQL), maintaining backup procedures, integrity checks, and query performance.",
-      "Coordinated with third parties to integrate RESTful services into Mendix applications, enabling reliable data exchange between internal systems and external vendors.",
-      "Engaged with the executive team and clients to resolve technical issues and deliver pragmatic solutions, often under urgent clinical timelines.",
+      "Developed and maintained a centralized billing portal across 8 locations, receiving SFTP-transmitted HL7 documents from radiology systems and translating them into structured Mendix data for clinical staff.",
+      "Designed and maintained four company websites serving patients and referring physicians across 8 diagnostic imaging locations.",
+      "Managed a PostgreSQL database with 20+ entities, maintaining data integrity, backup procedures, and query performance across a multi-location imaging operation.",
+      "Integrated the EXA radiology information system via HL7 interface, enabling automated data transmission between external imaging systems and the internal Mendix portal.",
+      "Detected a silent breaking change when EXA updated their HL7 format without notice. Identified missing data through proactive log monitoring, escalated immediately to the supervisor, and coordinated directly with EXA to adapt the integration and restore full data transmission.",
     ],
   },
   {
@@ -199,7 +199,7 @@ export const experiences: Experience[] = [
     end: "Nov 2021",
     location: "Greater Los Angeles Area",
     bullets: [
-      "Built and shipped multiple full-stack projects — including an AI Flappy Bird (Neural Network + Genetic Algorithm built from scratch), a School Library Platform (Django/SQLite), and a Canvas drawing app — demonstrating rapid prototyping across diverse domains.",
+      "Built and shipped multiple full-stack projects including an AI Flappy Bird (Neural Network + Genetic Algorithm built from scratch), a School Library Platform (Django/SQLite), and a Canvas drawing app, demonstrating rapid prototyping across diverse domains.",
       "Applied Reinforcement Learning and Neural Network concepts to train autonomous game agents using Genetic Algorithms, implementing the full learning pipeline from scratch.",
       "Developed and deployed full-stack web applications using Python, Django, HTML/CSS, JavaScript, and AWS, covering the full lifecycle from development to cloud production.",
     ],

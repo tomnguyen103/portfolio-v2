@@ -82,11 +82,13 @@ export default function Hero() {
             </div>
 
             <p className="text-foreground/80 text-lg leading-relaxed max-w-xl mx-auto md:mx-0 mb-8 md:border-l-2 md:border-accent/50 md:pl-4">
-              I specialize in architecting scalable web applications, automated
-              solutions, and next-generation AI agents. CS graduate from Cal
-              State LA with 1,000+ hours of hands-on engineering — from
-              traditional enterprise systems to modern LLM workflows — building
-              maintainable tools that drive real-world business value.
+              Experienced Software Developer with 4+ years building and
+              maintaining production applications for healthcare providers in
+              Houston. A pragmatic problem-solver across the full stack, from
+              clinical interfaces and enterprise platforms to mobile applications
+              and RESTful integrations, always focused on delivering reliable,
+              scalable software while providing clear technical guidance to users
+              and stakeholders.
             </p>
 
             <div className="flex flex-wrap gap-3 justify-center md:justify-start">
