@@ -6,12 +6,14 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { Send } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useInViewTracking } from "@/lib/useInViewTracking";
+import { useLanguage } from "./language-provider";
 
 const inputClass =
   "w-full px-4 py-3 bg-surface border border-foreground/10 rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40 placeholder:text-muted transition";
 
 export default function Contact() {
   const sectionRef = useInViewTracking("contact");
+  const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -52,11 +54,9 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-foreground">
-            Let&apos;s Work Together
+            {t.contact.heading}
           </h2>
-          <p className="text-muted">
-            Have a project in mind? I&apos;d love to hear about it.
-          </p>
+          <p className="text-muted">{t.contact.subheading}</p>
         </motion.div>
 
         <motion.div
@@ -68,11 +68,9 @@ export default function Contact() {
           {submitted ? (
             <div className="text-center py-16 bg-surface rounded-2xl border border-foreground/5">
               <p className="text-xl font-semibold text-accent mb-2">
-                Message sent!
+                {t.contact.form.successTitle}
               </p>
-              <p className="text-muted">
-                Thanks for reaching out. I&apos;ll get back to you soon.
-              </p>
+              <p className="text-muted">{t.contact.form.successBody}</p>
             </div>
           ) : (
             <form
@@ -91,14 +89,14 @@ export default function Contact() {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Name"
+                  placeholder={t.contact.form.namePlaceholder}
                   required
                   className={inputClass}
                 />
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder={t.contact.form.emailPlaceholder}
                   required
                   className={inputClass}
                 />
@@ -106,13 +104,13 @@ export default function Contact() {
               <input
                 type="text"
                 name="subject"
-                placeholder="Subject"
+                placeholder={t.contact.form.subjectPlaceholder}
                 required
                 className={inputClass}
               />
               <textarea
                 name="message"
-                placeholder="Message"
+                placeholder={t.contact.form.messagePlaceholder}
                 required
                 rows={5}
                 className={`${inputClass} resize-none`}
@@ -123,11 +121,11 @@ export default function Contact() {
                 className="w-full py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
-                {loading ? "Sending…" : "Send Message"}
+                {loading ? t.contact.form.submitting : t.contact.form.submit}
               </button>
               {error && (
                 <p className="text-sm text-red-500 text-center">
-                  Something went wrong. Please try again or email me directly.
+                  {t.contact.form.error}
                 </p>
               )}
             </form>
@@ -141,7 +139,7 @@ export default function Contact() {
             >
               tom.nguyen.nht@gmail.com
             </a>
-            <p className="text-sm text-muted mb-4">Or find me on</p>
+            <p className="text-sm text-muted mb-4">{t.contact.orFindMe}</p>
             <div className="flex justify-center gap-4">
               <a
                 href="https://github.com/tomnguyen103"
@@ -169,7 +167,7 @@ export default function Contact() {
       </div>
 
       <div className="mt-12 text-center text-sm text-muted border-t border-foreground/5 pt-8">
-        © Tom Nguyen. All rights reserved.
+        {t.contact.footer}
       </div>
     </section>
   );
