@@ -12,7 +12,7 @@ export const translations = {
     },
     hero: {
       greeting: "Hi. I'm Tom Nguyen.",
-      bio: 'Experienced Software Developer with 4+ years building and maintaining production applications for healthcare providers in Houston. A pragmatic problem-solver across the full stack, from clinical interfaces and enterprise platforms to mobile applications and RESTful integrations, always focused on delivering reliable, scalable software while providing clear technical guidance to users and stakeholders.',
+      bio: 'Full Stack Developer & AI Engineer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value.',
       roles: ['Mendix Developer', 'Software Developer', 'AI Agent Developer', 'Full Stack Developer'],
       cta: { skills: 'My Skills', linkedin: 'LinkedIn', github: 'GitHub' },
     },
@@ -115,7 +115,7 @@ export const translations = {
     },
     hero: {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
-      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack - từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful - luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
+      bio: 'Lập trình viên Full Stack & Kỹ sư AI với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM. Tốt nghiệp Khoa học Máy tính tại Cal State LA, chuyên về kiến trúc web có khả năng mở rộng, giải pháp tự động hóa và AI agent thế hệ mới. Tập trung vào việc cung cấp phần mềm đáng tin cậy và hướng dẫn kỹ thuật rõ ràng tạo ra giá trị thực tế.',
       roles: ['Lập Trình Viên Mendix', 'Lập Trình Viên Phần Mềm', 'Lập Trình Viên AI Agent', 'Lập Trình Viên Full Stack'],
       cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
     },

@@ -145,7 +145,7 @@ portfolio-v2/
   - `"Software Developer"`
   - `"AI Agent Developer"`
   - `"Full Stack Developer"`
-- **Bio**: "I specialize in architecting scalable web applications, automated solutions, and next-generation AI agents. CS graduate from Cal State LA with 1,000+ hours of hands-on engineering — from traditional enterprise systems to modern LLM workflows — building maintainable tools that drive real-world business value."
+- **Bio**: "Full Stack Developer & AI Engineer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value."
 - **CTA buttons**:
   1. "My Skills" → smooth scroll to `#skills`
   2. "LinkedIn" → `https://www.linkedin.com/in/tomnguyen103/` (new tab)
