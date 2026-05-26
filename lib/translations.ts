@@ -65,6 +65,13 @@ export const translations = {
       items: [
         {
           description: [
+            'Dynamic browser-based visualizer for multiple backtracking and constraint solving algorithms',
+            'Generates valid, unique puzzles in real-time with Easy, Medium, and Hard difficulty models',
+            'Animates solving traces, tracking placed values, backtracks, and precise algorithm execution times',
+          ],
+        },
+        {
+          description: [
             'Real-time collaborative system architecture builder with AI assistance',
             'Interactive React Flow diagram editor with live cursors and presence avatars',
             'AI-powered design suggestions and auto-generated technical specs via Gemini',
@@ -166,6 +173,13 @@ export const translations = {
       heading: 'Dự Án',
       subheading: 'Những gì tôi đã xây dựng',
       items: [
+        {
+          description: [
+            'Trình trực quan hóa trên trình duyệt cho nhiều thuật toán quay lui (backtracking) và giải ràng buộc',
+            'Tạo các câu đố Sudoku hợp lệ và duy nhất trong thời gian thực với các mức độ Dễ, Trung bình và Khó',
+            'Trực quan hóa quá trình giải, theo dõi số lượng điền số, số lần quay lui và thời gian chạy thuật toán chính xác',
+          ],
+        },
         {
           description: [
             'Công cụ xây dựng kiến trúc hệ thống cộng tác thời gian thực với hỗ trợ AI',

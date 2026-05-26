@@ -51,7 +51,10 @@ export default function Projects() {
               whileHover={{ boxShadow: "0 20px 40px -10px rgba(14,165,233,0.2)" }}
               className="bg-surface rounded-2xl overflow-hidden border border-foreground/5 flex flex-col md:flex-row"
             >
-              <div className={`relative w-full md:w-3/5 aspect-video md:aspect-auto md:min-h-65 shrink-0${project.imageFit === "contain" ? " bg-[#0d1117]" : ""}`}>
+              <div
+                className="relative w-full md:w-3/5 aspect-video md:aspect-auto md:min-h-65 shrink-0"
+                style={project.imageFit === "contain" ? { backgroundColor: project.imageBg ?? "#0d1117" } : undefined}
+              >
                 <Image
                   src={project.image}
                   alt={project.title}

@@ -104,8 +104,9 @@ portfolio-v2/
 │   │   ├── pic00.jpg       # Profile photo
 │   │   ├── pic01.png       # AI Flappy Bird screenshot
 │   │   ├── pic04.png       # Development Plan Tool screenshot
-│   │   └── pic06.png       # AI Language Learning App screenshot
-│   ├── netlify.html        # Static form stub for Netlify Forms build-time detection
+│   │   ├── pic06.png       # AI Language Learning App screenshot
+│   │   └── sudoku-v2.png   # Sudoku Solver Visualizer screenshot
+│   ├── __forms.html        # Static form stub for Netlify Forms build-time detection
 │   ├── MyResume.pdf        # Legacy resume PDF (kept for reference)
 │   ├── resume.html         # Live HTML resume page (English, linked from nav Resume button)
 │   └── resume-vi.html      # Live HTML resume page (Vietnamese, linked when VI locale active)
@@ -212,6 +213,20 @@ portfolio-v2/
 
 ```ts
 {
+  title: "Sudoku Solver Visualizer",
+  image: "/images/sudoku-v2.png",
+  imageFit: "contain",
+  imageBg: "#ffffff",
+  description: [
+    "Dynamic browser-based visualizer for multiple backtracking and constraint solving algorithms",
+    "Generates valid, unique puzzles in real-time with Easy, Medium, and Hard difficulty models",
+    "Animates solving traces, tracking placed values, backtracks, and precise algorithm execution times",
+  ],
+  tech: ["JavaScript", "HTML/CSS", "PWA", "Service Worker", "Algorithms", "Netlify"],
+  github: "https://github.com/tomnguyen103/Sudoku-Game-v2",
+  demo: "https://sudoku.tomnguyen.me/",
+},
+{
   title: "Development Plan Tool",
   image: "/images/pic04.png",
   imageFit: "contain",
@@ -238,6 +253,8 @@ portfolio-v2/
 {
   title: "AI Flappy Bird",
   image: "/images/pic01.png",
+  imageFit: "contain",
+  imageBg: "#1c8da5",
   description: [
     "Rewrote basic HTML Flappy Bird into an AI-driven version",
     "Applied Reinforcement Learning and Neural Network concepts",

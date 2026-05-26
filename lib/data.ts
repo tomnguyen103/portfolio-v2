@@ -18,6 +18,7 @@ export interface Project {
   title: string;
   image: string;
   imageFit?: "cover" | "contain";
+  imageBg?: string;
   description: string[];
   tech: string[];
   github: string;
@@ -86,6 +87,11 @@ export const tagColor: Record<string, string> = {
   "MVC":                    "bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-500/40",
   "OOP":                    "bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-500/40",
   "CRUD Operations":        "bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-500/40",
+  // Sudoku Visualizer Tech
+  "PWA":                    "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/40",
+  "Service Worker":         "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40",
+  "Algorithms":             "bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/40",
+  "Netlify":                "bg-teal-500/20 text-teal-700 dark:text-teal-300 border-teal-500/40",
 };
 
 export const skillCards: SkillCard[] = [
@@ -123,6 +129,20 @@ export const skillCards: SkillCard[] = [
 
 export const projects: Project[] = [
   {
+    title: "Sudoku Solver Visualizer",
+    image: "/images/sudoku-v2.png",
+    imageFit: "contain",
+    imageBg: "#ffffff",
+    description: [
+      "Dynamic browser-based visualizer for multiple backtracking and constraint solving algorithms",
+      "Generates valid, unique puzzles in real-time with Easy, Medium, and Hard difficulty models",
+      "Animates solving traces, tracking placed values, backtracks, and precise algorithm execution times",
+    ],
+    tech: ["JavaScript", "HTML/CSS", "PWA", "Service Worker", "Algorithms", "Netlify"],
+    github: "https://github.com/tomnguyen103/Sudoku-Game-v2",
+    demo: "https://sudoku.tomnguyen.me/",
+  },
+  {
     title: "Development Plan Tool",
     image: "/images/pic04.png",
     imageFit: "contain",
@@ -149,6 +169,8 @@ export const projects: Project[] = [
   {
     title: "AI Flappy Bird",
     image: "/images/pic01.png",
+    imageFit: "contain",
+    imageBg: "#1c8da5",
     description: [
       "Rewrote basic HTML Flappy Bird into an AI-driven version",
       "Applied Reinforcement Learning and Neural Network concepts",
