@@ -130,7 +130,7 @@ export const translations = {
     hero: {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
       bio: 'Lập trình viên Full Stack & Kỹ sư AI với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM. Tốt nghiệp Khoa học Máy tính tại Cal State LA, chuyên về kiến trúc web có khả năng mở rộng, giải pháp tự động hóa và AI agent thế hệ mới. Tập trung vào việc cung cấp phần mềm đáng tin cậy và hướng dẫn kỹ thuật rõ ràng tạo ra giá trị thực tế.',
-      roles: ['Lập Trình Viên Mendix', 'Lập Trình Viên Phần Mềm', 'Lập Trình Viên AI Agent', 'Lập Trình Viên Full Stack'],
+      roles: ['Kỹ Sư Phần Mềm', 'Kỹ Sư AI Agent', 'Kỹ Sư Mendix', 'Kỹ Sư Full Stack'],
       cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
     },
     skills: {
