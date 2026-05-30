@@ -135,7 +135,7 @@ export const skillCards: SkillCard[] = [
 export const projects: Project[] = [
   {
     title: "AI Financial Platform",
-    image: "/images/financial-platform.png",
+    image: "/images/ai-financial-v2.png",
     imageFit: "contain",
     imageBg: "#0d1117",
     description: [
