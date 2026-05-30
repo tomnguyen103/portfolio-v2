@@ -13,7 +13,7 @@ export const translations = {
     hero: {
       greeting: "Hi. I'm Tom Nguyen.",
       bio: 'Full Stack Developer & AI Engineer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value.',
-      roles: ['Mendix Developer', 'Software Developer', 'AI Agent Developer', 'Full Stack Developer'],
+      roles: ['Software Engineer', 'AI Agent Developer', 'Mendix Engineer','Full Stack Engineer'],
       cta: { skills: 'My Skills', linkedin: 'LinkedIn', github: 'GitHub' },
     },
     skills: {
