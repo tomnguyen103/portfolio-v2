@@ -78,16 +78,29 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-foreground">
-              {t.hero.greeting.split("Tom Nguyen").map((part, i, arr) =>
-                i < arr.length - 1 ? (
-                  <span key={i}>
-                    {part}
-                    <span className="text-accent font-extrabold">Tom Nguyen</span>
-                  </span>
-                ) : (
-                  <span key={i}>{part}</span>
-                )
-              )}
+              {t.hero.greeting.split("Tom Nguyen").map((part, i, arr) => {
+                if (i < arr.length - 1) {
+                  const sentences = part.split(". ");
+                  if (sentences.length > 1) {
+                    return (
+                      <span key={i}>
+                        {sentences[0]}.{" "}
+                        <span className="whitespace-nowrap">
+                          {sentences[1]}
+                          <span className="text-accent font-extrabold">Tom Nguyen</span>
+                        </span>
+                      </span>
+                    );
+                  }
+                  return (
+                    <span key={i} className="whitespace-nowrap">
+                      {part}
+                      <span className="text-accent font-extrabold">Tom Nguyen</span>
+                    </span>
+                  );
+                }
+                return <span key={i}>{part}</span>;
+              })}
             </h1>
 
             <div className="text-xl sm:text-2xl text-muted mb-6 h-9 flex items-center justify-center md:justify-start gap-1">
