@@ -43,6 +43,8 @@ export const tagColor: Record<string, string> = {
   "Neural Network":         "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
   "Reinforcement Learning": "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
   "Genetic Algorithm":      "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
+  "scikit-learn":            "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
+  "RAG Retrieval":           "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
   // Google Gemini — blue
   "Gemini SDK":             "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40",
   "Gemini":                 "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40",
@@ -54,6 +56,7 @@ export const tagColor: Record<string, string> = {
   "HTML5":                  "bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-500/40",
   "HTML/CSS":               "bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-500/40",
   "CSS3":                   "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40",
+  "pandas":                  "bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/40",
   // Frameworks
   "Next.js":                "bg-slate-500/20 text-slate-700 dark:text-slate-200 border-slate-500/40",
   "React Native":           "bg-cyan-400/20 text-cyan-700 dark:text-cyan-300 border-cyan-400/40",
@@ -64,6 +67,7 @@ export const tagColor: Record<string, string> = {
   "Flask":                  "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/40",
   "Spring Framework":       "bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/40",
   "Mendix":                 "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40",
+  "FastAPI":                 "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40",
   // Databases
   "MySQL":                  "bg-sky-600/20 text-sky-700 dark:text-sky-300 border-sky-600/40",
   "MongoDB":                "bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/40",
@@ -76,6 +80,7 @@ export const tagColor: Record<string, string> = {
   "Git/GitHub":             "bg-orange-600/20 text-orange-700 dark:text-orange-300 border-orange-600/40",
   "Postman":                "bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-500/40",
   "VS Code":                "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40",
+  "Docker":                  "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40",
   // Auth & Real-time
   "Clerk":                  "bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-500/40",
   "Liveblocks":             "bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/40",
@@ -128,6 +133,20 @@ export const skillCards: SkillCard[] = [
 ];
 
 export const projects: Project[] = [
+  {
+    title: "AI Financial Platform",
+    image: "/images/financial-platform.png",
+    imageFit: "contain",
+    imageBg: "#0d1117",
+    description: [
+      "End-to-end production-style financial assistant powered by FastAPI and RAG retrieval over Pinecone",
+      "Integrates LLM models with machine learning pipelines built using scikit-learn and pandas",
+      "Demonstrates the complete ML lifecycle, including data pipelines, model serving, evaluation, and deployment",
+    ],
+    tech: ["Python", "FastAPI", "scikit-learn", "pandas", "SQLite", "Docker", "RAG Retrieval"],
+    github: "https://github.com/tomnguyen103/AI_Financial_Platform",
+    demo: "https://financial.tomnguyen.me",
+  },
   {
     title: "Sudoku Solver Visualizer",
     image: "/images/sudoku-v2.png",

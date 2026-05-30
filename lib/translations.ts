@@ -65,6 +65,13 @@ export const translations = {
       items: [
         {
           description: [
+            'End-to-end production-style financial assistant powered by FastAPI and RAG retrieval over Pinecone',
+            'Integrates LLM models with machine learning pipelines built using scikit-learn and pandas',
+            'Demonstrates the complete ML lifecycle, including data pipelines, model serving, evaluation, and deployment',
+          ],
+        },
+        {
+          description: [
             'Dynamic browser-based visualizer for multiple backtracking and constraint solving algorithms',
             'Generates valid, unique puzzles in real-time with Easy, Medium, and Hard difficulty models',
             'Animates solving traces, tracking placed values, backtracks, and precise algorithm execution times',
@@ -173,6 +180,13 @@ export const translations = {
       heading: 'Dự Án',
       subheading: 'Những gì tôi đã xây dựng',
       items: [
+        {
+          description: [
+            'Trợ lý tài chính chuẩn production từ đầu đến cuối được vận hành bởi FastAPI và truy xuất RAG trên Pinecone',
+            'Tích hợp các mô hình LLM với các đường ống (pipeline) học máy được xây dựng bằng scikit-learn và pandas',
+            'Minh họa toàn bộ vòng đời ML, bao gồm các luồng dữ liệu (data pipelines), đóng gói phục vụ mô hình (model serving), đánh giá và triển khai',
+          ],
+        },
         {
           description: [
             'Trình trực quan hóa trên trình duyệt cho nhiều thuật toán quay lui (backtracking) và giải ràng buộc',
