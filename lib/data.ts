@@ -191,9 +191,9 @@ export const projects: Project[] = [
     imageFit: "contain",
     imageBg: "#1c8da5",
     description: [
-      "Rewrote basic HTML Flappy Bird into an AI-driven version",
-      "Applied Reinforcement Learning and Neural Network concepts",
-      "Implemented Genetic Algorithm for agent evolution",
+      "Interactive simulation dashboard of an artificial intelligence learning to play Flappy Bird via neuroevolution",
+      "Features a live neural network visualizer rendering real-time node activations, synapses, and auto-scaling generation fitness charts",
+      "Optimized with modular ES6 classes and high-performance zero-copy breeding to eliminate frame rate spikes during genetic crossovers",
     ],
     tech: ["JavaScript", "HTML/CSS", "Neural Network", "Genetic Algorithm", "Reinforcement Learning"],
     github: "https://github.com/tomnguyen103/AI_Flappy_Bird",

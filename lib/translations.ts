@@ -93,9 +93,9 @@ export const translations = {
         },
         {
           description: [
-            'Rewrote basic HTML Flappy Bird into an AI-driven version',
-            'Applied Reinforcement Learning and Neural Network concepts',
-            'Implemented Genetic Algorithm for agent evolution',
+            'Interactive simulation dashboard of an artificial intelligence learning to play Flappy Bird via neuroevolution',
+            'Features a live neural network visualizer rendering real-time node activations, synapses, and auto-scaling generation fitness charts',
+            'Optimized with modular ES6 classes and high-performance zero-copy breeding to eliminate frame rate spikes during genetic crossovers',
           ],
         },
       ],
@@ -210,9 +210,9 @@ export const translations = {
         },
         {
           description: [
-            'Viết lại Flappy Bird HTML cơ bản thành phiên bản điều khiển bởi AI',
-            'Áp dụng các khái niệm Reinforcement Learning và Neural Network',
-            'Triển khai Genetic Algorithm cho quá trình tiến hóa tác nhân',
+            'Bảng mô phỏng tương tác của một trí tuệ nhân tạo học chơi Flappy Bird thông qua tiến hóa mạng nơ-ron (neuroevolution)',
+            'Tích hợp trình trực quan hóa bộ não hiển thị các nút kích hoạt, khớp thần kinh theo thời gian thực và biểu đồ tiến trình thế hệ',
+            'Tối ưu hóa bằng kiến trúc lớp ES6 và kỹ thuật phối giống sao chép zero-copy nhằm loại bỏ giật khung hình khi tiến hành đột biến di truyền',
           ],
         },
       ],
