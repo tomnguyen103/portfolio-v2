@@ -102,7 +102,7 @@ portfolio-v2/
 ├── public/
 │   ├── images/
 │   │   ├── pic00.jpg       # Profile photo
-│   │   ├── pic01.png       # AI Flappy Bird screenshot
+│   │   ├── ai_flappy_bird_demo.png # AI Flappy Bird screenshot
 │   │   ├── pic04.png       # Development Plan Tool screenshot
 │   │   ├── pic06.png       # AI Language Learning App screenshot
 │   │   └── sudoku-v2.png   # Sudoku Solver Visualizer screenshot
@@ -252,7 +252,7 @@ portfolio-v2/
 },
 {
   title: "AI Flappy Bird",
-  image: "/images/pic01.png",
+  image: "/images/ai_flappy_bird_demo.png",
   imageFit: "contain",
   imageBg: "#1c8da5",
   description: [
@@ -262,7 +262,7 @@ portfolio-v2/
   ],
   tech: ["JavaScript", "HTML/CSS", "Neural Network", "Genetic Algorithm", "Reinforcement Learning"],
   github: "https://github.com/tomnguyen103/AI_Flappy_Bird",
-  demo: "https://youtu.be/uf1wSdsGWUs",
+  demo: "https://bird.tomnguyen.me/",
 },
 ```
 

@@ -187,7 +187,7 @@ export const projects: Project[] = [
   },
   {
     title: "AI Flappy Bird",
-    image: "/images/pic01.png",
+    image: "/images/ai_flappy_bird_demo.png",
     imageFit: "contain",
     imageBg: "#1c8da5",
     description: [
@@ -197,7 +197,7 @@ export const projects: Project[] = [
     ],
     tech: ["JavaScript", "HTML/CSS", "Neural Network", "Genetic Algorithm", "Reinforcement Learning"],
     github: "https://github.com/tomnguyen103/AI_Flappy_Bird",
-    demo: "https://youtu.be/uf1wSdsGWUs",
+    demo: "https://bird.tomnguyen.me/",
   },
 ];
 
