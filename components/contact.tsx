@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { Send } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
@@ -14,6 +14,7 @@ const inputClass =
 export default function Contact() {
   const sectionRef = useInViewTracking("contact");
   const { t } = useLanguage();
+  const reduce = useReducedMotion();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -44,11 +45,11 @@ export default function Contact() {
   }
 
   return (
-    <section ref={sectionRef} id="contact" className="min-h-screen flex flex-col justify-center px-6 py-20">
+    <section ref={sectionRef} id="contact" className="px-6 py-24 md:py-32">
       <div className="max-w-2xl mx-auto w-full">
         <motion.div
           className="text-center mb-8"
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
@@ -60,7 +61,7 @@ export default function Contact() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={reduce ? false : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}

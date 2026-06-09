@@ -24,7 +24,8 @@
 
 /* Expose tokens as Tailwind color utilities */
 @theme inline {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --color-background: var(--bg);
   --color-surface: var(--surface);
   --color-accent: var(--accent);
@@ -41,33 +42,63 @@ html {
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
-/* Animated gradient blobs for hero background */
-@keyframes blob {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
+/* Subtle technical dot-grid field for the hero background (theme-aware, edge-faded) */
+.bg-dot-grid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--fg) 14%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 75% 60% at 50% 35%,
+    #000 35%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 75% 60% at 50% 35%,
+    #000 35%,
+    transparent 78%
+  );
+}
+
+/* Seamless logo marquee — the track is duplicated, so -50% travels exactly one copy */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
   }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
+  to {
+    transform: translateX(-50%);
   }
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
+.animate-marquee {
+  animation: marquee 45s linear infinite;
 }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
+/* Pause the marquee while the user is inspecting it */
+.marquee-mask:hover .animate-marquee {
+  animation-play-state: paused;
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
+/* Fade both edges of the marquee into the background */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
 }
 
 /* Nav semi-transparent background that respects current theme */
@@ -76,4 +107,22 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+/* Respect users who prefer reduced motion: stop loops, collapse transitions.
+   (Framer Motion entrances are additionally gated via useReducedMotion in JS.) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

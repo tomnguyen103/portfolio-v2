@@ -16,10 +16,10 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 |-------|--------|
 | Framework | Next.js 14+ (App Router) |
 | Language | TypeScript |
-| Styling | Tailwind CSS v3 |
+| Styling | Tailwind CSS v4 (CSS-based config via `@theme` in `globals.css`; no `tailwind.config`) |
 | Animations | Framer Motion |
 | Icons | Lucide React (UI icons) + react-icons (brand icons: GitHub, LinkedIn) |
-| Font | Inter via `next/font/google` |
+| Font | Geist (sans) + Geist Mono via `next/font/google` |
 | Contact form | Netlify Forms |
 | Analytics | Google Analytics 4 (GA4) via `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Deployment config | `netlify.toml` in project root |
@@ -53,24 +53,26 @@ Light mode:
 ```
 
 ### Typography
-- Font family: `Inter`, system-ui fallback
-- Base font size: 112.5% (18px) — scales all rem units up
+- Font family: `Geist` (sans), system-ui fallback; `Geist Mono` for tech-tag pills and date ranges (via the `font-mono` utility / `--font-mono` token)
+- Base font size: 112.5% (18px), scales all rem units up
 - Headings: font-bold, tracking-tight
 - Body: font-normal, leading-relaxed
 
 ### Spacing & Shape
 - Card border radius: `rounded-2xl`
 - Pill/tag border radius: `rounded-full`
-- Section padding: `py-20 pb-24` (with bottom space for scroll indicator)
+- Section padding: `py-24 md:py-32` for standard sections; Hero is `min-h-[100dvh]`
+- Tech-tag pills: one neutral style via `tagClass` in `lib/data.ts` (`bg-foreground/[0.04] text-foreground/70 border-foreground/10`) + `font-mono`; sky-blue stays the page's only accent color
 
 ### Animation Rules
-- **Scroll entrance**: Framer Motion `whileInView` fade-up (`y: 40 → 0, opacity: 0 → 1`)
+- **Scroll entrance**: Framer Motion `whileInView` fade-up (`y: 40 → 0, opacity: 0 → 1`), gated by `useReducedMotion`
 - **Stagger**: 0.1s delay between sibling cards
-- **Hero subtitle**: Typing/cycling text effect (type → pause 2s → delete → next role)
-- **Hero background**: Animated sky-blue gradient blobs (CSS `@keyframes blob`)
-- **Card hover**: `whileHover` lift (`y: -6`) + sky-blue box-shadow glow
+- **Hero subtitle**: Typing/cycling text effect (type → pause 2s → delete → next role); shows a static role under reduced motion
+- **Hero background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) - replaces the old animated blobs
+- **Skills marquee**: Auto-scrolling brand-logo strip (`.animate-marquee`, CSS `@keyframes marquee`); pauses on hover, static under reduced motion
+- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`)
 - **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px
-- **Scroll indicator**: Bouncing `ArrowDown` at bottom of Hero, Skills, Experience, and Projects sections
+- **Reduced motion**: global `@media (prefers-reduced-motion: reduce)` block stops loops/transitions; Framer entrances additionally gated via `useReducedMotion` per component
 
 ---
 
@@ -82,20 +84,21 @@ portfolio-v2/
 │   ├── icon.jpg            # Favicon — profile photo (overrides favicon.ico)
 │   ├── layout.tsx          # Root layout: fonts, ThemeProvider, metadata
 │   ├── page.tsx            # Page: composes all section components
-│   └── globals.css         # Tailwind directives + CSS custom properties + blob keyframes
+│   └── globals.css         # Tailwind directives + CSS tokens + dot-grid/marquee + reduced-motion
 ├── components/
 │   ├── nav.tsx             # Fixed nav, scroll behavior, theme/language toggles, mobile menu
-│   ├── hero.tsx            # Full-viewport hero section
-│   ├── skills.tsx          # Skills grid section
+│   ├── hero.tsx            # Full-viewport hero: dot-grid bg, typing roles, tagline, photo
+│   ├── about.tsx           # About strip: full bio (relocated out of the hero)
+│   ├── skills.tsx          # Skills: brand-logo marquee + grouped category lists
 │   ├── experience.tsx      # Work experience timeline section
-│   ├── projects.tsx        # Projects section
+│   ├── projects.tsx        # Projects: featured card + zigzag alternating cards
 │   ├── contact.tsx         # Contact form + social links section
 │   ├── theme-toggle.tsx    # Dark/light icon button
 │   ├── language-toggle.tsx # EN/VI language switcher button
 │   ├── language-provider.tsx # LanguageProvider context + useLanguage hook
 │   └── time-based-theme.tsx # Sets theme on first load based on time of day
 ├── lib/
-│   ├── data.ts             # All static content: skillCards, projects, experiences, tagColor map
+│   ├── data.ts             # All static content: skillCards, projects, experiences, tagClass pill style
 │   ├── translations.ts     # EN/VI translation strings for all sections
 │   ├── analytics.ts        # trackEvent() wrapper around window.gtag
 │   └── useInViewTracking.ts # IntersectionObserver hook — fires section_viewed GA4 event once
@@ -125,46 +128,44 @@ portfolio-v2/
 ### Navigation (`components/nav.tsx`)
 - Fixed to top, full width, z-50
 - Logo/name: "Tom Nguyen" (left side)
-- Nav links (right side): Home · Skills · Experience · Projects · Contact · Resume
-  - All section links use smooth anchor scroll (`href="#section-id"`)
+- Nav links (right side): Home · About · Skills · Experience · Projects · Contact · Resume
+  - All section links use smooth anchor scroll (`href="#section-id"`); About scrolls to `#about`
   - Resume opens `/resume.html` (EN) or `/resume-vi.html` (VI) in a new tab; fires `resume_view` GA4 event
 - Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
-- Mobile: hamburger menu — closes only when a nav link is tapped (not on scroll)
+- Inline nav links show at `md` and up; below `md` they collapse to a hamburger menu - closes only when a nav link is tapped (not on scroll)
 - Language toggle button (EN/VI) — switches locale, persists to localStorage; placed left of theme toggle
 - Theme toggle icon button (rightmost item)
 
 ---
 
 ### Hero (`components/hero.tsx`)
-- `min-h-screen` full viewport, centered content
-- **Background**: Animated sky-blue gradient blobs (3 divs with `animate-blob` + `animation-delay-*`)
-- **Layout**: `flex-col-reverse md:flex-row` — photo right on desktop, stacked (photo top) on mobile
-- **Photo**: `images/pic00.jpg` — circular frame, sky ring/glow (`ring-2 ring-sky-500/40`)
-- **Heading**: `Hi. I'm Tom Nguyen.` — large, bold, name in accent color
-- **Subtitle**: Typing/cycling effect cycling through:
-  - `"Mendix Developer"`
-  - `"Software Developer"`
-  - `"AI Agent Developer"`
-  - `"Full Stack Developer"`
-- **Bio**: "Full Stack Developer & AI Engineer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value."
+- `min-h-[100dvh]` full viewport, centered content
+- **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) - no animated blobs
+- **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
+- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow (no blur glow)
+- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in accent color (name kept on one line)
+- **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
+- **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
 - **CTA buttons**:
   1. "My Skills" → smooth scroll to `#skills`
   2. "LinkedIn" → `https://www.linkedin.com/in/tomnguyen103/` (new tab)
   3. "GitHub" → `https://github.com/tomnguyen103` (new tab)
-- **Scroll indicator**: bouncing `ArrowDown` → `#skills`
+
+---
+
+### About (`components/about.tsx`)
+- Section id: `#about`; reachable via the "About" nav link (smooth anchor scroll, same behavior as the other sections)
+- Sits between Hero and Skills; holds the full bio (`t.hero.bio`) relocated out of the hero
+- Layout: mono uppercase `About` label (`t.hero.aboutLabel`) beside the bio paragraph (`max-w-4xl`); reveal gated by `useReducedMotion`
 
 ---
 
 ### Skills (`components/skills.tsx`)
 - Section id: `#skills`
 - Heading: "Skills" + subheading: "Technologies I work with"
-- 6 cards in a responsive grid: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`
-- Each card (`surface` background, `rounded-2xl`, hover lift + sky glow):
-  - Lucide icon (large, accent color)
-  - Category title (bold)
-  - Skill tags: pill badges (`rounded-full`, color-coded per `tagColor` map in `lib/data.ts`)
-- Scroll-triggered staggered fade-up entrance (Framer Motion `whileInView`)
-- Scroll indicator at bottom → `#projects`
+- **Brand-logo marquee**: auto-scrolling strip of real `react-icons/si` logos + labels (`.animate-marquee`); theme-aware via `currentColor`, pauses on hover, static under reduced motion
+- **Grouped category lists** (below marquee): the 6 `skillCards` rendered as borderless groups (Lucide icon + title with a hairline underline + `tagClass` `font-mono` pills) in a `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`; staggered `whileInView` entrance
+- This borderless grouped style is intentionally distinct from the Projects cards
 
 **Card data** (defined in `lib/data.ts`):
 
@@ -185,7 +186,7 @@ portfolio-v2/
 - Layout: vertical timeline with a sky-blue `0.5px` left border; each entry has a sky-500 dot marker
 - Each entry shows: company + type badge, date-range pill (sky-500 tint), job title, location, bullet list
 - Staggered fade-up entrance (0.1s delay per entry, `whileInView`)
-- Scroll indicator at bottom → `#projects`
+- Date-range pill uses `font-mono`
 - Uses `useInViewTracking("experience")` to fire `section_viewed` GA4 event
 
 **Experience data** (defined in `lib/data.ts` as `experiences: Experience[]`):
@@ -202,12 +203,11 @@ portfolio-v2/
 - Section id: `#projects`
 - Heading: "Projects" + subheading: "Things I've built"
 - Background: `bg-surface/30` to differentiate from Skills section
-- Layout: vertical stack of horizontal cards (`flex-col md:flex-row`)
-  - Image: left side, `w-full md:w-3/5`, `object-cover` (or `object-contain` + dark bg for UI screenshots)
-  - Content: right side with title, bullet list, tech pills, GitHub/Demo buttons
-- Card hover: sky-blue box-shadow glow
-- Scroll-triggered fade-up entrance (staggered by index)
-- Scroll indicator at bottom → `#contact`
+- Layout: first project is a larger **featured** card (`Featured` badge via `t.projects.featured`, `md:w-3/5` image); the rest **zigzag** - image side alternates each row (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile
+  - Image: `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
+  - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
+- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow)
+- Scroll-triggered fade-up entrance gated by `useReducedMotion`
 
 **Project data** (defined in `lib/data.ts`):
 

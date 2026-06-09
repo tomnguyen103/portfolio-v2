@@ -4,6 +4,7 @@ export const translations = {
   en: {
     nav: {
       home: 'Home',
+      about: 'About',
       skills: 'Skills',
       experience: 'Experience',
       projects: 'Projects',
@@ -15,6 +16,9 @@ export const translations = {
       bio: 'Software Engineer & AI Agent Developer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value.',
       roles: ['Software Engineer', 'AI Agent Developer', 'Mendix Engineer','Full Stack Engineer'],
       cta: { skills: 'My Skills', linkedin: 'LinkedIn', github: 'GitHub' },
+      tagline:
+        'I build production software and AI agents - from clinical portals and enterprise platforms to mobile apps and LLM workflows.',
+      aboutLabel: 'About',
     },
     skills: {
       heading: 'Skills',
@@ -62,6 +66,7 @@ export const translations = {
     projects: {
       heading: 'Projects',
       subheading: "Things I've built",
+      featured: 'Featured',
       items: [
         {
           description: [
@@ -121,6 +126,7 @@ export const translations = {
   vi: {
     nav: {
       home: 'Trang Chủ',
+      about: 'Giới Thiệu',
       skills: 'Kỹ Năng',
       experience: 'Kinh Nghiệm',
       projects: 'Dự Án',
@@ -132,6 +138,9 @@ export const translations = {
       bio: 'Kỹ sư Phần mềm & Nhà phát triển AI Agent với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM. Tốt nghiệp Khoa học Máy tính tại Cal State LA, chuyên về kiến trúc web có khả năng mở rộng, giải pháp tự động hóa và AI agent thế hệ mới. Tập trung vào việc cung cấp phần mềm đáng tin cậy và hướng dẫn kỹ thuật rõ ràng tạo ra giá trị thực tế.',
       roles: ['Kỹ Sư Phần Mềm', 'Kỹ Sư AI Agent', 'Kỹ Sư Mendix', 'Kỹ Sư Full Stack'],
       cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
+      tagline:
+        'Tôi xây dựng phần mềm production và AI agent - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM.',
+      aboutLabel: 'Giới Thiệu',
     },
     skills: {
       heading: 'Kỹ Năng',
@@ -179,6 +188,7 @@ export const translations = {
     projects: {
       heading: 'Dự Án',
       subheading: 'Những gì tôi đã xây dựng',
+      featured: 'Nổi Bật',
       items: [
         {
           description: [
