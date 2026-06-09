@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { experiences } from "@/lib/data";
 import { useInViewTracking } from "@/lib/useInViewTracking";
 import { useLanguage } from "./language-provider";
@@ -9,6 +8,7 @@ import { useLanguage } from "./language-provider";
 export default function Experience() {
   const sectionRef = useInViewTracking("experience");
   const { t } = useLanguage();
+  const reduce = useReducedMotion();
 
   const localizedExperiences = experiences.map((exp, i) => ({
     ...exp,
@@ -16,11 +16,11 @@ export default function Experience() {
   }));
 
   return (
-    <section ref={sectionRef} id="experience" className="relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24">
+    <section ref={sectionRef} id="experience" className="px-6 py-24 md:py-32">
       <div className="max-w-3xl mx-auto w-full">
         <motion.h2
           className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
@@ -29,7 +29,7 @@ export default function Experience() {
         </motion.h2>
         <motion.p
           className="text-muted text-center mb-12"
-          initial={{ opacity: 0 }}
+          initial={reduce ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -43,10 +43,10 @@ export default function Experience() {
           {localizedExperiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${exp.start}`}
-              initial={{ opacity: 0, y: 40 }}
+              initial={reduce ? false : { opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: reduce ? 0 : index * 0.1 }}
               className="relative pl-8 mb-10 last:mb-0"
             >
               <span className="absolute left-[-7px] top-1.5 w-3 h-3 rounded-full bg-sky-500 ring-2 ring-sky-500/20" />
@@ -56,7 +56,7 @@ export default function Experience() {
                   {exp.company}{" "}
                   <span className="font-normal text-muted text-sm">· {exp.type}</span>
                 </span>
-                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs bg-sky-500/10 text-sky-500 border border-sky-500/20">
+                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-sky-500/10 text-sky-500 border border-sky-500/20">
                   {exp.start} - {exp.end}
                 </span>
               </div>
@@ -76,17 +76,6 @@ export default function Experience() {
           ))}
         </div>
       </div>
-
-      <motion.a
-        href="#projects"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted hover:text-accent transition-colors cursor-pointer"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}
-        whileHover={{ scale: 1.3 }}
-        aria-label="Scroll to projects"
-      >
-        <ArrowDown className="w-6 h-6" />
-      </motion.a>
     </section>
   );
 }

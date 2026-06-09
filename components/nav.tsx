@@ -22,6 +22,7 @@ export default function Nav() {
 
   const navLinks = [
     { label: t.nav.home, href: "#top" },
+    { label: t.nav.about, href: "#about" },
     { label: t.nav.skills, href: "#skills" },
     { label: t.nav.experience, href: "#experience" },
     { label: t.nav.projects, href: "#projects" },
@@ -46,7 +47,7 @@ export default function Nav() {
 
         <div className="flex items-center gap-2">
           {/* Desktop nav */}
-          <div className="hidden sm:flex items-center gap-0.5">
+          <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -72,7 +73,7 @@ export default function Nav() {
 
           {/* Mobile hamburger */}
           <button
-            className="sm:hidden p-2 rounded-lg hover:bg-surface transition-colors text-muted hover:text-foreground"
+            className="md:hidden p-2 rounded-lg hover:bg-surface transition-colors text-muted hover:text-foreground"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label="Toggle menu"
           >
@@ -83,7 +84,7 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="sm:hidden border-t border-foreground/5 px-6 py-4 flex flex-col gap-1">
+        <div className="md:hidden border-t border-foreground/5 px-6 py-4 flex flex-col gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
