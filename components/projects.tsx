@@ -64,9 +64,7 @@ export default function Projects() {
                 }`}
               >
                 <div
-                  className={`relative w-full overflow-hidden aspect-video md:aspect-auto shrink-0 ${
-                    featured ? "md:w-3/5 md:min-h-80" : "md:w-1/2 md:min-h-64"
-                  }`}
+                  className="relative w-full overflow-hidden aspect-video md:aspect-auto shrink-0 md:w-1/2 md:min-h-64"
                   style={
                     project.imageFit === "contain"
                       ? { backgroundColor: project.imageBg ?? "#0d1117" }

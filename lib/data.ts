@@ -77,6 +77,20 @@ export const skillCards: SkillCard[] = [
 
 export const projects: Project[] = [
   {
+    title: "Second Brain Portfolio Demo",
+    image: "/images/second-brain-portfolio-demo-chat.png",
+    imageFit: "contain",
+    imageBg: "#e8dfd1",
+    description: [
+      "Static, public-safe portfolio preview of a local-first AI workspace with chat, search, sources, briefings, feedback, tasks, and admin surfaces",
+      "Mirrors cited RAG and Agentic RAG flows with deterministic browser-side fixtures, citation markers, retrieval metadata, and read-only actions",
+      "Deploys as a zero-backend-cost Netlify static export separated from private notes, secrets, databases, workers, and MCP runtime code",
+    ],
+    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "TanStack Query", "Framer Motion", "Netlify"],
+    github: "https://github.com/tomnguyen103/second-brain-portfolio-demo",
+    demo: "https://second-brain.tomnguyen.me/",
+  },
+  {
     title: "AI Financial Platform",
     image: "/images/ai-financial-v2.png",
     imageFit: "contain",

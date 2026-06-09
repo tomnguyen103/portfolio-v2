@@ -4,7 +4,7 @@ export const translations = {
   en: {
     nav: {
       home: 'Home',
-      about: 'About',
+      about: 'About Me',
       skills: 'Skills',
       experience: 'Experience',
       projects: 'Projects',
@@ -15,10 +15,10 @@ export const translations = {
       greeting: "Hi. I'm Tom Nguyen.",
       bio: 'Software Engineer & AI Agent Developer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value.',
       roles: ['Software Engineer', 'AI Agent Developer', 'Mendix Engineer','Full Stack Engineer'],
-      cta: { skills: 'My Skills', linkedin: 'LinkedIn', github: 'GitHub' },
+      cta: { about: 'About Me', linkedin: 'LinkedIn', github: 'GitHub' },
       tagline:
         'I build production software and AI agents - from clinical portals and enterprise platforms to mobile apps and LLM workflows.',
-      aboutLabel: 'About',
+      aboutLabel: 'About Me',
     },
     skills: {
       heading: 'Skills',
@@ -68,6 +68,13 @@ export const translations = {
       subheading: "Things I've built",
       featured: 'Featured',
       items: [
+        {
+          description: [
+            'Static, public-safe portfolio preview of a local-first AI workspace with chat, search, sources, briefings, feedback, tasks, and admin surfaces',
+            'Mirrors cited RAG and Agentic RAG flows with deterministic browser-side fixtures, citation markers, retrieval metadata, and read-only actions',
+            'Deploys as a zero-backend-cost Netlify static export separated from private notes, secrets, databases, workers, and MCP runtime code',
+          ],
+        },
         {
           description: [
             'End-to-end production-style financial assistant powered by FastAPI and RAG retrieval over Pinecone',
@@ -126,7 +133,7 @@ export const translations = {
   vi: {
     nav: {
       home: 'Trang Chủ',
-      about: 'Giới Thiệu',
+      about: 'Giới Thiệu Về Tôi',
       skills: 'Kỹ Năng',
       experience: 'Kinh Nghiệm',
       projects: 'Dự Án',
@@ -137,10 +144,10 @@ export const translations = {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
       bio: 'Kỹ sư Phần mềm & Nhà phát triển AI Agent với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM. Tốt nghiệp Khoa học Máy tính tại Cal State LA, chuyên về kiến trúc web có khả năng mở rộng, giải pháp tự động hóa và AI agent thế hệ mới. Tập trung vào việc cung cấp phần mềm đáng tin cậy và hướng dẫn kỹ thuật rõ ràng tạo ra giá trị thực tế.',
       roles: ['Kỹ Sư Phần Mềm', 'Kỹ Sư AI Agent', 'Kỹ Sư Mendix', 'Kỹ Sư Full Stack'],
-      cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
+      cta: { about: 'Giới Thiệu Về Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
       tagline:
         'Tôi xây dựng phần mềm production và AI agent - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM.',
-      aboutLabel: 'Giới Thiệu',
+      aboutLabel: 'Giới Thiệu Về Tôi',
     },
     skills: {
       heading: 'Kỹ Năng',
@@ -190,6 +197,13 @@ export const translations = {
       subheading: 'Những gì tôi đã xây dựng',
       featured: 'Nổi Bật',
       items: [
+        {
+          description: [
+            'Bản xem trước portfolio tĩnh, an toàn cho công chúng của workspace AI local-first với chat, tìm kiếm, nguồn, briefing, phản hồi, tác vụ và bề mặt quản trị',
+            'Mô phỏng luồng RAG có trích dẫn và Agentic RAG bằng dữ liệu fixture chạy trong trình duyệt, citation marker, metadata truy xuất và hành động chỉ đọc',
+            'Triển khai dưới dạng Netlify static export không tốn chi phí backend, tách biệt khỏi ghi chú riêng tư, secrets, database, worker và mã runtime MCP',
+          ],
+        },
         {
           description: [
             'Trợ lý tài chính chuẩn production từ đầu đến cuối được vận hành bởi FastAPI và truy xuất RAG trên Pinecone',

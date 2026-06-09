@@ -137,10 +137,10 @@ export default function Hero() {
               className="flex flex-wrap gap-3 justify-center md:justify-start"
             >
               <a
-                href="#skills"
+                href="#about"
                 className="px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-medium transition-colors"
               >
-                {t.hero.cta.skills}
+                {t.hero.cta.about}
               </a>
               <a
                 href="https://www.linkedin.com/in/tomnguyen103/"
