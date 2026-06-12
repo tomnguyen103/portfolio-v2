@@ -5,6 +5,7 @@ import Skills from "@/components/skills";
 import Experience from "@/components/experience";
 import Projects from "@/components/projects";
 import Contact from "@/components/contact";
+import BackToTop from "@/components/back-to-top";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <Projects />
         <Contact />
       </main>
+      <BackToTop />
     </>
   );
 }

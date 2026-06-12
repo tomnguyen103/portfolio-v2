@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
@@ -16,10 +16,48 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const siteTitle = "Tom Nguyen | Full Stack & AI Developer";
+const siteDescription =
+  "Full Stack Developer & AI Engineer specializing in scalable web applications, AI agent architecture, and LLM workflows. Experienced with Next.js, React Native, Django, Mendix, and Gemini SDK. CS graduate from Cal State LA.";
+
 export const metadata: Metadata = {
-  title: "Tom Nguyen | Full Stack & AI Developer",
-  description:
-    "Full Stack Developer & AI Engineer specializing in scalable web applications, AI agent architecture, and LLM workflows. Experienced with Next.js, React Native, Django, Mendix, and Gemini SDK. CS graduate from Cal State LA.",
+  metadataBase: new URL("https://www.tomnguyen.me"),
+  title: siteTitle,
+  description: siteDescription,
+  keywords: [
+    "Tom Nguyen",
+    "Full Stack Developer",
+    "AI Engineer",
+    "AI Agents",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Portfolio",
+  ],
+  authors: [{ name: "Tom Nguyen", url: "https://www.tomnguyen.me" }],
+  creator: "Tom Nguyen",
+  openGraph: {
+    type: "website",
+    url: "https://www.tomnguyen.me",
+    siteName: "Tom Nguyen",
+    title: siteTitle,
+    description: siteDescription,
+    locale: "en_US",
+    images: [{ url: "/images/pic00.jpg", alt: "Tom Nguyen" }],
+  },
+  twitter: {
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
+    images: ["/images/pic00.jpg"],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0f" },
+  ],
 };
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;

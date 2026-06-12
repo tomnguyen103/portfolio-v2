@@ -1,16 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
 import LanguageToggle from "./language-toggle";
 import { useLanguage } from "./language-provider";
 import { trackEvent } from "@/lib/analytics";
 
+const sectionIds = ["top", "about", "skills", "experience", "projects", "contact"];
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("top");
   const { locale, t } = useLanguage();
+
+  // Page scroll progress, smoothed, drawn as a thin accent bar along the top edge
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 220,
+    damping: 40,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +30,23 @@ export default function Nav() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Highlight the link of the section currently crossing the middle of the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   const navLinks = [
@@ -37,6 +66,11 @@ export default function Nav() {
         scrolled || menuOpen ? "nav-glass" : "bg-transparent"
       }`}
     >
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX: progress }}
+        className="absolute top-0 left-0 right-0 h-0.5 origin-left bg-gradient-to-r from-sky-500 to-cyan-400"
+      />
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="#top"
@@ -52,7 +86,14 @@ export default function Nav() {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-base text-muted hover:text-foreground transition-colors rounded-lg hover:bg-surface"
+                aria-current={
+                  activeSection === link.href.slice(1) ? "true" : undefined
+                }
+                className={`px-3 py-2 text-base transition-colors rounded-lg hover:bg-surface ${
+                  activeSection === link.href.slice(1)
+                    ? "text-accent"
+                    : "text-muted hover:text-foreground"
+                }`}
               >
                 {link.label}
               </a>
@@ -90,7 +131,14 @@ export default function Nav() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="px-3 py-2.5 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-surface"
+              aria-current={
+                activeSection === link.href.slice(1) ? "true" : undefined
+              }
+              className={`px-3 py-2.5 text-sm transition-colors rounded-lg hover:bg-surface ${
+                activeSection === link.href.slice(1)
+                  ? "text-accent"
+                  : "text-muted hover:text-foreground"
+              }`}
             >
               {link.label}
             </a>

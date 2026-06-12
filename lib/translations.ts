@@ -10,15 +10,25 @@ export const translations = {
       projects: 'Projects',
       contact: 'Contact',
       resume: 'Resume',
+      backToTop: 'Back to top',
     },
     hero: {
       greeting: "Hi. I'm Tom Nguyen.",
+      availability: 'Open to new opportunities',
+      scrollHint: 'Scroll',
       bio: 'Software Engineer & AI Agent Developer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value.',
       roles: ['Software Engineer', 'AI Agent Developer', 'Mendix Engineer','Full Stack Engineer'],
       cta: { about: 'About Me', linkedin: 'LinkedIn', github: 'GitHub' },
       tagline:
         'I build production software and AI agents - from clinical portals and enterprise platforms to mobile apps and LLM workflows.',
       aboutLabel: 'About Me',
+    },
+    about: {
+      stats: {
+        years: 'Years Experience',
+        projects: 'Featured Projects',
+        companies: 'Companies',
+      },
     },
     skills: {
       heading: 'Skills',
@@ -139,15 +149,25 @@ export const translations = {
       projects: 'Dự Án',
       contact: 'Liên Hệ',
       resume: 'Hồ Sơ',
+      backToTop: 'Lên đầu trang',
     },
     hero: {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
+      availability: 'Sẵn sàng cho cơ hội mới',
+      scrollHint: 'Cuộn xuống',
       bio: 'Kỹ sư Phần mềm & Nhà phát triển AI Agent với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM. Tốt nghiệp Khoa học Máy tính tại Cal State LA, chuyên về kiến trúc web có khả năng mở rộng, giải pháp tự động hóa và AI agent thế hệ mới. Tập trung vào việc cung cấp phần mềm đáng tin cậy và hướng dẫn kỹ thuật rõ ràng tạo ra giá trị thực tế.',
       roles: ['Kỹ Sư Phần Mềm', 'Kỹ Sư AI Agent', 'Kỹ Sư Mendix', 'Kỹ Sư Full Stack'],
       cta: { about: 'Giới Thiệu Về Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
       tagline:
         'Tôi xây dựng phần mềm production và AI agent - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM.',
       aboutLabel: 'Giới Thiệu Về Tôi',
+    },
+    about: {
+      stats: {
+        years: 'Năm Kinh Nghiệm',
+        projects: 'Dự Án Tiêu Biểu',
+        companies: 'Công Ty',
+      },
     },
     skills: {
       heading: 'Kỹ Năng',

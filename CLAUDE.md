@@ -68,11 +68,23 @@ Light mode:
 - **Scroll entrance**: Framer Motion `whileInView` fade-up (`y: 40 → 0, opacity: 0 → 1`), gated by `useReducedMotion`
 - **Stagger**: 0.1s delay between sibling cards
 - **Hero subtitle**: Typing/cycling text effect (type → pause 2s → delete → next role); shows a static role under reduced motion
-- **Hero background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) - replaces the old animated blobs
+- **Hero background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static accent wash (`.hero-glow`, two faint radial gradients, no animation) - replaces the old animated blobs
+- **Hero avatar ring**: slow-rotating sky conic arc around the portrait (`.avatar-ring`, CSS `@keyframes spin-slow`, 12s loop; freezes under reduced motion)
+- **Hero scroll hint**: mouse-pill indicator at the hero's bottom edge (desktop only) with a bouncing accent dot (`.animate-scroll-dot`); links to `#about`
 - **Skills marquee**: Auto-scrolling brand-logo strip (`.animate-marquee`, CSS `@keyframes marquee`); pauses on hover, static under reduced motion
-- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`)
-- **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px
+- **About stats**: numbers count up from 0 on first scroll-into-view (Framer `animate()` + `useInView`); set instantly under reduced motion
+- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`) + cursor-following accent spotlight (`.card-spotlight`, hover-capable pointers only)
+- **Experience timeline**: line fades out toward the bottom (gradient); the current ("Present") entry's dot has a slow `animate-ping` pulse
+- **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px; thin sky-to-cyan scroll-progress bar along the top edge (Framer `useScroll` + `useSpring`); active section's link highlighted in accent (IntersectionObserver, middle-of-viewport band)
+- **Back to top**: floating button (bottom-right) fades/scales in after 600px scroll (`AnimatePresence`)
 - **Reduced motion**: global `@media (prefers-reduced-motion: reduce)` block stops loops/transitions; Framer entrances additionally gated via `useReducedMotion` per component
+
+### Global UX polish (`globals.css`)
+- `::selection` tinted with the accent color
+- Thin theme-aware scrollbar (`scrollbar-width: thin` + WebKit pseudo-elements)
+- `section[id] { scroll-margin-top: 4.5rem }` so anchored sections stop below the fixed nav
+- `:focus-visible` accent outline for keyboard navigation
+- `.text-gradient-accent`: sky-to-cyan gradient text with theme-aware endpoints (`--grad-from` / `--grad-to`); used on the hero name
 
 ---
 
@@ -93,6 +105,7 @@ portfolio-v2/
 │   ├── experience.tsx      # Work experience timeline section
 │   ├── projects.tsx        # Projects: featured card + zigzag alternating cards
 │   ├── contact.tsx         # Contact form + social links section
+│   ├── back-to-top.tsx     # Floating back-to-top button (appears after 600px scroll)
 │   ├── theme-toggle.tsx    # Dark/light icon button
 │   ├── language-toggle.tsx # EN/VI language switcher button
 │   ├── language-provider.tsx # LanguageProvider context + useLanguage hook
@@ -105,6 +118,8 @@ portfolio-v2/
 ├── public/
 │   ├── images/
 │   │   ├── pic00.jpg       # Profile photo
+│   │   ├── second-brain-portfolio-demo-chat.png # Second Brain Portfolio Demo screenshot
+│   │   ├── ai-financial-v2.png # AI Financial Platform screenshot
 │   │   ├── ai_flappy_bird_demo.png # AI Flappy Bird screenshot
 │   │   ├── pic04.png       # Development Plan Tool screenshot
 │   │   ├── pic06.png       # AI Language Learning App screenshot
@@ -131,6 +146,8 @@ portfolio-v2/
 - Nav links (right side): Home · About · Skills · Experience · Projects · Contact · Resume
   - All section links use smooth anchor scroll (`href="#section-id"`); About scrolls to `#about`
   - Resume opens `/resume.html` (EN) or `/resume-vi.html` (VI) in a new tab; fires `resume_view` GA4 event
+- **Scroll progress bar**: thin sky-to-cyan bar along the nav's top edge, `scaleX` driven by Framer `useScroll` + `useSpring`
+- **Active section highlight**: IntersectionObserver (rootMargin `-45% 0px -50% 0px`) tracks which section crosses mid-viewport; that link renders in accent + `aria-current` (desktop and mobile menus)
 - Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
 - Inline nav links show at `md` and up; below `md` they collapse to a hamburger menu - closes only when a nav link is tapped (not on scroll)
 - Language toggle button (EN/VI) — switches locale, persists to localStorage; placed left of theme toggle
@@ -140,16 +157,18 @@ portfolio-v2/
 
 ### Hero (`components/hero.tsx`)
 - `min-h-[100dvh]` full viewport, centered content
-- **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) - no animated blobs
+- **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static `.hero-glow` accent wash - no animated blobs
 - **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
-- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow (no blur glow)
-- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in accent color (name kept on one line)
+- **Availability badge**: above the heading - mono pill with pulsing emerald status dot, text `t.hero.availability` ("Open to new opportunities")
+- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow + slow-rotating `.avatar-ring` conic accent arc
+- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in sky-to-cyan gradient (`.text-gradient-accent`, name kept on one line)
 - **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
 - **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
 - **CTA buttons**:
-  1. "My Skills" → smooth scroll to `#skills`
+  1. "About Me" → smooth scroll to `#about`
   2. "LinkedIn" → `https://www.linkedin.com/in/tomnguyen103/` (new tab)
   3. "GitHub" → `https://github.com/tomnguyen103` (new tab)
+- **Scroll hint**: centered at the hero's bottom edge (desktop only) - mono "Scroll" label (`t.hero.scrollHint`) + mouse pill with bouncing accent dot, links to `#about`
 
 ---
 
@@ -157,6 +176,7 @@ portfolio-v2/
 - Section id: `#about`; reachable via the "About" nav link (smooth anchor scroll, same behavior as the other sections)
 - Sits between Hero and Skills; holds the full bio (`t.hero.bio`) relocated out of the hero
 - Layout: mono uppercase `About` label (`t.hero.aboutLabel`) beside the bio paragraph (`max-w-4xl`); reveal gated by `useReducedMotion`
+- **Stats row** below the bio (hairline top border): three count-up stats - `4+` Years Experience (static, matches the bio claim), Featured Projects (`projects.length` from `lib/data.ts`), Companies (`experiences.length`); labels from `t.about.stats`; numbers animate 0 → value once in view (instant under reduced motion)
 
 ---
 
@@ -183,7 +203,8 @@ portfolio-v2/
 ### Experience (`components/experience.tsx`)
 - Section id: `#experience`
 - Heading: "Experience" + subheading: "Where I've worked"
-- Layout: vertical timeline with a sky-blue `0.5px` left border; each entry has a sky-500 dot marker
+- Layout: vertical timeline; the left line is a top-to-bottom gradient (`from-sky-500/50 via-sky-500/25 to-transparent`); each entry has a sky-500 dot marker
+- The entry whose `end` is `"Present"` gets a slow `animate-ping` pulse behind its dot
 - Each entry shows: company + type badge, date-range pill (sky-500 tint), job title, location, bullet list
 - Staggered fade-up entrance (0.1s delay per entry, `whileInView`)
 - Date-range pill uses `font-mono`
@@ -204,67 +225,23 @@ portfolio-v2/
 - Heading: "Projects" + subheading: "Things I've built"
 - Background: `bg-surface/30` to differentiate from Skills section
 - Layout: first project is a larger **featured** card (`Featured` badge via `t.projects.featured`, `md:w-3/5` image); the rest **zigzag** - image side alternates each row (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile
-  - Image: `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
+  - Image: `object-cover` (or `object-contain` + `imageBg` for UI screenshots); `sizes="(min-width: 768px) 50vw, 100vw"`; zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
   - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
-- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow)
+- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)
 - Scroll-triggered fade-up entrance gated by `useReducedMotion`
 
-**Project data** (defined in `lib/data.ts`):
+**Project data** (defined in `lib/data.ts`, in display order):
 
-```ts
-{
-  title: "Sudoku Solver Visualizer",
-  image: "/images/sudoku-v2.png",
-  imageFit: "contain",
-  imageBg: "#ffffff",
-  description: [
-    "Dynamic browser-based visualizer for multiple backtracking and constraint solving algorithms",
-    "Generates valid, unique puzzles in real-time with Easy, Medium, and Hard difficulty models",
-    "Animates solving traces, tracking placed values, backtracks, and precise algorithm execution times",
-  ],
-  tech: ["JavaScript", "HTML/CSS", "PWA", "Service Worker", "Algorithms", "Netlify"],
-  github: "https://github.com/tomnguyen103/Sudoku-Game-v2",
-  demo: "https://sudoku.tomnguyen.me/",
-},
-{
-  title: "Development Plan Tool",
-  image: "/images/pic04.png",
-  imageFit: "contain",
-  description: [
-    "Real-time collaborative system architecture builder with AI assistance",
-    "Interactive React Flow diagram editor with live cursors and presence avatars",
-    "AI-powered design suggestions and auto-generated technical specs via Gemini",
-  ],
-  tech: ["Next.js", "TypeScript", "Prisma Postgres", "Liveblocks", "Trigger.dev", "Gemini", "Clerk", "Vercel"],
-  github: "https://github.com/tomnguyen103/Development-Plan-Tool",
-  demo: "https://development-tool.tomnguyen.me/",
-},
-{
-  title: "AI Language Learning App",
-  image: "/images/pic06.png",
-  description: [
-    "AI-powered language learning mobile app — a modern alternative to Duolingo",
-    "Real-time audio calls with an AI teacher, live captioning and pronunciation feedback",
-    "Supports 4 languages with 12 structured lessons and daily XP streak tracking",
-  ],
-  tech: ["React Native", "Expo", "TypeScript", "Stream Video SDK", "Clerk", "NativeWind", "Zustand"],
-  github: "https://github.com/tomnguyen103/MyFirstMobileApp",
-},
-{
-  title: "AI Flappy Bird",
-  image: "/images/ai_flappy_bird_demo.png",
-  imageFit: "contain",
-  imageBg: "#1c8da5",
-  description: [
-    "Rewrote basic HTML Flappy Bird into an AI-driven version",
-    "Applied Reinforcement Learning and Neural Network concepts",
-    "Implemented Genetic Algorithm for agent evolution",
-  ],
-  tech: ["JavaScript", "HTML/CSS", "Neural Network", "Genetic Algorithm", "Reinforcement Learning"],
-  github: "https://github.com/tomnguyen103/AI_Flappy_Bird",
-  demo: "https://bird.tomnguyen.me/",
-},
-```
+| Title | Image | GitHub repo | Demo |
+|---|---|---|---|
+| Second Brain Portfolio Demo (featured) | `second-brain-portfolio-demo-chat.png` | `second-brain-portfolio-demo` | `https://second-brain.tomnguyen.me/` |
+| AI Financial Platform | `ai-financial-v2.png` | `AI_Financial_Platform` | `https://financial.tomnguyen.me` |
+| Sudoku Solver Visualizer | `sudoku-v2.png` | `Sudoku-Game-v2` | `https://sudoku.tomnguyen.me/` |
+| Development Plan Tool | `pic04.png` | `Development-Plan-Tool` | `https://development-tool.tomnguyen.me/` |
+| AI Language Learning App | `pic06.png` | `MyFirstMobileApp` | - |
+| AI Flappy Bird | `ai_flappy_bird_demo.png` | `AI_Flappy_Bird` | `https://bird.tomnguyen.me/` |
+
+Descriptions and tech stacks live in `lib/data.ts` (EN) and `lib/translations.ts` (`projects.items`, EN + VI) - keep both in sync when editing.
 
 ---
 
@@ -282,7 +259,9 @@ portfolio-v2/
 - **Social links** below form: GitHub + LinkedIn icon buttons
 - **Footer**: `© Tom Nguyen. All rights reserved.`
 
-**Netlify Forms note**: `public/netlify.html` contains a static HTML stub of the form so Netlify's build bot can detect it at build time (required for Next.js App Router — the dynamic render is not scanned).
+**Netlify Forms note**: `public/__forms.html` contains a static HTML stub of the form so Netlify's build bot can detect it at build time (required for Next.js App Router - the dynamic render is not scanned). The client submits to `/__forms.html`.
+
+A floating **back-to-top** button (`components/back-to-top.tsx`) renders site-wide from `app/page.tsx`: fixed bottom-right, appears after 600px of scroll, smooth-scrolls to `#top`; aria-label from `t.nav.backToTop`.
 
 ---
 
@@ -314,6 +293,8 @@ GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractiv
 title: "Tom Nguyen | Full Stack & AI Developer"
 description: "Full Stack Developer & AI Engineer specializing in scalable web applications, AI agent architecture, and LLM workflows. Experienced with Next.js, React Native, Django, Mendix, and Gemini SDK. CS graduate from Cal State LA."
 ```
+
+Also set: `metadataBase` (`https://www.tomnguyen.me`), `keywords`, `authors`/`creator`, full `openGraph` (type website, siteName, locale `en_US`, image `/images/pic00.jpg`) and `twitter` (`summary` card) blocks, plus a `viewport` export with light/dark `themeColor` (`#ffffff` / `#0a0a0f`).
 
 Favicon: `app/icon.jpg` (profile photo — App Router file-based icon convention, overrides any favicon.ico)
 
