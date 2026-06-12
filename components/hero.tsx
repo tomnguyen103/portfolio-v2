@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { trackEvent } from "@/lib/analytics";
-import { useTilt } from "@/lib/useTilt";
 import { useLanguage } from "./language-provider";
 
 function useTypingEffect(roles: readonly string[], enabled: boolean) {
@@ -58,7 +57,6 @@ export default function Hero() {
   const { t } = useLanguage();
   const reduce = useReducedMotion();
   const typedText = useTypingEffect(t.hero.roles, !reduce);
-  const tilt = useTilt(8);
 
   const container: Variants = {
     hidden: {},
@@ -190,16 +188,7 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.div
-              className="relative w-56 h-56 sm:w-64 sm:h-64"
-              style={{
-                rotateX: tilt.rotateX,
-                rotateY: tilt.rotateY,
-                transformPerspective: 700,
-              }}
-              onMouseMove={tilt.onMouseMove}
-              onMouseLeave={tilt.onMouseLeave}
-            >
+            <div className="relative w-56 h-56 sm:w-64 sm:h-64">
               <div
                 aria-hidden="true"
                 className="avatar-ring absolute -inset-3 rounded-full"
@@ -212,7 +201,7 @@ export default function Hero() {
                 className="rounded-full object-cover w-full h-full ring-2 ring-sky-500/30 shadow-2xl shadow-sky-950/20"
                 priority
               />
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
