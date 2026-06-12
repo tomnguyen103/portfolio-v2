@@ -73,7 +73,8 @@ Light mode:
 - **Hero scroll hint**: mouse-pill indicator at the hero's bottom edge (desktop only) with a bouncing accent dot (`.animate-scroll-dot`); links to `#about`
 - **Skills marquee**: Auto-scrolling brand-logo strip (`.animate-marquee`, CSS `@keyframes marquee`); pauses on hover, static under reduced motion
 - **About stats**: numbers count up from 0 on first scroll-into-view (Framer `animate()` + `useInView`); set instantly under reduced motion
-- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`) + cursor-following accent spotlight (`.card-spotlight`, hover-capable pointers only)
+- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`) + cursor-following accent spotlight (`.card-spotlight`, hover-capable pointers only) + cursor-following 3D tilt (`useTilt(3.5)`, spring-smoothed `rotateX`/`rotateY` with `transformPerspective: 1100`)
+- **3D tilt**: shared `lib/useTilt.ts` hook (Framer Motion springs, no WebGL/three.js) - project cards (3.5deg max) and hero photo (8deg max, perspective 700); springs stay at 0 under reduced motion; inert on touch devices (no mousemove)
 - **Experience timeline**: line fades out toward the bottom (gradient); the current ("Present") entry's dot has a slow `animate-ping` pulse
 - **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px; thin sky-to-cyan scroll-progress bar along the top edge (Framer `useScroll` + `useSpring`); active section's link highlighted in accent (IntersectionObserver, middle-of-viewport band)
 - **Back to top**: floating button (bottom-right) fades/scales in after 600px scroll (`AnimatePresence`)
@@ -114,6 +115,7 @@ portfolio-v2/
 │   ├── data.ts             # All static content: skillCards, projects, experiences, tagClass pill style
 │   ├── translations.ts     # EN/VI translation strings for all sections
 │   ├── analytics.ts        # trackEvent() wrapper around window.gtag
+│   ├── useTilt.ts          # Cursor-following 3D tilt hook (Framer Motion springs)
 │   └── useInViewTracking.ts # IntersectionObserver hook — fires section_viewed GA4 event once
 ├── public/
 │   ├── images/
@@ -160,7 +162,7 @@ portfolio-v2/
 - **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static `.hero-glow` accent wash - no animated blobs
 - **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
 - **Availability badge**: above the heading - mono pill with pulsing emerald status dot, text `t.hero.availability` ("Open to new opportunities")
-- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow + slow-rotating `.avatar-ring` conic accent arc
+- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow + slow-rotating `.avatar-ring` conic accent arc + cursor-following 3D tilt (`useTilt(8)`)
 - **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in sky-to-cyan gradient (`.text-gradient-accent`, name kept on one line)
 - **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
 - **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
@@ -227,7 +229,8 @@ portfolio-v2/
 - Layout: first project is a larger **featured** card (`Featured` badge via `t.projects.featured`, `md:w-3/5` image); the rest **zigzag** - image side alternates each row (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile
   - Image: `object-cover` (or `object-contain` + `imageBg` for UI screenshots); `sizes="(min-width: 768px) 50vw, 100vw"`; zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
   - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
-- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)
+- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only) + 3D tilt via `useTilt(3.5)`
+- Each card is a `ProjectCard` subcomponent (same file) so every card owns its own tilt hook instance
 - Scroll-triggered fade-up entrance gated by `useReducedMotion`
 
 **Project data** (defined in `lib/data.ts`, in display order):
