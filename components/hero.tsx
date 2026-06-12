@@ -78,6 +78,8 @@ export default function Hero() {
     >
       {/* Subtle technical dot-grid field (replaces the old animated blobs) */}
       <div className="bg-dot-grid absolute inset-0 -z-10" />
+      {/* Static accent wash for depth under the dot grid */}
+      <div className="hero-glow absolute inset-0 -z-10" />
 
       <div className="max-w-6xl mx-auto px-6 py-20 w-full">
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
@@ -88,6 +90,22 @@ export default function Hero() {
             initial={reduce ? false : "hidden"}
             animate="show"
           >
+            <motion.div
+              variants={item}
+              className="mb-5 flex justify-center md:justify-start"
+            >
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-foreground/10 bg-surface/60 backdrop-blur text-xs font-mono text-foreground/70">
+                <span className="relative flex h-2 w-2">
+                  <span
+                    className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"
+                    style={{ animationDuration: "2s" }}
+                  />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                {t.hero.availability}
+              </span>
+            </motion.div>
+
             <motion.h1
               variants={item}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-foreground"
@@ -101,7 +119,7 @@ export default function Hero() {
                         {sentences[0]}.{" "}
                         <span className="whitespace-nowrap">
                           {sentences[1]}
-                          <span className="text-accent font-extrabold">Tom Nguyen</span>
+                          <span className="text-gradient-accent font-extrabold">Tom Nguyen</span>
                         </span>
                       </span>
                     );
@@ -109,7 +127,7 @@ export default function Hero() {
                   return (
                     <span key={i} className="whitespace-nowrap">
                       {part}
-                      <span className="text-accent font-extrabold">Tom Nguyen</span>
+                      <span className="text-gradient-accent font-extrabold">Tom Nguyen</span>
                     </span>
                   );
                 }
@@ -171,6 +189,10 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative w-56 h-56 sm:w-64 sm:h-64">
+              <div
+                aria-hidden="true"
+                className="avatar-ring absolute -inset-3 rounded-full"
+              />
               <Image
                 src="/images/pic00.jpg"
                 alt="Tom Nguyen"
@@ -183,6 +205,23 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll-down hint (desktop only, fades in after the entrance) */}
+      <motion.a
+        href="#about"
+        aria-label={t.hero.scrollHint}
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors"
+        initial={reduce ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <span className="text-[10px] font-mono uppercase tracking-[0.25em]">
+          {t.hero.scrollHint}
+        </span>
+        <span className="flex h-9 w-5.5 items-start justify-center rounded-full border border-foreground/20 p-1.5">
+          <span className="animate-scroll-dot h-1.5 w-1 rounded-full bg-accent" />
+        </span>
+      </motion.a>
     </section>
   );
 }

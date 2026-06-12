@@ -11,6 +11,8 @@
   --accent-hover: #0284c7;
   --fg: #0f172a;
   --muted: #64748b;
+  --grad-from: #0284c7; /* sky-600 */
+  --grad-to: #0891b2; /* cyan-600 */
 }
 
 .dark {
@@ -20,6 +22,8 @@
   --accent-hover: #0284c7;
   --fg: #f9fafb;
   --muted: #6b7280;
+  --grad-from: #38bdf8; /* sky-400 */
+  --grad-to: #22d3ee; /* cyan-400 */
 }
 
 /* Expose tokens as Tailwind color utilities */
@@ -37,12 +41,54 @@
 html {
   scroll-behavior: smooth;
   font-size: 112.5%; /* 18px base — scales all rem units up from 16px default */
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--fg) 22%, transparent) transparent;
 }
 
 body {
   background-color: var(--bg);
   color: var(--fg);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Anchored sections stop just below the fixed nav instead of sliding under it */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+/* Text selection in the page accent */
+::selection {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* Thin, theme-aware scrollbar (WebKit; Firefox/Chromium use the html rules above) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--fg) 18%, transparent);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--fg) 32%, transparent);
+}
+
+/* Visible keyboard focus everywhere, in the accent color */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Sky-to-cyan gradient text (theme-aware endpoints) - used on the hero name */
+.text-gradient-accent {
+  background-image: linear-gradient(90deg, var(--grad-from), var(--grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Subtle technical dot-grid field for the hero background (theme-aware, edge-faded) */
@@ -62,6 +108,96 @@ body {
     #000 35%,
     transparent 78%
   );
+}
+
+/* Static accent wash behind the hero - no animation, just depth under the dot grid */
+.hero-glow {
+  background:
+    radial-gradient(
+      36rem circle at 18% 28%,
+      color-mix(in srgb, var(--accent) 9%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      38rem circle at 84% 72%,
+      color-mix(in srgb, var(--grad-to) 7%, transparent),
+      transparent 70%
+    );
+}
+
+/* Slow-rotating accent arc around the hero portrait (freezes under reduced motion) */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.avatar-ring {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--accent) 85%, transparent) 55deg,
+    transparent 120deg
+  );
+  -webkit-mask-image: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    #000 calc(100% - 2px)
+  );
+  mask-image: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    #000 calc(100% - 2px)
+  );
+  animation: spin-slow 12s linear infinite;
+}
+
+/* Bouncing dot inside the hero scroll-down indicator */
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(0.6rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 2s ease-in-out infinite;
+}
+
+/* Cursor-following spotlight on project cards (hover-capable pointers only).
+   --spot-x/--spot-y are set from a mousemove handler on the card. */
+.card-spotlight {
+  position: relative;
+}
+
+.card-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    30rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--accent) 10%, transparent),
+    transparent 65%
+  );
+}
+
+@media (hover: hover) {
+  .card-spotlight:hover::after {
+    opacity: 1;
+  }
 }
 
 /* Seamless logo marquee — the track is duplicated, so -50% travels exactly one copy */

@@ -38,7 +38,7 @@ export default function Experience() {
         </motion.p>
 
         <div className="relative ml-1.5">
-          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-sky-500/30" />
+          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-gradient-to-b from-sky-500/50 via-sky-500/25 to-transparent" />
 
           {localizedExperiences.map((exp, index) => (
             <motion.div
@@ -49,7 +49,15 @@ export default function Experience() {
               transition={{ duration: 0.5, delay: reduce ? 0 : index * 0.1 }}
               className="relative pl-8 mb-10 last:mb-0"
             >
-              <span className="absolute left-[-7px] top-1.5 w-3 h-3 rounded-full bg-sky-500 ring-2 ring-sky-500/20" />
+              <span className="absolute left-[-7px] top-1.5 flex w-3 h-3">
+                {exp.end === "Present" && (
+                  <span
+                    className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-60 animate-ping"
+                    style={{ animationDuration: "2.5s" }}
+                  />
+                )}
+                <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500 ring-2 ring-sky-500/20" />
+              </span>
 
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
                 <span className="font-semibold text-foreground">

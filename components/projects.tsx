@@ -59,7 +59,13 @@ export default function Projects() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
                 whileHover={{ y: -4 }}
-                className={`group bg-surface rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/40 transition-colors flex flex-col ${
+                onMouseMove={(e) => {
+                  // Feed the cursor position to the .card-spotlight glow
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+                  e.currentTarget.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+                }}
+                className={`group card-spotlight bg-surface rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/40 transition-colors flex flex-col ${
                   reverse ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
               >
@@ -75,6 +81,7 @@ export default function Projects() {
                     src={project.image}
                     alt={project.title}
                     fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
                     className={`transition-transform duration-500 group-hover:scale-[1.04] ${
                       project.imageFit === "contain"
                         ? "object-contain p-4"
