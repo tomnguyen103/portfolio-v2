@@ -74,6 +74,7 @@ Light mode:
 - **Skills marquee**: Auto-scrolling brand-logo strip (`.animate-marquee`, CSS `@keyframes marquee`); pauses on hover, static under reduced motion
 - **About stats**: numbers count up from 0 on first scroll-into-view (Framer `animate()` + `useInView`); set instantly under reduced motion
 - **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`) + cursor-following accent spotlight (`.card-spotlight`, hover-capable pointers only)
+- **Projects tab switch**: sliding `layoutId` sky pill on the segmented control + direction-aware `AnimatePresence mode="wait"` panel slide (see Projects section spec); instant opacity swap under reduced motion
 - **Experience timeline**: line fades out toward the bottom (gradient); the current ("Present") entry's dot has a slow `animate-ping` pulse
 - **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px; thin sky-to-cyan scroll-progress bar along the top edge (Framer `useScroll` + `useSpring`); active section's link highlighted in accent (IntersectionObserver, middle-of-viewport band)
 - **Back to top**: floating button (bottom-right) fades/scales in after 600px scroll (`AnimatePresence`)
@@ -103,7 +104,7 @@ portfolio-v2/
 │   ├── about.tsx           # About strip: full bio (relocated out of the hero)
 │   ├── skills.tsx          # Skills: brand-logo marquee + grouped category lists
 │   ├── experience.tsx      # Work experience timeline section
-│   ├── projects.tsx        # Projects: featured card + zigzag alternating cards
+│   ├── projects.tsx        # Projects: tabbed pages (3/tab, newest-first) + featured card + zigzag cards
 │   ├── contact.tsx         # Contact form + social links section
 │   ├── back-to-top.tsx     # Floating back-to-top button (appears after 600px scroll)
 │   ├── theme-toggle.tsx    # Dark/light icon button
@@ -224,24 +225,30 @@ portfolio-v2/
 - Section id: `#projects`
 - Heading: "Projects" + subheading: "Things I've built"
 - Background: `bg-surface/30` to differentiate from Skills section
-- Layout: first project is a larger **featured** card (`Featured` badge via `t.projects.featured`, `md:w-3/5` image); the rest **zigzag** - image side alternates each row (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile
-  - Image: `object-cover` (or `object-contain` + `imageBg` for UI screenshots); `sizes="(min-width: 768px) 50vw, 100vw"`; zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
+- **Tab pagination**: projects are kept newest-first in `lib/data.ts` and chunked into pages of 3 (`TAB_SIZE = 3`); a centered segmented tab control sits between the subheading and the cards
+  - Tab labels come from `t.projects.tabs` ("Latest" / "Earlier", VI: "Mới Nhất" / "Cũ Hơn"); extra pages beyond the label list fall back to zero-padded numbers ("03", "04", ...)
+  - Control style: `rounded-full` container (`bg-surface` + `border-foreground/10` + `p-1`); tab buttons are `font-mono` uppercase `text-xs tracking-wider`; the active tab is a solid sky pill (`bg-accent` + white text) that slides between tabs via Framer Motion `layoutId="projects-tab-pill"` (spring 400/32, duration 0 under reduced motion); inactive tabs are `text-muted hover:text-foreground`
+  - Accessibility: full WAI-ARIA tabs pattern - `role="tablist"/"tab"/"tabpanel"`, `aria-selected`, `aria-controls`/`aria-labelledby`, roving `tabIndex`, ArrowLeft/ArrowRight/Home/End keyboard navigation
+  - Tab switch fires `project_tab_click` GA4 event with `{ tab_label }`
+- **Tab-switch animation**: `AnimatePresence mode="wait"` swaps the page panel with a direction-aware horizontal slide - forward exits to x:-56 / enters from x:+56, backward mirrored (direction stored alongside the tab index in one state tuple); enter 0.4s `[0.16, 1, 0.3, 1]`, exit 0.22s; reduced motion collapses to an instant opacity swap
+- Layout per tab: on the first tab the first project is a larger **featured** card (`Featured` badge via `t.projects.featured`); the remaining cards **zigzag** - image side alternates each row within the tab (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile; later tabs are all zigzag (no featured card)
+  - Image: `next/image` with `fill` + `sizes="(min-width: 768px) 50vw, 100vw"` (container is full-width on mobile, `md:w-1/2` on desktop); `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
   - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
 - Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)
-- Scroll-triggered fade-up entrance gated by `useReducedMotion`
+- Scroll-triggered fade-up entrance gated by `useReducedMotion`, staggered 0.1s per card; cards re-run the stagger when their tab mounts
 
-**Project data** (defined in `lib/data.ts`, in display order):
+**Project data** (defined in `lib/data.ts` as `projects: Project[]`, ordered newest-first - this order drives the tab pages):
 
-| Title | Image | GitHub repo | Demo |
-|---|---|---|---|
-| Second Brain Portfolio Demo (featured) | `second-brain-portfolio-demo-chat.png` | `second-brain-portfolio-demo` | `https://second-brain.tomnguyen.me/` |
-| AI Financial Platform | `ai-financial-v2.png` | `AI_Financial_Platform` | `https://financial.tomnguyen.me` |
-| Sudoku Solver Visualizer | `sudoku-v2.png` | `Sudoku-Game-v2` | `https://sudoku.tomnguyen.me/` |
-| Development Plan Tool | `pic04.png` | `Development-Plan-Tool` | `https://development-tool.tomnguyen.me/` |
-| AI Language Learning App | `pic06.png` | `MyFirstMobileApp` | - |
-| AI Flappy Bird | `ai_flappy_bird_demo.png` | `AI_Flappy_Bird` | `https://bird.tomnguyen.me/` |
+| # | Tab | Title | Image | Tech | Links |
+|---|---|---|---|---|---|
+| 1 | Latest (featured) | Second Brain Portfolio Demo | `second-brain-portfolio-demo-chat.png` (contain, `#e8dfd1`) | Next.js 16, React 19, TypeScript, Tailwind CSS, TanStack Query, Framer Motion, Netlify | GitHub + demo (second-brain.tomnguyen.me) |
+| 2 | Latest | AI Financial Platform | `ai-financial-v2.png` (contain, `#0d1117`) | Python, FastAPI, scikit-learn, pandas, SQLite, Docker, RAG Retrieval | GitHub + demo (financial.tomnguyen.me) |
+| 3 | Latest | Sudoku Solver Visualizer | `sudoku-v2.png` (contain, `#ffffff`) | JavaScript, HTML/CSS, PWA, Service Worker, Algorithms, Netlify | GitHub + demo (sudoku.tomnguyen.me) |
+| 4 | Earlier | Development Plan Tool | `pic04.png` (contain) | Next.js, TypeScript, Prisma Postgres, Liveblocks, Trigger.dev, Gemini, Clerk, Vercel | GitHub + demo (development-tool.tomnguyen.me) |
+| 5 | Earlier | AI Language Learning App | `pic06.png` (cover) | React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand | GitHub |
+| 6 | Earlier | AI Flappy Bird | `ai_flappy_bird_demo.png` (contain, `#1c8da5`) | JavaScript, HTML/CSS, Neural Network, Genetic Algorithm, Reinforcement Learning | GitHub + demo (bird.tomnguyen.me) |
 
-Descriptions and tech stacks live in `lib/data.ts` (EN) and `lib/translations.ts` (`projects.items`, EN + VI) - keep both in sync when editing.
+Full descriptions live in `lib/data.ts` (EN) and `lib/translations.ts` (`projects.items`, EN/VI, indexed in the same order as the data array) - keep both in sync when editing.
 
 ---
 
@@ -282,6 +289,7 @@ GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractiv
 | `linkedin_click` | Hero CTA, Contact social links | `{ location }` |
 | `github_click` | Hero CTA, Projects cards, Contact social links | `{ location }` |
 | `project_demo_click` | Projects — Demo button | `{ project_title }` |
+| `project_tab_click` | Projects — tab control (Latest/Earlier) | `{ tab_label }` |
 | `email_click` | Contact — mailto link | — |
 | `contact_form_submit` | Contact — form submit | — |
 
