@@ -78,10 +78,9 @@ export default function Experience() {
               <ul className="space-y-3">
                 {exp.bullets.map((bullet, bi) => (
                   <li key={bi} className="flex gap-3 text-[0.95rem] leading-relaxed text-muted">
-                    <span
-                      aria-hidden="true"
-                      className="mt-2.5 h-px w-3.5 shrink-0 bg-accent/60"
-                    />
+                    <span aria-hidden="true" className="shrink-0 select-none text-accent/70">
+                      -
+                    </span>
                     <span>{bullet}</span>
                   </li>
                 ))}

@@ -84,7 +84,7 @@ function Bullets({ items, className }: { items: string[]; className?: string }) 
     <ul className={`space-y-2.5 ${className ?? ""}`}>
       {items.map((desc, di) => (
         <li key={di} className="flex gap-3 text-[0.95rem] leading-relaxed text-muted">
-          <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-accent/60" />
+          <span aria-hidden="true" className="shrink-0 select-none text-accent/70">-</span>
           <span>{desc}</span>
         </li>
       ))}
