@@ -18,13 +18,13 @@ export default function ThemeToggle() {
         try { localStorage.setItem("theme-user-set", "true"); } catch {}
         setTheme(theme === "dark" ? "light" : "dark");
       }}
-      className="p-2 rounded-lg hover:bg-surface transition-colors cursor-pointer"
+      className="cursor-pointer rounded-full p-2 text-muted transition-colors hover:bg-foreground/5 hover:text-foreground"
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (
-        <Sun className="w-5 h-5 text-muted hover:text-foreground transition-colors" />
+        <Sun className="h-5 w-5" strokeWidth={1.5} />
       ) : (
-        <Moon className="w-5 h-5 text-muted hover:text-foreground transition-colors" />
+        <Moon className="h-5 w-5" strokeWidth={1.5} />
       )}
     </button>
   );

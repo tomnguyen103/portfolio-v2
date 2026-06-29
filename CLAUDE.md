@@ -19,7 +19,7 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 | Styling | Tailwind CSS v4 (CSS-based config via `@theme` in `globals.css`; no `tailwind.config`) |
 | Animations | Framer Motion |
 | Icons | Lucide React (UI icons) + react-icons (brand icons: GitHub, LinkedIn) |
-| Font | Geist (sans) + Geist Mono via `next/font/google` |
+| Font | Bricolage Grotesque (display) + Geist (sans) + Geist Mono via `next/font/google` |
 | Contact form | Netlify Forms |
 | Analytics | Google Analytics 4 (GA4) via `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Deployment config | `netlify.toml` in project root |
@@ -32,60 +32,75 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 - **Default**: Time-based — light (6 am–6 pm) / dark (6 pm–6 am), set by `TimeBasedTheme` component on first load
 - **Override**: Dark/light toggle in the nav bar; once the user picks a theme it is persisted via `localStorage` (`theme-user-set` flag) and `next-themes`, overriding time-based logic on future visits
 
-### Color Palette
+### Color Palette - "Obsidian & Ember"
+
+One accent only (warm ember/bronze). No blue, no purple, no gradient headings. Raw tokens live in `app/globals.css`, switched on the `.dark` class and exposed to Tailwind via `@theme inline`.
 
 ```
-Dark mode:
-  background:  #0a0a0f
-  surface:     #111827
-  accent:      #0ea5e9  (sky-500)
-  accent-hover:#0284c7  (sky-600)
-  text:        #f9fafb
-  muted:       #6b7280
+Dark mode (primary impression):
+  background:   #0b0b0d   (warm obsidian, never pure black)
+  surface:      #141418
+  surface-2:    #1c1c22   (inputs / highest elevation)
+  foreground:   #f4f1ea   (warm bone)
+  muted:        #918c82
+  accent:       #e2a75a   (ember / honey-gold - the ONLY accent)
+  accent-hover: #eebb78
+  on-accent:    #16120c   (dark text on an amber fill)
+  hairline:     rgba(244,241,234,0.10)
 
 Light mode:
-  background:  #ffffff
-  surface:     #f8fafc
-  accent:      #0ea5e9
-  accent-hover:#0284c7
-  text:        #0f172a
-  muted:       #64748b
+  background:   #f3f1ec   (warm paper, not a saturated cream)
+  surface:      #fbfaf7
+  surface-2:    #ffffff
+  foreground:   #1a1714   (warm ink)
+  muted:        #6c675d
+  accent:       #9a5d16   (deep bronze - AA for text/links on paper)
+  accent-hover: #7d4a0d
+  on-accent:    #f7f3ea
+  hairline:     rgba(26,23,20,0.12)
 ```
 
 ### Typography
-- Font family: `Geist` (sans), system-ui fallback; `Geist Mono` for tech-tag pills and date ranges (via the `font-mono` utility / `--font-mono` token)
+- **Display**: `Bricolage Grotesque` (`--font-display` / the `.font-display` utility) - masthead, section headings, stat numerals, card titles; tight tracking. No serif anywhere.
+- **Body**: `Geist` (sans, `--font-geist-sans`), system-ui fallback
+- **Mono**: `Geist Mono` (`--font-mono`) - eyebrows, labels, date ranges, tech-tag pills, marquee labels
+- All three load via `next/font/google` in `app/layout.tsx`
 - Base font size: 112.5% (18px), scales all rem units up
-- Headings: font-bold, tracking-tight
-- Body: font-normal, leading-relaxed
+- Headings: `.font-display`, font-semibold, tracking-tight; Body: leading-relaxed
 
 ### Spacing & Shape
-- Card border radius: `rounded-2xl`
-- Pill/tag border radius: `rounded-full`
-- Section padding: `py-24 md:py-32` for standard sections; Hero is `min-h-[100dvh]`
-- Tech-tag pills: one neutral style via `tagClass` in `lib/data.ts` (`bg-foreground/[0.04] text-foreground/70 border-foreground/10`) + `font-mono`; sky-blue stays the page's only accent color
+- Section padding: `py-28 md:py-40` for standard sections; Hero is `min-h-[100dvh]`
+- Containers: `max-w-6xl` (hero / skills / projects), `max-w-4xl` (about / experience), `max-w-2xl` (contact)
+- Card radius: `rounded-[1.5rem]` (project cards), `rounded-[1.75rem]` (portrait); `rounded-full` for the nav island, pills, buttons, and tabs
+- Hairlines (`--hairline`) carry structure: section dividers, card borders, the experience spine, the marquee's top/bottom rules
+- Tech-tag pills: one neutral style via `tagClass` in `lib/data.ts` (`bg-foreground/[0.04] text-foreground/70 border-foreground/10`) + `font-mono`; ember stays the page's only accent color
 
-### Animation Rules
-- **Scroll entrance**: Framer Motion `whileInView` fade-up (`y: 40 → 0, opacity: 0 → 1`), gated by `useReducedMotion`
-- **Stagger**: 0.1s delay between sibling cards
-- **Hero subtitle**: Typing/cycling text effect (type → pause 2s → delete → next role); shows a static role under reduced motion
-- **Hero background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static accent wash (`.hero-glow`, two faint radial gradients, no animation) - replaces the old animated blobs
-- **Hero avatar ring**: slow-rotating sky conic arc around the portrait (`.avatar-ring`, CSS `@keyframes spin-slow`, 12s loop; freezes under reduced motion)
-- **Hero scroll hint**: mouse-pill indicator at the hero's bottom edge (desktop only) with a bouncing accent dot (`.animate-scroll-dot`); links to `#about`
-- **Skills marquee**: Auto-scrolling brand-logo strip (`.animate-marquee`, CSS `@keyframes marquee`); pauses on hover, static under reduced motion
-- **About stats**: numbers count up from 0 on first scroll-into-view (Framer `animate()` + `useInView`); set instantly under reduced motion
-- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`) + cursor-following accent spotlight (`.card-spotlight`, hover-capable pointers only)
-- **Projects tab switch**: sliding `layoutId` sky pill on the segmented control + direction-aware `AnimatePresence mode="wait"` panel slide (see Projects section spec); instant opacity swap under reduced motion
-- **Experience timeline**: line fades out toward the bottom (gradient); the current ("Present") entry's dot has a slow `animate-ping` pulse
-- **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px; thin sky-to-cyan scroll-progress bar along the top edge (Framer `useScroll` + `useSpring`); active section's link highlighted in accent (IntersectionObserver, middle-of-viewport band)
-- **Back to top**: floating button (bottom-right) fades/scales in after 600px scroll (`AnimatePresence`)
+### Signature - "The Ledger Line"
+A single ember hairline is the connective motif: it draws across on load beneath the hero role lockup (`.draw-line`), forms the spine of the experience timeline (with tick-mark bullets), underlines links from the left on hover (`.link-underline`), sits centered beneath the contact headline, and rides the lower edge of the floating nav as the scroll-progress bar.
+
+### Animation Rules (Framer Motion + CSS; MOTION ~6, all gated by `useReducedMotion` / `prefers-reduced-motion`)
+- **Ledger line (signature)**: see Signature above - draws on load, threads the timeline, underlines links, rides the nav edge as the progress bar
+- **Hero load**: staggered fade-up of the availability eyebrow, masthead, ledger line + role lockup, tagline, and CTAs; portrait fades + subtle scale
+- **Hero role lockup**: roles cross-fade (slide up/out) via `AnimatePresence` every 2.8s (replaces the old typewriter); static first role under reduced motion
+- **Scroll entrance**: `whileInView` fade-up (`y: 20-36 -> 0`), once, staggered 0.08-0.1s
+- **Nav**: floating glass island (`.nav-glass`); entrance slide-down; active section link in accent (IntersectionObserver, `-45% 0px -50%` band); scroll-progress drawn as an ember hairline on the island's lower edge (Framer `useScroll` + `useSpring`)
+- **Buttons**: `.btn` press (`scale .97`); primary CTA arrow nudges on hover (`group-hover:translate-x-1`)
+- **Project card hover**: `whileHover` lift (`y: -4`) + border warms to `accent/40` + image zoom (`group-hover:scale-[1.05]`) + cursor-following ember spotlight (`.card-spotlight`, hover-capable pointers only)
+- **Projects tab switch**: sliding `layoutId` ember pill + direction-aware `AnimatePresence mode="wait"` panel slide; instant opacity swap under reduced motion
+- **Experience**: ember spine (top-to-bottom gradient that fades out at the bottom); the "Present" entry's dot has a slow `animate-ping`; bullets use tiny ember tick markers
+- **About stats**: count up from 0 on first scroll-into-view (display numerals); instant under reduced motion
+- **Skills marquee**: auto-scrolling stack strip (`.animate-marquee`); pauses on hover, static under reduced motion
+- **Back to top**: floating glass button, appears after 600px (`useScroll` + `useMotionValueEvent` - no window scroll listeners)
+- **Material**: a fixed, `pointer-events-none` film-grain overlay (`.grain`, ~3-4%) gives a hand-finished surface
 - **Reduced motion**: global `@media (prefers-reduced-motion: reduce)` block stops loops/transitions; Framer entrances additionally gated via `useReducedMotion` per component
 
 ### Global UX polish (`globals.css`)
 - `::selection` tinted with the accent color
 - Thin theme-aware scrollbar (`scrollbar-width: thin` + WebKit pseudo-elements)
-- `section[id] { scroll-margin-top: 4.5rem }` so anchored sections stop below the fixed nav
+- `section[id] { scroll-margin-top: 6rem }` so anchored sections stop below the floating nav
 - `:focus-visible` accent outline for keyboard navigation
-- `.text-gradient-accent`: sky-to-cyan gradient text with theme-aware endpoints (`--grad-from` / `--grad-to`); used on the hero name
+- Utilities: `.font-display`, `.link-underline`, `.draw-line`, `.btn` / `.btn-primary` / `.btn-ghost`, `.card-spotlight`, `.nav-glass`, `.portrait-frame`, `.grain`, `.animate-marquee`
+- Removed in the Obsidian & Ember redesign: the sky-blue accent, animated dot-grid + hero glow, spinning avatar ring, mouse-pill scroll hint, hero typing effect, and the sky-to-cyan gradient name
 
 ---
 
@@ -95,16 +110,16 @@ Light mode:
 portfolio-v2/
 ├── app/
 │   ├── icon.jpg            # Favicon — profile photo (overrides favicon.ico)
-│   ├── layout.tsx          # Root layout: fonts, ThemeProvider, metadata
+│   ├── layout.tsx          # Root layout: fonts (Bricolage/Geist/Geist Mono), grain overlay, ThemeProvider, metadata
 │   ├── page.tsx            # Page: composes all section components
-│   └── globals.css         # Tailwind directives + CSS tokens + dot-grid/marquee + reduced-motion
+│   └── globals.css         # Tailwind + Obsidian&Ember tokens + ledger-line/grain/marquee utilities + reduced-motion
 ├── components/
-│   ├── nav.tsx             # Fixed nav, scroll behavior, theme/language toggles, mobile menu
-│   ├── hero.tsx            # Full-viewport hero: dot-grid bg, typing roles, tagline, photo
+│   ├── nav.tsx             # Floating glass island nav: scroll-progress, active-section, theme/language toggles, mobile menu
+│   ├── hero.tsx            # Hero: masthead, ledger line + role cross-fade, tagline, CTAs, framed portrait
 │   ├── about.tsx           # About strip: full bio (relocated out of the hero)
 │   ├── skills.tsx          # Skills: brand-logo marquee + grouped category lists
 │   ├── experience.tsx      # Work experience timeline section
-│   ├── projects.tsx        # Projects: tabbed pages (3/tab, newest-first) + featured card + zigzag cards
+│   ├── projects.tsx        # Projects: tabbed pages (3/tab, newest-first) + featured showcase + two-up grid
 │   ├── contact.tsx         # Contact form + social links section
 │   ├── back-to-top.tsx     # Floating back-to-top button (appears after 600px scroll)
 │   ├── theme-toggle.tsx    # Dark/light icon button
@@ -142,50 +157,42 @@ portfolio-v2/
 ## Section Specifications
 
 ### Navigation (`components/nav.tsx`)
-- Fixed to top, full width, z-50
-- Logo/name: "Tom Nguyen" (left side)
-- Nav links (right side): Home · About · Skills · Experience · Projects · Contact · Resume
+- A floating glass **island** (`.nav-glass`, `rounded-full`, `max-w-5xl`, `z-50`), centered and detached from the top; slides down on mount
+- Wordmark "Tom Nguyen" (left, `.font-display`)
+- Nav links: Home · About · Skills · Experience · Projects · Contact, then a Resume link
+  - Links show at `lg` and up; below `lg` they collapse to a hamburger menu (closes only when a link is tapped)
   - All section links use smooth anchor scroll (`href="#section-id"`); About scrolls to `#about`
   - Resume opens `/resume.html` (EN) or `/resume-vi.html` (VI) in a new tab; fires `resume_view` GA4 event
-- **Scroll progress bar**: thin sky-to-cyan bar along the nav's top edge, `scaleX` driven by Framer `useScroll` + `useSpring`
+- **Scroll progress**: a thin ember hairline along the island's lower edge, `scaleX` driven by Framer `useScroll` + `useSpring` (no manual scroll listener)
 - **Active section highlight**: IntersectionObserver (rootMargin `-45% 0px -50% 0px`) tracks which section crosses mid-viewport; that link renders in accent + `aria-current` (desktop and mobile menus)
-- Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
-- Inline nav links show at `md` and up; below `md` they collapse to a hamburger menu - closes only when a nav link is tapped (not on scroll)
-- Language toggle button (EN/VI) — switches locale, persists to localStorage; placed left of theme toggle
-- Theme toggle icon button (rightmost item)
+- Language toggle (EN/VI, persists to localStorage) + theme toggle, separated by a hairline divider; hamburger has `aria-expanded`
 
 ---
 
 ### Hero (`components/hero.tsx`)
-- `min-h-[100dvh]` full viewport, centered content
-- **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static `.hero-glow` accent wash - no animated blobs
-- **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
-- **Availability badge**: above the heading - mono pill with pulsing emerald status dot, text `t.hero.availability` ("Open to new opportunities")
-- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow + slow-rotating `.avatar-ring` conic accent arc
-- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in sky-to-cyan gradient (`.text-gradient-accent`, name kept on one line)
-- **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
-- **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
-- **CTA buttons**:
-  1. "About Me" → smooth scroll to `#about`
-  2. "LinkedIn" → `https://www.linkedin.com/in/tomnguyen103/` (new tab)
-  3. "GitHub" → `https://github.com/tomnguyen103` (new tab)
-- **Scroll hint**: centered at the hero's bottom edge (desktop only) - mono "Scroll" label (`t.hero.scrollHint`) + mouse pill with bouncing accent dot, links to `#about`
+- `min-h-[100dvh]`; asymmetric two-column grid (`md:grid-cols-[1.15fr_0.85fr]`). The masthead is text-first in source order, so the value prop + CTAs lead on mobile and the masthead sits left / portrait right on desktop
+- **Background**: clean canvas + global grain + one very faint ember radial behind the portrait (no mesh, no blobs)
+- **Availability eyebrow**: mono `t.hero.availability` with a single small ember status dot (`animate-ping`)
+- **Masthead**: "Tom Nguyen" in `.font-display`, `text-6xl sm:text-7xl lg:text-8xl`, tight tracking (solid foreground, no gradient)
+- **Role lockup**: the ledger line (`.draw-line`) + `t.hero.roles` cross-fading via `AnimatePresence` every 2.8s; static first role under reduced motion
+- **Tagline**: one sharp positioning line (`t.hero.tagline`, <=20 words)
+- **CTAs**: primary "View work" (`t.hero.cta.work`) to `#projects` (bone-solid `.btn-primary` with a nudging arrow); secondary "Get in touch" (`t.hero.cta.contact`) to `#contact` (`.btn-ghost`); then GitHub + LinkedIn icon links (fire `github_click` / `linkedin_click` with `location: "hero"`)
+- **Portrait**: `images/pic00.jpg` in a `rounded-[1.75rem]` `.portrait-frame`; an edge vignette feathers the studio-white into the canvas, a warm bottom scrim grounds it, and a faint ember top-light warms it
 
 ---
 
 ### About (`components/about.tsx`)
-- Section id: `#about`; reachable via the "About" nav link (smooth anchor scroll, same behavior as the other sections)
-- Sits between Hero and Skills; holds the full bio (`t.hero.bio`) relocated out of the hero
-- Layout: mono uppercase `About` label (`t.hero.aboutLabel`) beside the bio paragraph (`max-w-4xl`); reveal gated by `useReducedMotion`
-- **Stats row** below the bio (hairline top border): three count-up stats - `4+` Years Experience (static, matches the bio claim), Featured Projects (`projects.length` from `lib/data.ts`), Companies (`experiences.length`); labels from `t.about.stats`; numbers animate 0 → value once in view (instant under reduced motion)
+- Section id: `#about`; reachable via the "About" nav link
+- Holds the full bio (`t.hero.bio`), set large and editorial (`max-w-4xl`), under a mono ember `About` eyebrow (`t.hero.aboutLabel`); reveal gated by `useReducedMotion`
+- **Stats row** below the bio (hairline top border): three count-up stats in `.font-display` numerals - `4+` Years Experience, Featured Projects (`projects.length`), Companies (`experiences.length`); labels from `t.about.stats`; numbers animate 0 -> value once in view (instant under reduced motion)
 
 ---
 
 ### Skills (`components/skills.tsx`)
 - Section id: `#skills`
-- Heading: "Skills" + subheading: "Technologies I work with"
-- **Brand-logo marquee**: auto-scrolling strip of real `react-icons/si` logos + labels (`.animate-marquee`); theme-aware via `currentColor`, pauses on hover, static under reduced motion
-- **Grouped category lists** (below marquee): the 6 `skillCards` rendered as borderless groups (Lucide icon + title with a hairline underline + `tagClass` `font-mono` pills) in a `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`; staggered `whileInView` entrance
+- Left-aligned header: "Skills" (`.font-display`) + subheading "Technologies I work with"
+- **Stack marquee**: auto-scrolling strip of real `react-icons/si` logos + mono labels (`.animate-marquee`), framed by top/bottom hairlines; theme-aware via `currentColor`, pauses on hover, static under reduced motion
+- **Grouped capabilities** (below marquee): the 6 `skillCards` as borderless groups (thin Lucide icon + `.font-display` title over a hairline + `tagClass` `font-mono` pills) in a `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`; staggered `whileInView` entrance
 - This borderless grouped style is intentionally distinct from the Projects cards
 
 **Card data** (defined in `lib/data.ts`):
@@ -203,13 +210,11 @@ portfolio-v2/
 
 ### Experience (`components/experience.tsx`)
 - Section id: `#experience`
-- Heading: "Experience" + subheading: "Where I've worked"
-- Layout: vertical timeline; the left line is a top-to-bottom gradient (`from-sky-500/50 via-sky-500/25 to-transparent`); each entry has a sky-500 dot marker
-- The entry whose `end` is `"Present"` gets a slow `animate-ping` pulse behind its dot
-- Each entry shows: company + type badge, date-range pill (sky-500 tint), job title, location, bullet list
-- Staggered fade-up entrance (0.1s delay per entry, `whileInView`)
-- Date-range pill uses `font-mono`
-- Uses `useInViewTracking("experience")` to fire `section_viewed` GA4 event
+- Left-aligned header: "Experience" + subheading "Where I've worked"
+- Layout: the "ledger" - a single ember spine (`from-accent/60 via-accent/20 to-transparent`) threading every role, with an ember dot marker per entry
+- The entry whose `end` is `"Present"` gets a slow `animate-ping` behind its dot
+- Each entry: company (`.font-display`) + type, date range in ember mono (right side), job title, location (mono), and bullets prefixed by tiny ember tick markers (the ledger motif at micro scale)
+- Staggered fade-up entrance (0.1s per entry, `whileInView`); uses `useInViewTracking("experience")` to fire `section_viewed`
 
 **Experience data** (defined in `lib/data.ts` as `experiences: Experience[]`):
 
@@ -224,18 +229,19 @@ portfolio-v2/
 ### Projects (`components/projects.tsx`)
 - Section id: `#projects`
 - Heading: "Projects" + subheading: "Things I've built"
-- Background: `bg-surface/30` to differentiate from Skills section
-- **Tab pagination**: projects are kept newest-first in `lib/data.ts` and chunked into pages of 3 (`TAB_SIZE = 3`); a centered segmented tab control sits between the subheading and the cards
-  - Tab labels come from `t.projects.tabs` ("Latest" / "Earlier", VI: "Mới Nhất" / "Cũ Hơn"); extra pages beyond the label list fall back to zero-padded numbers ("03", "04", ...)
-  - Control style: `rounded-full` container (`bg-surface` + `border-foreground/10` + `p-1`); tab buttons are `font-mono` uppercase `text-xs tracking-wider`; the active tab is a solid sky pill (`bg-accent` + white text) that slides between tabs via Framer Motion `layoutId="projects-tab-pill"` (spring 400/32, duration 0 under reduced motion); inactive tabs are `text-muted hover:text-foreground`
-  - Accessibility: full WAI-ARIA tabs pattern - `role="tablist"/"tab"/"tabpanel"`, `aria-selected`, `aria-controls`/`aria-labelledby`, roving `tabIndex`, ArrowLeft/ArrowRight/Home/End keyboard navigation
+- Header "Projects" (`.font-display`) + subheading "Things I've built" on the left; the tab control sits on the right of the same row (stacks on mobile)
+- Background: a subtle translucent surface band with hairline top/bottom borders, to set it apart from neighboring sections
+- **Tab pagination**: projects are kept newest-first in `lib/data.ts` and chunked into pages of 3 (`TAB_SIZE = 3`)
+  - Tab labels come from `t.projects.tabs` ("Latest" / "Earlier", VI: "Mới Nhất" / "Cũ Hơn"); extra pages fall back to zero-padded numbers
+  - Control style: `rounded-full` container (`bg-surface` + hairline + `p-1`); `font-mono` uppercase tabs; the active tab is a solid **ember** pill with `text-on-accent` (dark text) that slides via Framer `layoutId="projects-tab-pill"` (spring 400/32, duration 0 under reduced motion)
+  - Accessibility: full WAI-ARIA tabs pattern - `role="tablist"/"tab"/"tabpanel"`, `aria-selected`, `aria-controls`/`aria-labelledby`, roving `tabIndex`, ArrowLeft/ArrowRight/Home/End
   - Tab switch fires `project_tab_click` GA4 event with `{ tab_label }`
-- **Tab-switch animation**: `AnimatePresence mode="wait"` swaps the page panel with a direction-aware horizontal slide - forward exits to x:-56 / enters from x:+56, backward mirrored (direction stored alongside the tab index in one state tuple); enter 0.4s `[0.16, 1, 0.3, 1]`, exit 0.22s; reduced motion collapses to an instant opacity swap
-- Layout per tab: on the first tab the first project is a larger **featured** card (`Featured` badge via `t.projects.featured`); the remaining cards **zigzag** - image side alternates each row within the tab (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile; later tabs are all zigzag (no featured card)
-  - Image: `next/image` with `fill` + `sizes="(min-width: 768px) 50vw, 100vw"` (container is full-width on mobile, `md:w-1/2` on desktop); `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
-  - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
-- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)
-- Scroll-triggered fade-up entrance gated by `useReducedMotion`, staggered 0.1s per card; cards re-run the stagger when their tab mounts
+- **Tab-switch animation**: `AnimatePresence mode="wait"` swaps the panel with a direction-aware horizontal slide (forward exits to x:-48 / enters from x:+48, backward mirrored); reduced motion collapses to an instant opacity swap
+- **Layout per tab** (varies the rhythm instead of a repeated zigzag): the first project is a large horizontal **featured showcase** (image ~56% + content); the remaining two sit in a **two-up grid** of vertical cards (image on top). The `Featured` badge (`t.projects.featured`) appears only on the first tab's first project; everything stacks to a single column on mobile
+  - Image: `next/image` with `fill` + `sizes="(min-width: 768px) 50vw, 100vw"`; `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.05]` on card hover
+  - Content: title (`.font-display`), bullets with ember ticks, `tagClass` `font-mono` tech pills, GitHub + "Live demo" links
+- Card hover: lift `y: -4` + border warms to `accent/40` + `.card-spotlight` cursor-following ember glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)
+- Scroll-triggered fade-up entrance gated by `useReducedMotion`
 
 **Project data** (defined in `lib/data.ts` as `projects: Project[]`, ordered newest-first - this order drives the tab pages):
 
@@ -254,17 +260,15 @@ Full descriptions live in `lib/data.ts` (EN) and `lib/translations.ts` (`project
 
 ### Contact (`components/contact.tsx`)
 - Section id: `#contact`
-- Heading: "Let's Work Together"
-- Subheading: "Have a project in mind? I'd love to hear about it."
-- **Form** (Netlify Forms — POST to `"/"` with `application/x-www-form-urlencoded`):
-  - `data-netlify="true"`, `name="contact"`, hidden `form-name` input
-  - Fields: Name, Email, Subject, Message (all required), laid out in 2-col grid (Name + Email)
-  - Submit button: "Send Message" with Send icon, full-width, disabled + opacity during loading
-  - Success state: replaces form with confirmation message
-  - Error state: inline red error message below submit button
-- **Email link**: `tom.nguyen.nht@gmail.com`
-- **Social links** below form: GitHub + LinkedIn icon buttons
-- **Footer**: `© Tom Nguyen. All rights reserved.`
+- A centered closing finale: heading "Let's Work Together" (`.font-display`), an ember ledger line beneath it, then the subheading "Have a project in mind? I'd love to hear about it."
+- **Form** (Netlify Forms - POST to `/__forms.html` with `application/x-www-form-urlencoded`):
+  - `data-netlify="true"`, `name="contact"`, hidden `form-name` input, honeypot `bot-field`
+  - Fields: Name, Email, Subject, Message (all required), each with a real `<label>` above the input (no placeholder-as-label); Name + Email in a 2-col grid
+  - Submit: bone-solid `.btn-primary` "Send Message" with Send icon, full width, disabled + opacity during loading
+  - Success state replaces the form; error state shows an inline `role="alert"` message
+- **Email link**: `tom.nguyen.nht@gmail.com` (ember `.link-underline`)
+- **Social links** below: GitHub + LinkedIn icon buttons
+- **Footer**: `© Tom Nguyen. All rights reserved.` (mono, hairline top border)
 
 **Netlify Forms note**: `public/__forms.html` contains a static HTML stub of the form so Netlify's build bot can detect it at build time (required for Next.js App Router - the dynamic render is not scanned). The client submits to `/__forms.html`.
 
@@ -302,7 +306,7 @@ title: "Tom Nguyen | Full Stack & AI Developer"
 description: "Full Stack Developer & AI Engineer specializing in scalable web applications, AI agent architecture, and LLM workflows. Experienced with Next.js, React Native, Django, Mendix, and Gemini SDK. CS graduate from Cal State LA."
 ```
 
-Also set: `metadataBase` (`https://www.tomnguyen.me`), `keywords`, `authors`/`creator`, full `openGraph` (type website, siteName, locale `en_US`, image `/images/pic00.jpg`) and `twitter` (`summary` card) blocks, plus a `viewport` export with light/dark `themeColor` (`#ffffff` / `#0a0a0f`).
+Also set: `metadataBase` (`https://www.tomnguyen.me`), `keywords`, `authors`/`creator`, full `openGraph` (type website, siteName, locale `en_US`, image `/images/pic00.jpg`) and `twitter` (`summary` card) blocks, plus a `viewport` export with light/dark `themeColor` (`#f3f1ec` / `#0b0b0d`).
 
 Favicon: `app/icon.jpg` (profile photo — App Router file-based icon convention, overrides any favicon.ico)
 

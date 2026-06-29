@@ -1,106 +1,83 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useLanguage } from "./language-provider";
 
-function useTypingEffect(roles: readonly string[], enabled: boolean) {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
+function useRoleCycle(roles: readonly string[], enabled: boolean) {
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    setRoleIndex(0);
-    setDisplayed("");
-    setPhase("typing");
-  }, [roles]);
-
-  useEffect(() => {
+    setIndex(0);
     if (!enabled) return;
-    const current = roles[roleIndex];
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % roles.length);
+    }, 2800);
+    return () => clearInterval(id);
+  }, [roles, enabled]);
 
-    if (phase === "typing") {
-      if (displayed.length < current.length) {
-        const t = setTimeout(
-          () => setDisplayed(current.slice(0, displayed.length + 1)),
-          80
-        );
-        return () => clearTimeout(t);
-      }
-      const t = setTimeout(() => setPhase("pause"), 2000);
-      return () => clearTimeout(t);
-    }
-
-    if (phase === "pause") {
-      const t = setTimeout(() => setPhase("deleting"), 500);
-      return () => clearTimeout(t);
-    }
-
-    if (phase === "deleting") {
-      if (displayed.length > 0) {
-        const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
-        return () => clearTimeout(t);
-      }
-      setRoleIndex((i) => (i + 1) % roles.length);
-      setPhase("typing");
-    }
-  }, [displayed, phase, roleIndex, roles, enabled]);
-
-  // Reduced motion: skip the animation, show the first role statically.
-  return enabled ? displayed : roles[0];
+  return roles[enabled ? index : 0];
 }
 
 export default function Hero() {
   const { t } = useLanguage();
   const reduce = useReducedMotion();
-  const typedText = useTypingEffect(t.hero.roles, !reduce);
+  const role = useRoleCycle(t.hero.roles, !reduce);
 
   const container: Variants = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+    show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
   };
   const item: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 24 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
   return (
     <section
       id="top"
-      className="relative min-h-[100dvh] flex items-center overflow-hidden"
+      className="relative flex min-h-[100dvh] items-center overflow-hidden"
     >
-      {/* Subtle technical dot-grid field (replaces the old animated blobs) */}
-      <div className="bg-dot-grid absolute inset-0 -z-10" />
-      {/* Static accent wash for depth under the dot grid */}
-      <div className="hero-glow absolute inset-0 -z-10" />
+      {/* Single, very faint ember warmth behind the portrait - no mesh, no blobs */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 top-1/4 -z-10 h-[34rem] w-[34rem] rounded-full opacity-60"
+        style={{
+          background:
+            "radial-gradient(circle, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%)",
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto px-6 py-20 w-full">
-        <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
-          {/* Text content */}
+      <div className="mx-auto w-full max-w-6xl px-6 pt-28 pb-20 md:pt-24">
+        <div className="grid items-center gap-12 md:grid-cols-[1.15fr_0.85fr] md:gap-14">
+          {/* Masthead */}
           <motion.div
-            className="flex-1 text-center md:text-left"
+            className="order-1"
             variants={container}
             initial={reduce ? false : "hidden"}
             animate="show"
           >
-            <motion.div
-              variants={item}
-              className="mb-5 flex justify-center md:justify-start"
-            >
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-foreground/10 bg-surface/60 backdrop-blur text-xs font-mono text-foreground/70">
-                <span className="relative flex h-2 w-2">
+            <motion.div variants={item} className="mb-7">
+              <span className="inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] text-muted">
+                <span className="relative flex h-1.5 w-1.5">
                   <span
-                    className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"
-                    style={{ animationDuration: "2s" }}
+                    className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-70 animate-ping"
+                    style={{ animationDuration: "2.4s" }}
                   />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                 </span>
                 {t.hero.availability}
               </span>
@@ -108,120 +85,108 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-foreground"
+              className="font-display text-6xl font-semibold leading-[0.92] tracking-[-0.03em] text-foreground sm:text-7xl lg:text-8xl"
             >
-              {t.hero.greeting.split("Tom Nguyen").map((part, i, arr) => {
-                if (i < arr.length - 1) {
-                  const sentences = part.split(". ");
-                  if (sentences.length > 1) {
-                    return (
-                      <span key={i}>
-                        {sentences[0]}.{" "}
-                        <span className="whitespace-nowrap">
-                          {sentences[1]}
-                          <span className="text-gradient-accent font-extrabold">Tom Nguyen</span>
-                        </span>
-                      </span>
-                    );
-                  }
-                  return (
-                    <span key={i} className="whitespace-nowrap">
-                      {part}
-                      <span className="text-gradient-accent font-extrabold">Tom Nguyen</span>
-                    </span>
-                  );
-                }
-                return <span key={i}>{part}</span>;
-              })}
+              Tom Nguyen
             </motion.h1>
 
-            <motion.div
-              variants={item}
-              className="text-xl sm:text-2xl text-muted mb-6 h-9 flex items-center justify-center md:justify-start gap-1"
-            >
-              <span className="text-accent font-medium">{typedText}</span>
-              <span className="w-0.5 h-6 bg-accent animate-pulse inline-block" />
+            {/* The ledger line - draws across on load, then the role lockup */}
+            <motion.div variants={item} className="mt-6 flex items-center gap-4">
+              <span
+                aria-hidden="true"
+                className="draw-line h-px w-12 shrink-0 bg-accent sm:w-16"
+              />
+              <span className="h-7 overflow-hidden text-xl text-muted sm:text-2xl">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={role}
+                    className="block font-medium text-foreground/85"
+                    initial={reduce ? false : { y: "100%", opacity: 0 }}
+                    animate={{ y: "0%", opacity: 1 }}
+                    exit={reduce ? { opacity: 0 } : { y: "-100%", opacity: 0 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {role}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </motion.div>
 
             <motion.p
               variants={item}
-              className="text-foreground/70 text-lg leading-relaxed max-w-xl mx-auto md:mx-0 mb-8"
+              className="mt-8 max-w-md text-lg leading-relaxed text-muted"
             >
               {t.hero.tagline}
             </motion.p>
 
             <motion.div
               variants={item}
-              className="flex flex-wrap gap-3 justify-center md:justify-start"
+              className="mt-10 flex flex-wrap items-center gap-3"
             >
+              <a href="#projects" className="btn btn-primary group px-6 py-3">
+                {t.hero.cta.work}
+                <ArrowRight
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  strokeWidth={1.75}
+                />
+              </a>
+              <a href="#contact" className="btn btn-ghost px-6 py-3">
+                {t.hero.cta.contact}
+              </a>
+              <span className="mx-1 hidden h-6 w-px bg-[color:var(--hairline)] sm:block" />
               <a
-                href="#about"
-                className="px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-medium transition-colors"
+                href="https://github.com/tomnguyen103"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                onClick={() => trackEvent("github_click", { location: "hero" })}
+                className="rounded-full border border-[color:var(--hairline-strong)] p-3 text-muted transition-colors hover:border-accent/60 hover:text-accent"
               >
-                {t.hero.cta.about}
+                <FaGithub className="h-4.5 w-4.5" />
               </a>
               <a
                 href="https://www.linkedin.com/in/tomnguyen103/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 onClick={() => trackEvent("linkedin_click", { location: "hero" })}
-                className="px-6 py-3 bg-surface hover:bg-surface/80 border border-foreground/10 rounded-xl font-medium transition-colors flex items-center gap-2 text-foreground"
+                className="rounded-full border border-[color:var(--hairline-strong)] p-3 text-muted transition-colors hover:border-accent/60 hover:text-accent"
               >
-                <FaLinkedinIn className="w-4 h-4" /> {t.hero.cta.linkedin}
-              </a>
-              <a
-                href="https://github.com/tomnguyen103"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("github_click", { location: "hero" })}
-                className="px-6 py-3 bg-surface hover:bg-surface/80 border border-foreground/10 rounded-xl font-medium transition-colors flex items-center gap-2 text-foreground"
-              >
-                <FaGithub className="w-4 h-4" /> {t.hero.cta.github}
+                <FaLinkedinIn className="h-4.5 w-4.5" />
               </a>
             </motion.div>
           </motion.div>
 
-          {/* Profile photo */}
+          {/* Portrait - warm-framed studio headshot */}
           <motion.div
-            className="flex-shrink-0"
-            initial={reduce ? false : { opacity: 0, scale: 0.9 }}
+            className="order-2 mx-auto w-full max-w-[17rem] sm:max-w-[20rem] md:mx-0 md:ml-auto md:max-w-none"
+            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64">
-              <div
-                aria-hidden="true"
-                className="avatar-ring absolute -inset-3 rounded-full"
-              />
+            <div className="portrait-frame relative aspect-[4/5] overflow-hidden rounded-[1.75rem]">
               <Image
                 src="/images/pic00.jpg"
                 alt="Tom Nguyen"
-                width={256}
-                height={256}
-                className="rounded-full object-cover w-full h-full ring-2 ring-sky-500/30 shadow-2xl shadow-sky-950/20"
+                fill
+                sizes="(min-width: 768px) 40vw, 80vw"
+                className="object-cover object-top"
                 priority
+              />
+              {/* Edge vignette feathers the studio-white into the canvas (frames it
+                  like a print), warm bottom scrim grounds it, faint ember top-light */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(96% 96% at 50% 36%, transparent 46%, color-mix(in srgb, var(--canvas) 82%, transparent) 100%), linear-gradient(180deg, transparent 52%, color-mix(in srgb, var(--canvas) 88%, transparent)), radial-gradient(120% 80% at 72% 2%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 52%)",
+                }}
               />
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll-down hint (desktop only, fades in after the entrance) */}
-      <motion.a
-        href="#about"
-        aria-label={t.hero.scrollHint}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-      >
-        <span className="text-[10px] font-mono uppercase tracking-[0.25em]">
-          {t.hero.scrollHint}
-        </span>
-        <span className="flex h-9 w-5.5 items-start justify-center rounded-full border border-foreground/20 p-1.5">
-          <span className="animate-scroll-dot h-1.5 w-1 rounded-full bg-accent" />
-        </span>
-      </motion.a>
     </section>
   );
 }

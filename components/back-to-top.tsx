@@ -1,7 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useLanguage } from "./language-provider";
 
@@ -9,13 +15,11 @@ export default function BackToTop() {
   const [visible, setVisible] = useState(false);
   const { t } = useLanguage();
   const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 600);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (v) => {
+    setVisible(v > 600);
+  });
 
   return (
     <AnimatePresence>
@@ -27,9 +31,9 @@ export default function BackToTop() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={reduce ? undefined : { opacity: 0, y: 12, scale: 0.9 }}
           transition={{ duration: 0.25 }}
-          className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-surface/80 backdrop-blur border border-foreground/10 text-muted shadow-lg hover:text-accent hover:border-accent/40 transition-colors"
+          className="nav-glass fixed bottom-6 right-6 z-40 rounded-full p-3 text-muted transition-colors hover:text-accent"
         >
-          <ArrowUp className="w-5 h-5" />
+          <ArrowUp className="h-5 w-5" strokeWidth={1.5} />
         </motion.a>
       )}
     </AnimatePresence>

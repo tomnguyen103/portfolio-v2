@@ -8,8 +8,11 @@ import { trackEvent } from "@/lib/analytics";
 import { useInViewTracking } from "@/lib/useInViewTracking";
 import { useLanguage } from "./language-provider";
 
-const inputClass =
-  "w-full px-4 py-3 bg-surface border border-foreground/10 rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40 placeholder:text-muted transition";
+const fieldClass =
+  "w-full rounded-xl border border-[color:var(--hairline-strong)] bg-[color:var(--surface-2)] px-4 py-3 text-sm text-foreground transition placeholder:text-muted/60 focus:border-accent/50 focus:outline-none focus:ring-2 focus:ring-accent/30";
+
+const labelClass =
+  "mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.15em] text-muted";
 
 export default function Contact() {
   const sectionRef = useInViewTracking("contact");
@@ -45,30 +48,38 @@ export default function Contact() {
   }
 
   return (
-    <section ref={sectionRef} id="contact" className="px-6 py-24 md:py-32">
-      <div className="max-w-2xl mx-auto w-full">
+    <section ref={sectionRef} id="contact" className="px-6 py-28 md:py-40">
+      <div className="mx-auto w-full max-w-2xl">
         <motion.div
-          className="text-center mb-8"
-          initial={reduce ? false : { opacity: 0, y: 20 }}
+          className="text-center"
+          initial={reduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-foreground">
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-foreground md:text-6xl">
             {t.contact.heading}
           </h2>
-          <p className="text-muted">{t.contact.subheading}</p>
+          {/* The ledger line, centered, beneath the closing headline */}
+          <span
+            aria-hidden="true"
+            className="mx-auto mt-6 block h-px w-16 bg-accent"
+          />
+          <p className="mx-auto mt-6 max-w-md text-lg text-muted">
+            {t.contact.subheading}
+          </p>
         </motion.div>
 
         <motion.div
+          className="mt-12"
           initial={reduce ? false : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           {submitted ? (
-            <div className="text-center py-16 bg-surface rounded-2xl border border-foreground/5">
-              <p className="text-xl font-semibold text-accent mb-2">
+            <div className="rounded-2xl border border-[color:var(--hairline)] bg-[color:var(--surface)] py-16 text-center">
+              <p className="mb-2 font-display text-2xl font-semibold text-accent">
                 {t.contact.form.successTitle}
               </p>
               <p className="text-muted">{t.contact.form.successBody}</p>
@@ -80,77 +91,83 @@ export default function Contact() {
               data-netlify="true"
               data-netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
-              className="space-y-4"
+              className="space-y-5"
             >
               <input type="hidden" name="form-name" value="contact" />
               <p className="hidden">
-                <input name="bot-field" />
+                <label>
+                  Do not fill this out: <input name="bot-field" />
+                </label>
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder={t.contact.form.namePlaceholder}
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="contact-name" className={labelClass}>
+                    {t.contact.form.namePlaceholder}
+                  </label>
+                  <input id="contact-name" type="text" name="name" required className={fieldClass} />
+                </div>
+                <div>
+                  <label htmlFor="contact-email" className={labelClass}>
+                    {t.contact.form.emailPlaceholder}
+                  </label>
+                  <input id="contact-email" type="email" name="email" required className={fieldClass} />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="contact-subject" className={labelClass}>
+                  {t.contact.form.subjectPlaceholder}
+                </label>
+                <input id="contact-subject" type="text" name="subject" required className={fieldClass} />
+              </div>
+              <div>
+                <label htmlFor="contact-message" className={labelClass}>
+                  {t.contact.form.messagePlaceholder}
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
                   required
-                  className={inputClass}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder={t.contact.form.emailPlaceholder}
-                  required
-                  className={inputClass}
+                  rows={5}
+                  className={`${fieldClass} resize-none`}
                 />
               </div>
-              <input
-                type="text"
-                name="subject"
-                placeholder={t.contact.form.subjectPlaceholder}
-                required
-                className={inputClass}
-              />
-              <textarea
-                name="message"
-                placeholder={t.contact.form.messagePlaceholder}
-                required
-                rows={5}
-                className={`${inputClass} resize-none`}
-              />
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-accent hover:bg-accent-hover text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
+                className="btn btn-primary w-full justify-center py-3.5 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <Send className="w-4 h-4" />
+                <Send className="h-4 w-4" strokeWidth={1.75} />
                 {loading ? t.contact.form.submitting : t.contact.form.submit}
               </button>
               {error && (
-                <p className="text-sm text-red-500 text-center">
+                <p className="text-center text-sm text-red-500" role="alert">
                   {t.contact.form.error}
                 </p>
               )}
             </form>
           )}
 
-          <div className="mt-8 text-center">
+          <div className="mt-10 text-center">
             <a
               href="mailto:tom.nguyen.nht@gmail.com"
               onClick={() => trackEvent("email_click")}
-              className="inline-block text-sm text-accent hover:underline mb-4"
+              className="link-underline text-accent"
             >
               tom.nguyen.nht@gmail.com
             </a>
-            <p className="text-sm text-muted mb-4">{t.contact.orFindMe}</p>
-            <div className="flex justify-center gap-4">
+            <p className="mb-4 mt-6 font-mono text-xs uppercase tracking-[0.15em] text-muted">
+              {t.contact.orFindMe}
+            </p>
+            <div className="flex justify-center gap-3">
               <a
                 href="https://github.com/tomnguyen103"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
                 onClick={() => trackEvent("github_click", { location: "contact" })}
-                className="p-3 bg-surface hover:bg-accent hover:text-white rounded-xl transition-colors border border-foreground/10 text-foreground"
+                className="rounded-full border border-[color:var(--hairline-strong)] p-3 text-muted transition-colors hover:border-accent/60 hover:text-accent"
               >
-                <FaGithub className="w-5 h-5" />
+                <FaGithub className="h-5 w-5" />
               </a>
               <a
                 href="https://www.linkedin.com/in/tomnguyen103/"
@@ -158,16 +175,16 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 onClick={() => trackEvent("linkedin_click", { location: "contact" })}
-                className="p-3 bg-surface hover:bg-accent hover:text-white rounded-xl transition-colors border border-foreground/10 text-foreground"
+                className="rounded-full border border-[color:var(--hairline-strong)] p-3 text-muted transition-colors hover:border-accent/60 hover:text-accent"
               >
-                <FaLinkedinIn className="w-5 h-5" />
+                <FaLinkedinIn className="h-5 w-5" />
               </a>
             </div>
           </div>
         </motion.div>
       </div>
 
-      <div className="mt-12 text-center text-sm text-muted border-t border-foreground/5 pt-8">
+      <div className="mx-auto mt-20 max-w-6xl border-t border-[color:var(--hairline)] pt-8 text-center font-mono text-xs uppercase tracking-[0.15em] text-muted">
         {t.contact.footer}
       </div>
     </section>

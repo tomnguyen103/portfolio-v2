@@ -3,204 +3,247 @@
 /* Class-based dark mode for next-themes */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Raw color tokens — switch on .dark class */
+/* ============================================================
+   OBSIDIAN & EMBER - design tokens
+   Light = :root (warm paper), Dark = .dark (warm obsidian).
+   One accent only: ember/honey-gold. No blue, no purple.
+   ============================================================ */
 :root {
-  --bg: #ffffff;
-  --surface: #f8fafc;
-  --accent: #0ea5e9;
-  --accent-hover: #0284c7;
-  --fg: #0f172a;
-  --muted: #64748b;
-  --grad-from: #0284c7; /* sky-600 */
-  --grad-to: #0891b2; /* cyan-600 */
+  --canvas: #f3f1ec; /* warm paper, not a saturated cream */
+  --surface: #fbfaf7; /* slightly raised */
+  --surface-2: #ffffff; /* inputs / highest */
+  --fg: #1a1714; /* warm near-black ink */
+  --muted: #6c675d; /* secondary text (AA on paper) */
+  --hairline: rgba(26, 23, 20, 0.12);
+  --hairline-strong: rgba(26, 23, 20, 0.22);
+  --accent: #9a5d16; /* deep bronze - AA for text/links on paper */
+  --accent-hover: #7d4a0d;
+  --accent-soft: rgba(154, 93, 22, 0.1);
+  --on-accent: #f7f3ea; /* text on an accent fill */
 }
 
 .dark {
-  --bg: #0a0a0f;
-  --surface: #111827;
-  --accent: #0ea5e9;
-  --accent-hover: #0284c7;
-  --fg: #f9fafb;
-  --muted: #6b7280;
-  --grad-from: #38bdf8; /* sky-400 */
-  --grad-to: #22d3ee; /* cyan-400 */
+  --canvas: #0b0b0d; /* warm obsidian, never pure black */
+  --surface: #141418;
+  --surface-2: #1c1c22;
+  --fg: #f4f1ea; /* warm bone */
+  --muted: #918c82; /* warm gray (AA on obsidian) */
+  --hairline: rgba(244, 241, 234, 0.1);
+  --hairline-strong: rgba(244, 241, 234, 0.2);
+  --accent: #e2a75a; /* ember / honey-gold */
+  --accent-hover: #eebb78;
+  --accent-soft: rgba(226, 167, 90, 0.12);
+  --on-accent: #16120c; /* dark text on the bright amber fill */
 }
 
-/* Expose tokens as Tailwind color utilities */
+/* Expose tokens as Tailwind color/font utilities */
 @theme inline {
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --color-background: var(--bg);
+  --font-display: var(--font-bricolage), var(--font-geist-sans), system-ui,
+    sans-serif;
+
+  --color-background: var(--canvas);
   --color-surface: var(--surface);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--fg);
   --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --color-hairline: var(--hairline);
 }
 
 html {
   scroll-behavior: smooth;
-  font-size: 112.5%; /* 18px base — scales all rem units up from 16px default */
+  font-size: 112.5%; /* 18px base - scales all rem units up from 16px default */
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--fg) 22%, transparent) transparent;
+  scrollbar-color: color-mix(in srgb, var(--fg) 20%, transparent) transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--bg);
+  background-color: var(--canvas);
   color: var(--fg);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  /* Subtle warm-to-darker vertical wash gives the canvas depth without a "mesh gradient" */
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--fg) 3%, transparent),
+    transparent 22%
+  );
+}
+
+/* Display face: tight, confident editorial grotesque */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 /* Anchored sections stop just below the fixed nav instead of sliding under it */
 section[id] {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 6rem;
 }
 
 /* Text selection in the page accent */
 ::selection {
-  background: color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--fg);
 }
 
-/* Thin, theme-aware scrollbar (WebKit; Firefox/Chromium use the html rules above) */
+/* Thin, theme-aware scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--fg) 18%, transparent);
+  background: color-mix(in srgb, var(--fg) 16%, transparent);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--fg) 32%, transparent);
+  background: color-mix(in srgb, var(--fg) 30%, transparent);
 }
 
 /* Visible keyboard focus everywhere, in the accent color */
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-/* Sky-to-cyan gradient text (theme-aware endpoints) - used on the hero name */
-.text-gradient-accent {
-  background-image: linear-gradient(90deg, var(--grad-from), var(--grad-to));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* ============================================================
+   SIGNATURE - "The Ledger Line"
+   A precise hairline that draws across on load, underlines links
+   from the left, and forms the spine of the timeline.
+   ============================================================ */
+
+/* Hairline rule (real structure, theme-aware) */
+.hairline {
+  border-color: var(--hairline);
 }
 
-/* Subtle technical dot-grid field for the hero background (theme-aware, edge-faded) */
-.bg-dot-grid {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--fg) 14%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(
-    ellipse 75% 60% at 50% 35%,
-    #000 35%,
-    transparent 78%
-  );
-  mask-image: radial-gradient(
-    ellipse 75% 60% at 50% 35%,
-    #000 35%,
-    transparent 78%
-  );
+/* Link underline that draws in from the left on hover/focus */
+.link-underline {
+  position: relative;
+  white-space: nowrap;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
 }
 
-/* Static accent wash behind the hero - no animation, just depth under the dot grid */
-.hero-glow {
-  background:
-    radial-gradient(
-      36rem circle at 18% 28%,
-      color-mix(in srgb, var(--accent) 9%, transparent),
-      transparent 68%
-    ),
-    radial-gradient(
-      38rem circle at 84% 72%,
-      color-mix(in srgb, var(--grad-to) 7%, transparent),
-      transparent 70%
-    );
-}
-
-/* Slow-rotating accent arc around the hero portrait (freezes under reduced motion) */
-@keyframes spin-slow {
+/* Load-drawn horizontal rule (origin-left scaleX) */
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
   to {
-    transform: rotate(360deg);
+    transform: scaleX(1);
   }
 }
-
-.avatar-ring {
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    color-mix(in srgb, var(--accent) 85%, transparent) 55deg,
-    transparent 120deg
-  );
-  -webkit-mask-image: radial-gradient(
-    farthest-side,
-    transparent calc(100% - 3px),
-    #000 calc(100% - 2px)
-  );
-  mask-image: radial-gradient(
-    farthest-side,
-    transparent calc(100% - 3px),
-    #000 calc(100% - 2px)
-  );
-  animation: spin-slow 12s linear infinite;
+.draw-line {
+  transform-origin: left;
+  animation: draw-x 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
 }
 
-/* Bouncing dot inside the hero scroll-down indicator */
-@keyframes scroll-dot {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  70% {
-    transform: translateY(0.6rem);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 0;
-  }
+/* ============================================================
+   MATERIAL - subtle film grain for a hand-finished surface
+   Fixed, pointer-events:none, very low opacity (per perf rules).
+   ============================================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark .grain {
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
 }
 
-.animate-scroll-dot {
-  animation: scroll-dot 2s ease-in-out infinite;
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* Buttons - neutral "inverted" solid primary (the foreground color),
+   ghost secondary with a hairline. Ember stays a precision accent. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn-primary {
+  background: var(--fg);
+  color: var(--canvas);
+}
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--fg) 88%, var(--accent));
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--hairline-strong);
+}
+.btn-ghost:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--accent-soft);
 }
 
-/* Cursor-following spotlight on project cards (hover-capable pointers only).
-   --spot-x/--spot-y are set from a mousemove handler on the card. */
+/* Cursor-following ember spotlight on feature blocks (hover-capable only).
+   --spot-x/--spot-y are set from a mousemove handler. */
 .card-spotlight {
   position: relative;
 }
-
 .card-spotlight::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 0;
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
   background: radial-gradient(
-    30rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    color-mix(in srgb, var(--accent) 10%, transparent),
-    transparent 65%
+    26rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--accent) 13%, transparent),
+    transparent 60%
   );
 }
-
 @media (hover: hover) {
   .card-spotlight:hover::after {
     opacity: 1;
   }
 }
 
-/* Seamless logo marquee — the track is duplicated, so -50% travels exactly one copy */
+/* Seamless logo marquee - track is duplicated, so -50% travels one copy */
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -209,50 +252,56 @@ section[id] {
     transform: translateX(-50%);
   }
 }
-
 .animate-marquee {
-  animation: marquee 45s linear infinite;
+  animation: marquee 50s linear infinite;
 }
-
-/* Pause the marquee while the user is inspecting it */
 .marquee-mask:hover .animate-marquee {
   animation-play-state: paused;
 }
-
-/* Fade both edges of the marquee into the background */
 .marquee-mask {
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,
-    #000 12%,
-    #000 88%,
+    #000 14%,
+    #000 86%,
     transparent
   );
   mask-image: linear-gradient(
     to right,
     transparent,
-    #000 12%,
-    #000 88%,
+    #000 14%,
+    #000 86%,
     transparent
   );
 }
 
-/* Nav semi-transparent background that respects current theme */
+/* Nav: floating glass island that respects the current theme */
 .nav-glass {
-  background-color: color-mix(in srgb, var(--bg) 80%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+  background-color: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.5);
 }
 
-/* Respect users who prefer reduced motion: stop loops, collapse transitions.
-   (Framer Motion entrances are additionally gated via useReducedMotion in JS.) */
+/* Soft amber rim for the portrait - warms the studio-white background */
+.portrait-frame {
+  box-shadow:
+    inset 0 0 0 1px var(--hairline-strong),
+    0 30px 80px -40px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+/* Respect reduced motion: stop loops, collapse transitions */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-marquee {
+  .animate-marquee,
+  .draw-line {
     animation: none;
+  }
+  .draw-line {
+    transform: scaleX(1);
   }
   *,
   *::before,
