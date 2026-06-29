@@ -28,7 +28,7 @@ Add an Experience section to the portfolio between the Skills and Projects secti
 - `"use client"` directive (Framer Motion)
 - Follows same section shell as `skills.tsx` and `projects.tsx`:
   - `<section id="experience">` with `relative min-h-screen flex flex-col justify-center px-6 py-20 pb-24`
-  - `max-w-3xl mx-auto` container (narrower than other sections — timeline reads better at tighter width)
+  - `max-w-3xl mx-auto` container (narrower than other sections - timeline reads better at tighter width)
   - Animated heading + muted subheading (`whileInView` fade-up, same timing)
   - Scroll indicator `ArrowDown` → `#projects`
 
@@ -40,7 +40,7 @@ Add an Experience section to the portfolio between the Skills and Projects secti
 [vertical line: border-l-2 border-sky-500/30, positioned left]
 
 ●  [dot: w-3 h-3 bg-sky-500 rounded-full ring-2 ring-sky-500/20, absolute -left-1.5]
-   Company · Type                        [Apr 2024 – Present]  ← pill badge
+   Company · Type                        [Apr 2024 - Present]  ← pill badge
    Job Title
    Location (muted, small)
    • bullet
@@ -53,10 +53,10 @@ Add an Experience section to the portfolio between the Skills and Projects secti
 
 - **Container:** `relative pl-8 border-l-2 border-sky-500/30 ml-1.5` (leaves room for dots)
 - **Dot:** `absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-sky-500 ring-2 ring-sky-500/20`
-- **Date badge:** `rounded-full px-2.5 py-0.5 text-xs bg-sky-500/10 text-sky-500 border border-sky-500/20` — floated right on `md:`, stacked below company on mobile
+- **Date badge:** `rounded-full px-2.5 py-0.5 text-xs bg-sky-500/10 text-sky-500 border border-sky-500/20` - floated right on `md:`, stacked below company on mobile
 - **Entry spacing:** `mb-10 last:mb-0`
 - **Animations:** `whileInView { opacity: 0→1, y: 40→0 }`, `viewport={{ once: true }}`, `transition={{ duration: 0.5, delay: index * 0.1 }}`
-- **No card border/background** — entries sit directly on the section background for a cleaner timeline feel (unlike Skills/Projects which use surface cards)
+- **No card border/background** - entries sit directly on the section background for a cleaner timeline feel (unlike Skills/Projects which use surface cards)
 
 ---
 
@@ -145,8 +145,8 @@ import Experience from "@/components/experience";
 
 ## Theme Compatibility
 
-- All colors use Tailwind semantic tokens (`text-foreground`, `text-muted`) or sky-500 accent tints — renders correctly in both dark and light themes
-- Timeline line and dot use `sky-500/30` and `sky-500/20` opacity tints — visible in both themes without adjustment
+- All colors use Tailwind semantic tokens (`text-foreground`, `text-muted`) or sky-500 accent tints - renders correctly in both dark and light themes
+- Timeline line and dot use `sky-500/30` and `sky-500/20` opacity tints - visible in both themes without adjustment
 - No hardcoded hex colors
 
 ---

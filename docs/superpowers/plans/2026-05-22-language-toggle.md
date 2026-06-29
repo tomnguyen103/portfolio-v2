@@ -139,7 +139,7 @@ export const translations = {
     },
     hero: {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
-      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack — từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful — luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
+      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack - từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful - luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
       roles: ['Lập Trình Viên Mendix', 'Lập Trình Viên Phần Mềm', 'Lập Trình Viên AI Agent', 'Lập Trình Viên Full Stack'],
       cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
     },
@@ -199,7 +199,7 @@ export const translations = {
         },
         {
           description: [
-            'Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo',
+            'Ứng dụng di động học ngôn ngữ bằng AI - giải pháp thay thế hiện đại cho Duolingo',
             'Cuộc gọi âm thanh thời gian thực với giáo viên AI, chú thích trực tiếp và phản hồi phát âm',
             'Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc và theo dõi chuỗi XP hàng ngày',
           ],
@@ -983,7 +983,7 @@ export default function Experience() {
                   <span className="font-normal text-muted text-sm">· {exp.type}</span>
                 </span>
                 <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs bg-sky-500/10 text-sky-500 border border-sky-500/20">
-                  {exp.start} – {exp.end}
+                  {exp.start} - {exp.end}
                 </span>
               </div>
 
@@ -1412,7 +1412,7 @@ git commit -m "feat: translate contact section"
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tom Nguyen — Hồ Sơ</title>
+  <title>Tom Nguyen - Hồ Sơ</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1527,10 +1527,10 @@ git commit -m "feat: translate contact section"
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Lập Trình Viên Phần Mềm &mdash; <span style="font-weight:400">Texas Regional Physicians</span></div>
+          <div class="entry-title">Lập Trình Viên Phần Mềm - <span style="font-weight:400">Texas Regional Physicians</span></div>
           <div class="entry-location">Houston, Texas &middot; Remote</div>
         </div>
-        <div class="entry-date">Apr 2024 &ndash; Hiện tại</div>
+        <div class="entry-date">Apr 2024 - Hiện tại</div>
       </div>
       <ul>
         <li>Thiết kế, phát triển và duy trì cổng thông tin lâm sàng phục vụ hơn 30 nhân viên phòng khám, bác sĩ và hơn 10 người dùng luật sư, với hơn 40 cập nhật tính năng và cải tiến giao diện trong 3 tháng qua.</li>
@@ -1544,27 +1544,27 @@ git commit -m "feat: translate contact section"
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Lập Trình Viên Phần Mềm &mdash; <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
+          <div class="entry-title">Lập Trình Viên Phần Mềm - <span style="font-weight:400">Memorial MRI and Diagnostic</span></div>
           <div class="entry-location">Houston, Texas</div>
         </div>
-        <div class="entry-date">Nov 2021 &ndash; Apr 2024</div>
+        <div class="entry-date">Nov 2021 - Apr 2024</div>
       </div>
       <ul>
         <li>Phát triển và duy trì cổng thanh toán tập trung cho 8 chi nhánh, nhận tài liệu HL7 qua SFTP từ hệ thống X-quang và chuyển đổi thành dữ liệu Mendix có cấu trúc cho nhân viên lâm sàng.</li>
         <li>Thiết kế và duy trì bốn website công ty phục vụ bệnh nhân và bác sĩ tuyến trong tại 8 địa điểm chẩn đoán hình ảnh.</li>
         <li>Quản lý cơ sở dữ liệu PostgreSQL với hơn 20 thực thể, duy trì tính toàn vẹn dữ liệu, quy trình sao lưu và hiệu suất truy vấn trên hoạt động nhiều địa điểm.</li>
         <li>Tích hợp hệ thống thông tin X-quang EXA qua giao diện HL7, cho phép truyền dữ liệu tự động giữa hệ thống hình ảnh bên ngoài và cổng Mendix nội bộ.</li>
-        <li>Phát hiện thay đổi gây lỗi im lặng khi EXA cập nhật định dạng HL7 mà không thông báo — xác định dữ liệu bị thiếu qua giám sát log chủ động, báo cáo ngay cho cấp trên và phối hợp trực tiếp với EXA để khôi phục toàn bộ quá trình truyền dữ liệu.</li>
+        <li>Phát hiện thay đổi gây lỗi im lặng khi EXA cập nhật định dạng HL7 mà không thông báo - xác định dữ liệu bị thiếu qua giám sát log chủ động, báo cáo ngay cho cấp trên và phối hợp trực tiếp với EXA để khôi phục toàn bộ quá trình truyền dữ liệu.</li>
       </ul>
     </div>
 
     <div class="entry">
       <div class="entry-header">
         <div class="entry-left">
-          <div class="entry-title">Lập Trình Viên Full Stack Thường Trú &mdash; <span style="font-weight:400">Coding Dojo</span></div>
+          <div class="entry-title">Lập Trình Viên Full Stack Thường Trú - <span style="font-weight:400">Coding Dojo</span></div>
           <div class="entry-location">Greater Los Angeles Area</div>
         </div>
-        <div class="entry-date">Sep 2019 &ndash; Nov 2021</div>
+        <div class="entry-date">Sep 2019 - Nov 2021</div>
       </div>
       <ul>
         <li>Xây dựng và ra mắt nhiều dự án full-stack bao gồm AI Flappy Bird (Neural Network + Genetic Algorithm tự viết), Nền tảng Thư viện Trường học (Django/SQLite) và ứng dụng vẽ Canvas, thể hiện khả năng tạo mẫu nhanh trên nhiều lĩnh vực.</li>
@@ -1605,7 +1605,7 @@ git commit -m "feat: translate contact section"
         </div>
       </div>
       <ul>
-        <li>Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo với cuộc gọi âm thanh thời gian thực cùng giáo viên AI.</li>
+        <li>Ứng dụng di động học ngôn ngữ bằng AI - giải pháp thay thế hiện đại cho Duolingo với cuộc gọi âm thanh thời gian thực cùng giáo viên AI.</li>
         <li>Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc, chú thích trực tiếp, phản hồi phát âm và theo dõi chuỗi XP hàng ngày.</li>
       </ul>
       <div class="tech-line"><strong>Công nghệ:</strong> React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand</div>
@@ -1643,8 +1643,8 @@ git commit -m "feat: translate contact section"
 
     <div class="edu-entry">
       <div class="edu-header">
-        <div class="edu-school">Coding Dojo &mdash; Full-Stack Developer Bootcamp</div>
-        <div class="edu-date">Sep 2019 &ndash; Dec 2019</div>
+        <div class="edu-school">Coding Dojo - Full-Stack Developer Bootcamp</div>
+        <div class="edu-date">Sep 2019 - Dec 2019</div>
       </div>
       <div class="edu-detail">Chứng chỉ Full-Stack về Django, MEAN Stack và Java Spring Framework &middot; 800+ giờ đào tạo chuyên sâu</div>
     </div>
@@ -1685,9 +1685,9 @@ Find the "Standing Rules" section in `CLAUDE.md`. Replace the existing "Keep `re
 ```markdown
 ### Keep `resume.html` and `resume-vi.html` in sync
 Whenever any of the following are modified, **always update `public/resume.html`**, **`public/resume-vi.html`**, and the relevant strings in **`lib/translations.ts`** (`vi` key) at the end of the task:
-- `lib/data.ts` — experiences, projects, or skillCards
-- `components/hero.tsx` — bio text or subtitle roles
-- `components/contact.tsx` — email address or social links
+- `lib/data.ts` - experiences, projects, or skillCards
+- `components/hero.tsx` - bio text or subtitle roles
+- `components/contact.tsx` - email address or social links
 - Any other content that appears on the resume (phone number, summary, etc.)
 
 This ensures both resume pages and the live site always reflect the latest portfolio content without needing a manual reminder.
@@ -1712,11 +1712,11 @@ git commit -m "docs: update standing rule to cover resume-vi.html and translatio
 
 ### Final verification checklist
 
-- [ ] Toggle `VI` in nav — entire site switches to Vietnamese
-- [ ] Toggle back to `EN` — entire site switches to English
-- [ ] Refresh on Vietnamese — stays Vietnamese (localStorage persisted)
-- [ ] Open a fresh private/incognito window — defaults to English
-- [ ] Click Resume in English — opens `resume.html`
-- [ ] Click Hồ Sơ in Vietnamese — opens `resume-vi.html`
+- [ ] Toggle `VI` in nav - entire site switches to Vietnamese
+- [ ] Toggle back to `EN` - entire site switches to English
+- [ ] Refresh on Vietnamese - stays Vietnamese (localStorage persisted)
+- [ ] Open a fresh private/incognito window - defaults to English
+- [ ] Click Resume in English - opens `resume.html`
+- [ ] Click Hồ Sơ in Vietnamese - opens `resume-vi.html`
 - [ ] All links in both resume pages open in a new tab
 - [ ] `npm run build` passes clean

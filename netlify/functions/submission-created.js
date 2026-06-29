@@ -8,18 +8,18 @@ exports.handler = async function (event) {
     // Drop honeypot-triggered submissions
     if (payload.data["bot-field"]) {
       console.log("[submission-created] BLOCKED: honeypot filled");
-      return { statusCode: 200, body: "Bot detected — skipping" };
+      return { statusCode: 200, body: "Bot detected - skipping" };
     }
 
     if (!email) {
       console.log("[submission-created] BLOCKED: no email");
-      return { statusCode: 200, body: "No email address — skipping auto-reply" };
+      return { statusCode: 200, body: "No email address - skipping auto-reply" };
     }
 
-    // Guard against missing fields (belt-and-suspenders — form has required attributes)
+    // Guard against missing fields (belt-and-suspenders - form has required attributes)
     if (!name || !message) {
       console.log("[submission-created] BLOCKED: missing name or message");
-      return { statusCode: 200, body: "Invalid submission — skipping" };
+      return { statusCode: 200, body: "Invalid submission - skipping" };
     }
 
     console.log("[submission-created] PASSING: proceeding to send emails");
@@ -59,7 +59,7 @@ exports.handler = async function (event) {
 
                         <p style="margin:0 0 8px; font-size:16px; color:#0f172a;">Hi <strong>${name}</strong>,</p>
                         <p style="margin:0 0 24px; font-size:15px; color:#334155; line-height:1.7;">
-                          Thank you for reaching out! I've received your message and will get back to you as soon as possible — typically within <strong>24 hours</strong>.
+                          Thank you for reaching out! I've received your message and will get back to you as soon as possible - typically within <strong>24 hours</strong>.
                         </p>
 
                         <!-- Message recap -->
@@ -133,7 +133,7 @@ exports.handler = async function (event) {
         from: "Portfolio Contact <noreply@tomnguyen.me>",
         to: ["huuthong103@gmail.com"],
         reply_to: email,
-        subject: `New message from ${name} — ${subject}`,
+        subject: `New message from ${name} - ${subject}`,
         html: `
           <!DOCTYPE html>
           <html lang="en">

@@ -1,4 +1,4 @@
-# GA4 Analytics Integration — Design Spec
+# GA4 Analytics Integration - Design Spec
 
 **Date:** 2026-05-22  
 **Status:** Approved
@@ -20,7 +20,7 @@ Add two `<Script>` tags to `app/layout.tsx` using `next/script` with `strategy="
 1. The GA4 loader: `https://www.googletagmanager.com/gtag/js?id=<MEASUREMENT_ID>`
 2. An inline initialization script that calls `window.gtag('config', ...)` with the Measurement ID
 
-The Measurement ID is read from `process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID` — set in `.env.local` for local dev and as a Netlify environment variable for production.
+The Measurement ID is read from `process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID` - set in `.env.local` for local dev and as a Netlify environment variable for production.
 
 ### Analytics Utility
 
@@ -34,13 +34,13 @@ It guards against `window.gtag` not being defined (e.g., during SSR or if the sc
 
 ### Event Wiring
 
-Each component calls `trackEvent` on user-initiated actions (click handlers, form submit). No page-level instrumentation is needed — GA4 tracks pageviews automatically via the `config` call.
+Each component calls `trackEvent` on user-initiated actions (click handlers, form submit). No page-level instrumentation is needed - GA4 tracks pageviews automatically via the `config` call.
 
 ---
 
 ## Events
 
-All 5 events are marked as Conversions in the GA4 dashboard (toggled after deployment — no code change required).
+All 5 events are marked as Conversions in the GA4 dashboard (toggled after deployment - no code change required).
 
 | Event name | Trigger | Component |
 |---|---|---|
@@ -57,7 +57,7 @@ All 5 events are marked as Conversions in the GA4 dashboard (toggled after deplo
 | File | Change |
 |---|---|
 | `app/layout.tsx` | Add GA4 `<Script>` tags |
-| `lib/analytics.ts` | New — typed `trackEvent` utility |
+| `lib/analytics.ts` | New - typed `trackEvent` utility |
 | `components/nav.tsx` | Wire `resume_download` on Resume link |
 | `components/hero.tsx` | Wire `linkedin_click`, `github_click` |
 | `components/projects.tsx` | Wire `github_click`, `project_demo_click` |
@@ -76,7 +76,7 @@ All 5 events are marked as Conversions in the GA4 dashboard (toggled after deplo
 
 ## Post-Deploy: Mark Events as Conversions
 
-After deploying, go to GA4 dashboard → **Admin → Events** and toggle the "Mark as conversion" switch for all 5 events. This requires the events to have fired at least once before they appear in the list — test each interaction locally or in production first.
+After deploying, go to GA4 dashboard → **Admin → Events** and toggle the "Mark as conversion" switch for all 5 events. This requires the events to have fired at least once before they appear in the list - test each interaction locally or in production first.
 
 ---
 

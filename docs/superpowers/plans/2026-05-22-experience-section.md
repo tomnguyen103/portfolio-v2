@@ -27,7 +27,7 @@
 **Files:**
 - Modify: `lib/data.ts`
 
-This is purely additive — existing exports are untouched.
+This is purely additive - existing exports are untouched.
 
 - [ ] **Step 1: Add the `Experience` interface and `experiences` array**
 
@@ -169,7 +169,7 @@ export default function Experience() {
                   <span className="font-normal text-muted text-sm">· {exp.type}</span>
                 </span>
                 <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs bg-sky-500/10 text-sky-500 border border-sky-500/20">
-                  {exp.start} – {exp.end}
+                  {exp.start} - {exp.end}
                 </span>
               </div>
 
@@ -230,7 +230,7 @@ git commit -m "feat: add Experience timeline component"
 
 - [ ] **Step 1: Add "Experience" to the nav links array in nav.tsx**
 
-In `components/nav.tsx`, the `navLinks` array currently is (lines 7–12):
+In `components/nav.tsx`, the `navLinks` array currently is (lines 7-12):
 
 ```ts
 const navLinks = [
@@ -255,7 +255,7 @@ const navLinks = [
 
 - [ ] **Step 2: Update the Skills scroll indicator to point to #experience**
 
-In `components/skills.tsx`, the scroll indicator `<motion.a>` (lines 79–88) currently reads:
+In `components/skills.tsx`, the scroll indicator `<motion.a>` (lines 79-88) currently reads:
 
 ```tsx
       <motion.a
@@ -343,7 +343,7 @@ export default function Home() {
 npm run build
 ```
 
-Expected: build completes with no TypeScript errors and no Next.js page errors. If you see "Export encountered errors on following paths" it means a component has a runtime import issue — check the error path.
+Expected: build completes with no TypeScript errors and no Next.js page errors. If you see "Export encountered errors on following paths" it means a component has a runtime import issue - check the error path.
 
 - [ ] **Step 5: Verify visually in the dev server**
 

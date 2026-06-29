@@ -1,4 +1,4 @@
-# GA4 Analytics Integration — Implementation Plan
+# GA4 Analytics Integration - Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -14,12 +14,12 @@
 
 | File | Change |
 |---|---|
-| `lib/analytics.ts` | Create — typed `trackEvent` utility + `gtag` type declaration |
-| `app/layout.tsx` | Modify — add GA4 `<Script>` tags |
-| `components/nav.tsx` | Modify — wire `resume_download` on both Resume links |
-| `components/hero.tsx` | Modify — wire `linkedin_click`, `github_click` |
-| `components/projects.tsx` | Modify — wire `github_click`, `project_demo_click` per card |
-| `components/contact.tsx` | Modify — wire `linkedin_click`, `github_click`, `contact_form_submit` |
+| `lib/analytics.ts` | Create - typed `trackEvent` utility + `gtag` type declaration |
+| `app/layout.tsx` | Modify - add GA4 `<Script>` tags |
+| `components/nav.tsx` | Modify - wire `resume_download` on both Resume links |
+| `components/hero.tsx` | Modify - wire `linkedin_click`, `github_click` |
+| `components/projects.tsx` | Modify - wire `github_click`, `project_demo_click` per card |
+| `components/contact.tsx` | Modify - wire `linkedin_click`, `github_click`, `contact_form_submit` |
 
 ---
 
@@ -155,7 +155,7 @@ Add at the top of the file:
 import { trackEvent } from "@/lib/analytics";
 ```
 
-- [ ] **Step 2: Add `onClick` to the desktop Resume link (line 53–60)**
+- [ ] **Step 2: Add `onClick` to the desktop Resume link (line 53-60)**
 
 Replace:
 ```tsx
@@ -182,7 +182,7 @@ With:
 </a>
 ```
 
-- [ ] **Step 3: Add `onClick` to the mobile Resume link (line 89–97)**
+- [ ] **Step 3: Add `onClick` to the mobile Resume link (line 89-97)**
 
 Replace:
 ```tsx
@@ -236,7 +236,7 @@ Add at the top of the file:
 import { trackEvent } from "@/lib/analytics";
 ```
 
-- [ ] **Step 2: Add `onClick` to the LinkedIn button (line 98–105)**
+- [ ] **Step 2: Add `onClick` to the LinkedIn button (line 98-105)**
 
 Replace:
 ```tsx
@@ -263,7 +263,7 @@ With:
 </a>
 ```
 
-- [ ] **Step 3: Add `onClick` to the GitHub button (line 106–113)**
+- [ ] **Step 3: Add `onClick` to the GitHub button (line 106-113)**
 
 Replace:
 ```tsx
@@ -316,7 +316,7 @@ Add at the top of the file:
 import { trackEvent } from "@/lib/analytics";
 ```
 
-- [ ] **Step 2: Add `onClick` to the project GitHub link (line 80–87)**
+- [ ] **Step 2: Add `onClick` to the project GitHub link (line 80-87)**
 
 Replace:
 ```tsx
@@ -343,7 +343,7 @@ With:
 </a>
 ```
 
-- [ ] **Step 3: Add `onClick` to the project Demo link (line 88–97)**
+- [ ] **Step 3: Add `onClick` to the project Demo link (line 88-97)**
 
 Replace:
 ```tsx
@@ -421,7 +421,7 @@ if (res.ok) {
 }
 ```
 
-- [ ] **Step 3: Add `onClick` to the GitHub social icon (line 141–149)**
+- [ ] **Step 3: Add `onClick` to the GitHub social icon (line 141-149)**
 
 Replace:
 ```tsx
@@ -450,7 +450,7 @@ With:
 </a>
 ```
 
-- [ ] **Step 4: Add `onClick` to the LinkedIn social icon (line 150–158)**
+- [ ] **Step 4: Add `onClick` to the LinkedIn social icon (line 150-158)**
 
 Replace:
 ```tsx

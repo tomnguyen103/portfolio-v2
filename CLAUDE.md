@@ -1,4 +1,4 @@
-# Portfolio v2 — Requirements & Spec
+# Portfolio v2 - Requirements & Spec
 
 ## Overview
 
@@ -29,7 +29,7 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 ## Design System
 
 ### Theme
-- **Default**: Time-based — light (6 am–6 pm) / dark (6 pm–6 am), set by `TimeBasedTheme` component on first load
+- **Default**: Time-based - light (6 am-6 pm) / dark (6 pm-6 am), set by `TimeBasedTheme` component on first load
 - **Override**: Dark/light toggle in the nav bar; once the user picks a theme it is persisted via `localStorage` (`theme-user-set` flag) and `next-themes`, overriding time-based logic on future visits
 
 ### Color Palette - "Obsidian & Ember"
@@ -109,7 +109,7 @@ A single ember hairline is the connective motif: it draws across on load beneath
 ```
 portfolio-v2/
 ├── app/
-│   ├── icon.jpg            # Favicon — profile photo (overrides favicon.ico)
+│   ├── icon.jpg            # Favicon - profile photo (overrides favicon.ico)
 │   ├── layout.tsx          # Root layout: fonts (Bricolage/Geist/Geist Mono), grain overlay, ThemeProvider, metadata
 │   ├── page.tsx            # Page: composes all section components
 │   └── globals.css         # Tailwind + Obsidian&Ember tokens + ledger-line/grain/marquee utilities + reduced-motion
@@ -130,7 +130,7 @@ portfolio-v2/
 │   ├── data.ts             # All static content: skillCards, projects, experiences, tagClass pill style
 │   ├── translations.ts     # EN/VI translation strings for all sections
 │   ├── analytics.ts        # trackEvent() wrapper around window.gtag
-│   └── useInViewTracking.ts # IntersectionObserver hook — fires section_viewed GA4 event once
+│   └── useInViewTracking.ts # IntersectionObserver hook - fires section_viewed GA4 event once
 ├── public/
 │   ├── images/
 │   │   ├── pic00.jpg       # Profile photo
@@ -220,9 +220,9 @@ portfolio-v2/
 
 | Company | Title | Period |
 |---|---|---|
-| Texas Regional Physicians | Software Developer | Apr 2024 – Present |
-| Memorial MRI and Diagnostic | Software Developer | Nov 2021 – Apr 2024 |
-| Coding Dojo | Resident Full Stack Developer | Sep 2019 – Nov 2021 |
+| Texas Regional Physicians | Software Developer | Apr 2024 - Present |
+| Memorial MRI and Diagnostic | Software Developer | Nov 2021 - Apr 2024 |
+| Coding Dojo | Resident Full Stack Developer | Sep 2019 - Nov 2021 |
 
 ---
 
@@ -278,24 +278,24 @@ A floating **back-to-top** button (`components/back-to-top.tsx`) renders site-wi
 
 ## Analytics (GA4)
 
-GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractive">` and is gated on the `NEXT_PUBLIC_GA_MEASUREMENT_ID` env var — if the var is absent no scripts are injected and no events fire.
+GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractive">` and is gated on the `NEXT_PUBLIC_GA_MEASUREMENT_ID` env var - if the var is absent no scripts are injected and no events fire.
 
-**`lib/analytics.ts`** — exports a single `trackEvent(eventName, params?)` helper that calls `window.gtag("event", ...)` and is a no-op during SSR or when gtag is not initialized.
+**`lib/analytics.ts`** - exports a single `trackEvent(eventName, params?)` helper that calls `window.gtag("event", ...)` and is a no-op during SSR or when gtag is not initialized.
 
-**`lib/useInViewTracking.ts`** — React hook wrapping `IntersectionObserver` (threshold 0.3). Fires `section_viewed` once per section per page load, then disconnects.
+**`lib/useInViewTracking.ts`** - React hook wrapping `IntersectionObserver` (threshold 0.3). Fires `section_viewed` once per section per page load, then disconnects.
 
 ### Tracked events
 
 | Event | Where fired | Extra params |
 |---|---|---|
-| `resume_view` | Nav — Resume link (desktop + mobile) | — |
+| `resume_view` | Nav - Resume link (desktop + mobile) | - |
 | `section_viewed` | Skills, Experience, Projects, Contact | `{ section }` |
 | `linkedin_click` | Hero CTA, Contact social links | `{ location }` |
 | `github_click` | Hero CTA, Projects cards, Contact social links | `{ location }` |
-| `project_demo_click` | Projects — Demo button | `{ project_title }` |
-| `project_tab_click` | Projects — tab control (Latest/Earlier) | `{ tab_label }` |
-| `email_click` | Contact — mailto link | — |
-| `contact_form_submit` | Contact — form submit | — |
+| `project_demo_click` | Projects - Demo button | `{ project_title }` |
+| `project_tab_click` | Projects - tab control (Latest/Earlier) | `{ tab_label }` |
+| `email_click` | Contact - mailto link | - |
+| `contact_form_submit` | Contact - form submit | - |
 
 ---
 
@@ -308,7 +308,7 @@ description: "Full Stack Developer & AI Engineer specializing in scalable web ap
 
 Also set: `metadataBase` (`https://www.tomnguyen.me`), `keywords`, `authors`/`creator`, full `openGraph` (type website, siteName, locale `en_US`, image `/images/pic00.jpg`) and `twitter` (`summary` card) blocks, plus a `viewport` export with light/dark `themeColor` (`#f3f1ec` / `#0b0b0d`).
 
-Favicon: `app/icon.jpg` (profile photo — App Router file-based icon convention, overrides any favicon.ico)
+Favicon: `app/icon.jpg` (profile photo - App Router file-based icon convention, overrides any favicon.ico)
 
 ---
 
@@ -366,33 +366,33 @@ Do not ask to push without confirming CLAUDE.md was updated first.
 
 ### Keep `resume.html` and `resume-vi.html` in sync
 Whenever any of the following are modified, **always update `public/resume.html`**, **`public/resume-vi.html`**, and the relevant strings in **`lib/translations.ts`** (`vi` key) at the end of the task:
-- `lib/data.ts` — experiences, projects, or skillCards
-- `components/hero.tsx` — bio text or subtitle roles
-- `components/contact.tsx` — email address or social links
+- `lib/data.ts` - experiences, projects, or skillCards
+- `components/hero.tsx` - bio text or subtitle roles
+- `components/contact.tsx` - email address or social links
 - Any other content that appears on the resume (phone number, summary, etc.)
 
 This ensures both resume pages and the live site always reflect the latest portfolio content without needing a manual reminder.
 
 ### Project links in `resume.html` and `resume-vi.html`
-Each project entry shows masked link text — never raw URLs:
+Each project entry shows masked link text - never raw URLs:
 - Always include a **GitHub** link labeled `"GitHub"`
 - If the project has a `demo` URL, include it after a `|` separator labeled `"Live Demo"` (or `"Demo Video"` for YouTube links)
 - Example: `GitHub | Live Demo`
 
 ### Use single dash everywhere
-Always use a plain hyphen `-` as a separator or dash in all files across the project — HTML, TSX, TS, and any other content. Never use `&mdash;`, `&ndash;`, `—`, or `–` (em dash / en dash) anywhere in visible content or string literals.
+Always use a plain hyphen `-` as a separator or dash in all files across the project - HTML, TSX, TS, and any other content. Never use `-`, `-`, `-`, or `-` (em dash / en dash) anywhere in visible content or string literals.
 
 ### All links in `resume.html` and `resume-vi.html` open in a new tab
-Both `resume.html` and `resume-vi.html` include an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script from either file — it ensures the resume page stays open when a visitor clicks any link.
+Both `resume.html` and `resume-vi.html` include an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script from either file - it ensures the resume page stays open when a visitor clicks any link.
 
 ### Print pagination in `resume.html` and `resume-vi.html`
 Both resume files include `@media print` rules to prevent awkward page breaks. Key rules:
-- `break-inside: avoid` + `page-break-inside: avoid` on `.entry` — keeps each job/project block whole (pushes it to the next page rather than splitting mid-entry)
-- `break-after: avoid` + `page-break-after: avoid` on `.section-title` — prevents section headings from orphaning at the bottom of a page
-- `break-inside: avoid` + `page-break-inside: avoid` on `.edu-entry` — keeps education entries whole
-- `orphans: 2; widows: 2` on `li` and `p` — prevents single lines stranding at page edges
+- `break-inside: avoid` + `page-break-inside: avoid` on `.entry` - keeps each job/project block whole (pushes it to the next page rather than splitting mid-entry)
+- `break-after: avoid` + `page-break-after: avoid` on `.section-title` - prevents section headings from orphaning at the bottom of a page
+- `break-inside: avoid` + `page-break-inside: avoid` on `.edu-entry` - keeps education entries whole
+- `orphans: 2; widows: 2` on `li` and `p` - prevents single lines stranding at page edges
 
-Always include both the modern (`break-*`) and legacy (`page-break-*`) properties — Chrome's print engine responds more reliably to the legacy form.
+Always include both the modern (`break-*`) and legacy (`page-break-*`) properties - Chrome's print engine responds more reliably to the legacy form.
 
 ---
 
