@@ -16,67 +16,73 @@ export default function Experience() {
   }));
 
   return (
-    <section ref={sectionRef} id="experience" className="px-6 py-24 md:py-32">
-      <div className="max-w-3xl mx-auto w-full">
-        <motion.h2
-          className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"
+    <section ref={sectionRef} id="experience" className="px-6 py-28 md:py-40">
+      <div className="mx-auto w-full max-w-4xl">
+        <motion.div
+          className="mb-16 max-w-2xl"
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          {t.experience.heading}
-        </motion.h2>
-        <motion.p
-          className="text-muted text-center mb-12"
-          initial={reduce ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          {t.experience.subheading}
-        </motion.p>
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+            {t.experience.heading}
+          </h2>
+          <p className="mt-4 text-lg text-muted">{t.experience.subheading}</p>
+        </motion.div>
 
-        <div className="relative ml-1.5">
-          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-gradient-to-b from-sky-500/50 via-sky-500/25 to-transparent" />
+        {/* The ledger - a single ember spine threading every role */}
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="absolute left-0 top-1 bottom-0 w-px bg-gradient-to-b from-accent/60 via-accent/20 to-transparent"
+          />
 
           {localizedExperiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${exp.start}`}
-              initial={reduce ? false : { opacity: 0, y: 40 }}
+              initial={reduce ? false : { opacity: 0, y: 36 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: reduce ? 0 : index * 0.1 }}
-              className="relative pl-8 mb-10 last:mb-0"
+              transition={{ duration: 0.55, delay: reduce ? 0 : index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative mb-14 pl-8 last:mb-0 sm:pl-12"
             >
-              <span className="absolute left-[-7px] top-1.5 flex w-3 h-3">
+              {/* Spine marker */}
+              <span className="absolute left-0 top-1.5 flex h-3 w-3 -translate-x-1/2">
                 {exp.end === "Present" && (
                   <span
-                    className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-60 animate-ping"
-                    style={{ animationDuration: "2.5s" }}
+                    className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-ping"
+                    style={{ animationDuration: "2.6s" }}
                   />
                 )}
-                <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500 ring-2 ring-sky-500/20" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-accent ring-4 ring-[color:var(--canvas)]" />
               </span>
 
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
-                <span className="font-semibold text-foreground">
-                  {exp.company}{" "}
-                  <span className="font-normal text-muted text-sm">· {exp.type}</span>
-                </span>
-                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-sky-500/10 text-sky-500 border border-sky-500/20">
+              <div className="mb-1 flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="font-display text-xl font-medium tracking-tight text-foreground sm:text-2xl">
+                  {exp.company}
+                  <span className="ml-2 align-middle font-sans text-sm font-normal text-muted">
+                    {exp.type}
+                  </span>
+                </h3>
+                <span className="shrink-0 font-mono text-xs uppercase tracking-[0.12em] text-accent">
                   {exp.start} - {exp.end}
                 </span>
               </div>
 
-              <p className="font-medium text-foreground mb-0.5">{exp.title}</p>
-              <p className="text-sm text-muted mb-3">{exp.location}</p>
+              <p className="font-medium text-foreground/90">{exp.title}</p>
+              <p className="mb-5 font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                {exp.location}
+              </p>
 
-              <ul className="space-y-1.5">
+              <ul className="space-y-3">
                 {exp.bullets.map((bullet, bi) => (
-                  <li key={bi} className="text-base text-muted flex gap-2">
-                    <span className="text-accent mt-0.5 shrink-0">•</span>
-                    {bullet}
+                  <li key={bi} className="flex gap-3 text-[0.95rem] leading-relaxed text-muted">
+                    <span
+                      aria-hidden="true"
+                      className="mt-2.5 h-px w-3.5 shrink-0 bg-accent/60"
+                    />
+                    <span>{bullet}</span>
                   </li>
                 ))}
               </ul>

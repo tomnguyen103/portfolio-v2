@@ -9,7 +9,7 @@ export default function LanguageToggle() {
     <button
       onClick={() => setLocale(locale === "en" ? "vi" : "en")}
       aria-label="Toggle language"
-      className="px-2 py-1 text-sm font-medium text-muted hover:text-foreground transition-colors rounded-lg hover:bg-surface"
+      className="cursor-pointer rounded-full px-2.5 py-1.5 font-mono text-xs font-medium tracking-wider text-muted transition-colors hover:bg-foreground/5 hover:text-foreground"
     >
       {locale === "en" ? "VI" : "EN"}
     </button>
