@@ -202,8 +202,8 @@ with:
 
 - [ ] **Step 4: Verify the removed class has no remaining references**
 
-Run: `grep -rn "text-gradient-accent\|grad-from\|grad-to" --include="*.tsx" --include="*.css" .`
-Expected: no matches anywhere in the repo.
+Run: `grep -rn "text-gradient-accent\|grad-from" --include="*.tsx" --include="*.css" .`
+Expected: no matches anywhere in the repo (`--grad-to` is intentionally retained for `.hero-glow` and is excluded from this check).
 
 - [ ] **Step 5: Typecheck**
 
