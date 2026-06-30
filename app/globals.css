@@ -245,34 +245,6 @@ section[id] {
   border-bottom-color: var(--accent);
 }
 
-/* Editorial portrait plate: high-contrast warm B&W that blooms to full
-   color on hover (a print-to-life reveal). Edges feather into the paper. */
-.duotone {
-  position: relative;
-  isolation: isolate;
-}
-.duotone img {
-  filter: grayscale(1) sepia(0.16) contrast(1.06) brightness(1.02);
-  transition: filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@media (hover: hover) {
-  .duotone:hover img {
-    filter: grayscale(0) sepia(0) contrast(1.02);
-  }
-}
-.duotone::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    transparent 58%,
-    color-mix(in srgb, var(--canvas) 60%, transparent)
-  );
-}
-
 /* Project plate image hover */
 .plate-img {
   transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);

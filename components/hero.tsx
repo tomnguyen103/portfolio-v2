@@ -11,10 +11,11 @@ export default function Hero() {
   const reduce = useReducedMotion();
 
   const rise: Variants = {
-    hidden: { y: "115%" },
+    hidden: { opacity: 0, y: 42 },
     show: (i: number) => ({
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.9, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.85, delay: 0.1 + i * 0.1, ease: [0.16, 1, 0.3, 1] },
     }),
   };
   const fade: Variants = {
@@ -45,21 +46,21 @@ export default function Hero() {
       </motion.div>
 
       {/* Masthead - stacked, each line rises from behind a clipping rule */}
-      <h1 className="mt-5 font-display text-[16.5vw] font-extrabold leading-[0.82] tracking-[-0.03em] text-foreground sm:text-[13vw] lg:text-[9rem]">
+      <h1 className="mt-5 font-display text-[16vw] font-extrabold leading-[0.86] tracking-[-0.03em] text-foreground sm:text-[13vw] lg:text-[9rem]">
         {["Tom", "Nguyen"].map((word, i) => (
-          <span key={word} className="mask">
-            <motion.span
-              className="block"
-              variants={rise}
-              initial={initial}
-              animate="show"
-              custom={i}
-            >
-              {word}
-            </motion.span>
-          </span>
+          <motion.span
+            key={word}
+            className="block pb-[0.05em]"
+            variants={rise}
+            initial={initial}
+            animate="show"
+            custom={i}
+          >
+            {word}
+          </motion.span>
         ))}
       </h1>
+      {/* pb on each line keeps descenders (g/y in "Nguyen") clear of the next element */}
 
       {/* Drawn rule */}
       <div
@@ -130,7 +131,7 @@ export default function Hero() {
           custom={1}
           className="lg:col-span-5"
         >
-          <div className="duotone relative aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-sm lg:ml-auto">
+          <div className="relative aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-sm border border-[color:var(--hairline-strong)] lg:ml-auto">
             <Image
               src="/images/pic00.jpg"
               alt="Tom Nguyen"
