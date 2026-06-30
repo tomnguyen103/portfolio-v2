@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono, Syne } from "next/font/google";
+import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import TimeBasedTheme from "@/components/time-based-theme";
 import { LanguageProvider } from "@/components/language-provider";
@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-// Display face: Syne - a wide editorial grotesque for mastheads and headings
-const syne = Syne({
+// Display face: Archivo - a clean, professional editorial grotesque
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-archivo",
   weight: ["600", "700", "800"],
 });
 
@@ -77,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
       suppressHydrationWarning
     >
       <body className="antialiased">

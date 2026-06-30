@@ -171,7 +171,7 @@ export default function Contact() {
       {/* Colophon */}
       <footer className="mt-24 flex flex-col gap-2 border-t border-[color:var(--hairline)] pt-8 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-faint sm:flex-row sm:items-center sm:justify-between">
         <span>{t.contact.footer}</span>
-        <span>Set in Syne &amp; Geist</span>
+        <span>Set in Archivo &amp; Geist</span>
       </footer>
     </section>
   );
