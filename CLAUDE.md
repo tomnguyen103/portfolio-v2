@@ -38,7 +38,7 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 Dark mode:
   background:  #0a0a0f
   surface:     #111827
-  accent:      #2f8fd0  (refined sky — deeper/less neon than stock sky-500)
+  accent:      #2f8fd0  (refined sky - deeper/less neon than stock sky-500)
   accent-hover:#1c74b3
   text:        #f9fafb
   muted:       #6b7280
@@ -52,7 +52,7 @@ Light mode:
   muted:       #64748b
 ```
 
-Accent is used deliberately sparingly ("quiet precision" pass) — reserved for the primary CTA fill, links/hover states, the nav active-link, focus rings, and a handful of other intentional moments. Surface-tinted fills (e.g. a pill's background) were replaced with hairline borders + accent text where that distinction matters — see Hero and Experience below.
+Accent is used deliberately sparingly ("quiet precision" pass) - reserved for the primary CTA fill, links/hover states, the nav active-link, focus rings, and a handful of other intentional moments. Surface-tinted fills (e.g. a pill's background) were replaced with hairline borders + accent text where that distinction matters - see Hero and Experience below.
 
 ### Typography
 - Font family: `Geist` (sans), system-ui fallback; `Geist Mono` for tech-tag pills and date ranges (via the `font-mono` utility / `--font-mono` token)
@@ -163,7 +163,7 @@ portfolio-v2/
 - **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
 - **Availability badge**: above the heading - mono pill with pulsing emerald status dot, text `t.hero.availability` ("Open to new opportunities")
 - **Photo**: `images/pic00.jpg` - circular frame, hairline `ring-1 ring-foreground/10` + minimal `shadow-sm` + slow-rotating `.avatar-ring` conic accent arc
-- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, solid `text-foreground` (no gradient); scales from `text-4xl` (mobile) up to `text-8xl` (`xl:`) with `xl:tracking-[-0.02em]` at the largest size; name kept on one line via `whitespace-nowrap` — this caps how large the mobile tier can go before the name clips, which is why the unprefixed/mobile size stays at `text-4xl` while larger breakpoints scale up more aggressively
+- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, solid `text-foreground` (no gradient); scales from `text-4xl` (mobile) up to `text-8xl` (`xl:`) with `xl:tracking-[-0.02em]` at the largest size; name kept on one line via `whitespace-nowrap` - this caps how large the mobile tier can go before the name clips, which is why the unprefixed/mobile size stays at `text-4xl` while larger breakpoints scale up more aggressively
 - **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
 - **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
 - **CTA buttons**:
