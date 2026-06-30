@@ -46,11 +46,11 @@ export default function Hero() {
       </motion.div>
 
       {/* Masthead - stacked, each line rises from behind a clipping rule */}
-      <h1 className="mt-5 font-display text-[16vw] font-extrabold leading-[0.86] tracking-[-0.03em] text-foreground sm:text-[13vw] lg:text-[9rem]">
+      <h1 className="mt-5 pb-[0.12em] font-display text-[16vw] font-extrabold leading-[0.92] tracking-[-0.03em] text-foreground sm:text-[13vw] lg:text-[9rem]">
         {["Tom", "Nguyen"].map((word, i) => (
           <motion.span
             key={word}
-            className="block pb-[0.05em]"
+            className="block pb-[0.12em]"
             variants={rise}
             initial={initial}
             animate="show"
@@ -60,7 +60,7 @@ export default function Hero() {
           </motion.span>
         ))}
       </h1>
-      {/* pb on each line keeps descenders (g/y in "Nguyen") clear of the next element */}
+      {/* leading 0.92 + bottom padding guarantee the g/y descenders in "Nguyen" never clip */}
 
       {/* Drawn rule */}
       <div
