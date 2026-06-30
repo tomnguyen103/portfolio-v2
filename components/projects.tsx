@@ -219,7 +219,7 @@ export default function Projects() {
                   <div className="flex flex-col justify-between p-6 md:p-8 flex-1">
                     <div>
                       {featured && (
-                        <span className="inline-block mb-3 px-2.5 py-0.5 rounded-full text-xs font-mono uppercase tracking-wider bg-accent/10 text-accent border border-accent/30">
+                        <span className="inline-block mb-3 px-2.5 py-0.5 rounded-full text-xs font-mono uppercase tracking-wider bg-transparent text-accent border border-accent/30">
                           {t.projects.featured}
                         </span>
                       )}
