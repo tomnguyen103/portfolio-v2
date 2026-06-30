@@ -74,7 +74,7 @@ export default function Skills() {
     <section ref={sectionRef} id="skills" className="px-6 py-24 md:py-32">
       <div className="max-w-6xl mx-auto w-full">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-center mb-4 text-foreground"
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
