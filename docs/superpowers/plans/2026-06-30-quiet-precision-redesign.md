@@ -31,7 +31,7 @@
 
 **Interfaces:**
 - Produces: `--accent` / `--accent-hover` new values (`#0f6fb8` / `#0b5990` light, `#2f8fd0` / `#1c74b3` dark) that Tasks 2, 4, and 5 read via the existing `text-accent` / `border-accent` / `bg-accent` Tailwind utilities — no new token names.
-- Removes: `--grad-from`, `--grad-to`, `.text-gradient-accent` — Task 2 depends on this removal (it deletes the last two usages).
+- Removes: `--grad-from` and `.text-gradient-accent` — Task 2 depends on this removal (it deletes the last `.tsx` usage of the class). **`--grad-to` is kept** — `.hero-glow`'s second radial blob (`app/globals.css:113`) also consumes it and that effect is out of scope; removing it would silently break part of an untouched effect (caught during Task 2's verification grep — see Step 4 below).
 
 - [ ] **Step 1: Create the feature branch**
 
@@ -65,6 +65,7 @@ with:
   --accent-hover: #0b5990;
   --fg: #0f172a;
   --muted: #64748b;
+  --grad-to: #0891b2; /* cyan-600 — still consumed by .hero-glow's second blob */
 }
 ```
 
@@ -95,6 +96,7 @@ with:
   --accent-hover: #1c74b3;
   --fg: #f9fafb;
   --muted: #6b7280;
+  --grad-to: #22d3ee; /* cyan-400 — still consumed by .hero-glow's second blob */
 }
 ```
 

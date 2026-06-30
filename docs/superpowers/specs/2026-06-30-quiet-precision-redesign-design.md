@@ -31,10 +31,11 @@ Two full redesigns were already built and reverted today (Obsidian & Ember — w
 | `--surface` | `#111827` | unchanged | `#f8fafc` | unchanged |
 | `--fg` | `#f9fafb` | unchanged | `#0f172a` | unchanged |
 | `--muted` | `#6b7280` | unchanged | `#64748b` | unchanged |
-| `--grad-from` / `--grad-to` | `#38bdf8` / `#22d3ee` (dark), `#0284c7` / `#0891b2` (light) | **removed** | — | — |
+| `--grad-from` | `#38bdf8` (dark), `#0284c7` (light) | **removed** | — | — |
+| `--grad-to` | `#22d3ee` (dark), `#0891b2` (light) | unchanged | unchanged | unchanged |
 
 - `--accent` / `--accent-hover` deepen and desaturate from stock Tailwind sky-500/600 toward a more considered, less "default template" blue. Verify both shades pass WCAG AA for normal text against their respective `--bg` and `--surface` during implementation; nudge the value if they don't.
-- `--grad-from` / `--grad-to` are removed entirely along with the `.text-gradient-accent` class that's their only consumer (see Hero, below). No other rule in `globals.css` references them.
+- `--grad-from` is removed along with the `.text-gradient-accent` class that was its only consumer (see Hero, below). `--grad-to` is **kept** — `.hero-glow`'s second radial blob also consumes it (`app/globals.css:113`), and that effect is explicitly out of scope, so the token stays even though its gradient-text use is gone.
 
 **Accent usage — stays as-is:** primary CTA fill (hero, contact submit), links/hover states, nav active-link text, focus-visible ring, typed-role text, About's mono eyebrow label, skill-card icons, card-spotlight hover glow, project card border-hover, nav resume button. These are already either text-only, hover-only, or a single deliberate filled control — exactly the "moments that should pop" the principle is for.
 
