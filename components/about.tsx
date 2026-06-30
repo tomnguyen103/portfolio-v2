@@ -9,19 +9,16 @@ function Stat({
   value,
   suffix = "",
   label,
-  delay,
 }: {
   value: number;
   suffix?: string;
   label: string;
-  delay: number;
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const [display, setDisplay] = useState(0);
 
-  // Count up from 0 the first time the stat scrolls into view
   useEffect(() => {
     if (!inView) return;
     if (reduce) {
@@ -30,22 +27,19 @@ function Stat({
     }
     const controls = animate(0, value, {
       duration: 1.2,
-      delay,
       ease: "easeOut",
       onUpdate: (v) => setDisplay(Math.round(v)),
     });
     return () => controls.stop();
-  }, [inView, reduce, value, delay]);
+  }, [inView, reduce, value]);
 
   return (
     <div ref={ref}>
-      <div className="font-display text-5xl font-semibold tracking-tight text-foreground md:text-6xl">
+      <div className="font-display text-5xl font-bold tracking-tight text-foreground">
         {display}
         <span className="text-accent">{suffix}</span>
       </div>
-      <div className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-muted">
-        {label}
-      </div>
+      <div className="label mt-2">{label}</div>
     </div>
   );
 }
@@ -55,35 +49,31 @@ export default function About() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="about" className="px-6 py-28 md:py-40">
+    <section id="about" className="mx-auto max-w-[78rem] px-6 py-24 md:py-32">
       <motion.div
-        className="mx-auto max-w-4xl"
-        initial={reduce ? false : { opacity: 0, y: 30 }}
+        className="grid gap-x-10 gap-y-10 lg:grid-cols-12"
+        initial={reduce ? false : { opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
-          {t.hero.aboutLabel}
-        </span>
+        {/* Marginalia: numeral + label */}
+        <div className="lg:col-span-3">
+          <div className="font-display text-6xl font-bold leading-none text-faint">01</div>
+          <div className="label mt-3">{t.hero.aboutLabel}</div>
+        </div>
 
-        <p className="mt-7 text-balance text-2xl font-light leading-[1.45] tracking-tight text-foreground/90 md:text-[2rem] md:leading-[1.4]">
-          {t.hero.bio}
-        </p>
+        {/* Editorial lead + figures */}
+        <div className="lg:col-span-9">
+          <p className="dropcap max-w-[52ch] text-xl leading-[1.6] text-foreground/90 md:text-[1.45rem] md:leading-[1.55]">
+            {t.hero.bio}
+          </p>
 
-        {/* Stats - plain numbers over hairlines, no boxes */}
-        <div className="mt-14 grid grid-cols-3 gap-6 border-t border-[color:var(--hairline)] pt-10">
-          <Stat value={4} suffix="+" label={t.about.stats.years} delay={0} />
-          <Stat
-            value={projects.length}
-            label={t.about.stats.projects}
-            delay={0.15}
-          />
-          <Stat
-            value={experiences.length}
-            label={t.about.stats.companies}
-            delay={0.3}
-          />
+          <div className="mt-14 grid grid-cols-3 gap-6 border-t border-[color:var(--hairline)] pt-10">
+            <Stat value={4} suffix="+" label={t.about.stats.years} />
+            <Stat value={projects.length} label={t.about.stats.projects} />
+            <Stat value={experiences.length} label={t.about.stats.companies} />
+          </div>
         </div>
       </motion.div>
     </section>
