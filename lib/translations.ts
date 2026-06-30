@@ -18,7 +18,7 @@ export const translations = {
       scrollHint: 'Scroll',
       bio: 'Software Engineer & AI Agent Developer with 4+ years building and maintaining production applications - from clinical portals and enterprise platforms to mobile apps and LLM workflows. CS graduate from Cal State LA, specializing in scalable web architecture, automated solutions, and next-generation AI agents. Focused on delivering reliable software and clear technical guidance that drives real-world business value.',
       roles: ['Software Engineer', 'AI Agent Developer', 'Mendix Engineer','Full Stack Engineer'],
-      cta: { work: 'View work', contact: 'Get in touch', linkedin: 'LinkedIn', github: 'GitHub' },
+      cta: { about: 'About Me', linkedin: 'LinkedIn', github: 'GitHub' },
       tagline:
         'I build production software and AI agents - from clinical portals and enterprise platforms to mobile apps and LLM workflows.',
       aboutLabel: 'About Me',
@@ -77,7 +77,6 @@ export const translations = {
       heading: 'Projects',
       subheading: "Things I've built",
       featured: 'Featured',
-      liveDemo: 'Live demo',
       tabs: ['Latest', 'Earlier'],
       items: [
         {
@@ -159,7 +158,7 @@ export const translations = {
       scrollHint: 'Cuộn xuống',
       bio: 'Kỹ sư Phần mềm & Nhà phát triển AI Agent với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM. Tốt nghiệp Khoa học Máy tính tại Cal State LA, chuyên về kiến trúc web có khả năng mở rộng, giải pháp tự động hóa và AI agent thế hệ mới. Tập trung vào việc cung cấp phần mềm đáng tin cậy và hướng dẫn kỹ thuật rõ ràng tạo ra giá trị thực tế.',
       roles: ['Kỹ Sư Phần Mềm', 'Kỹ Sư AI Agent', 'Kỹ Sư Mendix', 'Kỹ Sư Full Stack'],
-      cta: { work: 'Xem Dự Án', contact: 'Liên Hệ', linkedin: 'LinkedIn', github: 'GitHub' },
+      cta: { about: 'Giới Thiệu Về Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
       tagline:
         'Tôi xây dựng phần mềm production và AI agent - từ cổng thông tin lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và quy trình LLM.',
       aboutLabel: 'Giới Thiệu Về Tôi',
@@ -218,7 +217,6 @@ export const translations = {
       heading: 'Dự Án',
       subheading: 'Những gì tôi đã xây dựng',
       featured: 'Nổi Bật',
-      liveDemo: 'Xem demo',
       tabs: ['Mới Nhất', 'Cũ Hơn'],
       items: [
         {

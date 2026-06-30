@@ -10,65 +10,77 @@ export default function Experience() {
   const { t } = useLanguage();
   const reduce = useReducedMotion();
 
-  const entries = experiences.map((exp, i) => ({
+  const localizedExperiences = experiences.map((exp, i) => ({
     ...exp,
     bullets: t.experience.entries[i].bullets,
   }));
 
   return (
-    <section
-      ref={sectionRef}
-      id="experience"
-      className="mx-auto max-w-[78rem] px-6 py-24 md:py-32"
-    >
-      <div className="grid gap-x-10 gap-y-12 lg:grid-cols-12">
-        <div className="lg:col-span-3">
-          <div className="font-display text-6xl font-bold leading-none text-faint">03</div>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground">
-            {t.experience.heading}
-          </h2>
-          <p className="mt-3 max-w-[26ch] text-sm text-muted">{t.experience.subheading}</p>
-        </div>
+    <section ref={sectionRef} id="experience" className="px-6 py-24 md:py-32">
+      <div className="max-w-3xl mx-auto w-full">
+        <motion.h2
+          className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          {t.experience.heading}
+        </motion.h2>
+        <motion.p
+          className="text-muted text-center mb-12"
+          initial={reduce ? false : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {t.experience.subheading}
+        </motion.p>
 
-        <div className="lg:col-span-9">
-          {entries.map((exp, index) => (
-            <motion.article
+        <div className="relative ml-1.5">
+          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-gradient-to-b from-sky-500/50 via-sky-500/25 to-transparent" />
+
+          {localizedExperiences.map((exp, index) => (
+            <motion.div
               key={`${exp.company}-${exp.start}`}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
+              initial={reduce ? false : { opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.55, delay: reduce ? 0 : index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-1 gap-x-8 gap-y-4 border-t border-[color:var(--hairline)] py-10 first:border-t-0 first:pt-0 md:grid-cols-12"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: reduce ? 0 : index * 0.1 }}
+              className="relative pl-8 mb-10 last:mb-0"
             >
-              <div className="md:col-span-4">
-                <div className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+              <span className="absolute left-[-7px] top-1.5 flex w-3 h-3">
+                {exp.end === "Present" && (
+                  <span
+                    className="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-60 animate-ping"
+                    style={{ animationDuration: "2.5s" }}
+                  />
+                )}
+                <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500 ring-2 ring-sky-500/20" />
+              </span>
+
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
+                <span className="font-semibold text-foreground">
+                  {exp.company}{" "}
+                  <span className="font-normal text-muted text-sm">· {exp.type}</span>
+                </span>
+                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-sky-500/10 text-sky-500 border border-sky-500/20">
                   {exp.start} - {exp.end}
-                </div>
-                <div className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-faint">
-                  {exp.location}
-                </div>
-                <div className="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-faint">
-                  {exp.type}
-                </div>
+                </span>
               </div>
 
-              <div className="md:col-span-8">
-                <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                  {exp.company}
-                </h3>
-                <p className="mt-1 text-foreground/80">{exp.title}</p>
-                <ul className="mt-5 space-y-3">
-                  {exp.bullets.map((bullet, bi) => (
-                    <li
-                      key={bi}
-                      className="max-w-[62ch] text-[0.95rem] leading-relaxed text-muted"
-                    >
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.article>
+              <p className="font-medium text-foreground mb-0.5">{exp.title}</p>
+              <p className="text-sm text-muted mb-3">{exp.location}</p>
+
+              <ul className="space-y-1.5">
+                {exp.bullets.map((bullet, bi) => (
+                  <li key={bi} className="text-base text-muted flex gap-2">
+                    <span className="text-accent mt-0.5 shrink-0">•</span>
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           ))}
         </div>
       </div>

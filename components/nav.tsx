@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
 import LanguageToggle from "./language-toggle";
@@ -11,11 +11,12 @@ import { trackEvent } from "@/lib/analytics";
 const sectionIds = ["top", "about", "skills", "experience", "projects", "contact"];
 
 export default function Nav() {
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
   const { locale, t } = useLanguage();
-  const reduce = useReducedMotion();
 
+  // Page scroll progress, smoothed, drawn as a thin accent bar along the top edge
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 220,
@@ -23,6 +24,15 @@ export default function Nav() {
     restDelta: 0.001,
   });
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 80);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Highlight the link of the section currently crossing the middle of the viewport
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -51,108 +61,99 @@ export default function Nav() {
   const resumeHref = locale === "vi" ? "/resume-vi.html" : "/resume.html";
 
   return (
-    <motion.header
-      initial={reduce ? false : { y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--hairline)] bg-[color-mix(in_srgb,var(--canvas)_82%,transparent)] backdrop-blur-md"
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled || menuOpen ? "nav-glass" : "bg-transparent"
+      }`}
     >
-      <div className="mx-auto flex h-14 max-w-[78rem] items-center justify-between gap-4 px-6">
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX: progress }}
+        className="absolute top-0 left-0 right-0 h-0.5 origin-left bg-gradient-to-r from-sky-500 to-cyan-400"
+      />
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="#top"
-          className="font-display text-lg font-bold tracking-tight text-foreground transition-colors hover:text-accent"
+          className="font-bold text-lg tracking-tight hover:text-accent transition-colors"
         >
           Tom Nguyen
         </a>
 
-        {/* Desktop links */}
-        <nav className="hidden items-center gap-6 lg:flex">
-          {navLinks.map((link) => {
-            const active = activeSection === link.href.slice(1);
-            return (
+        <div className="flex items-center gap-2">
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-0.5">
+            {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                aria-current={active ? "true" : undefined}
-                className={`font-mono text-[0.7rem] uppercase tracking-[0.18em] transition-colors ${
-                  active ? "text-accent" : "text-muted hover:text-foreground"
+                aria-current={
+                  activeSection === link.href.slice(1) ? "true" : undefined
+                }
+                className={`px-3 py-2 text-base transition-colors rounded-lg hover:bg-surface ${
+                  activeSection === link.href.slice(1)
+                    ? "text-accent"
+                    : "text-muted hover:text-foreground"
                 }`}
               >
                 {link.label}
               </a>
-            );
-          })}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <a
-            href={resumeHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackEvent("resume_view")}
-            className="hidden font-mono text-[0.7rem] uppercase tracking-[0.18em] text-foreground transition-colors hover:text-accent lg:inline link-underline"
-          >
-            {t.nav.resume}
-          </a>
-          <div className="hidden h-4 w-px bg-[color:var(--hairline-strong)] lg:block" />
-          <LanguageToggle />
-          <ThemeToggle />
-          <button
-            className="text-muted transition-colors hover:text-foreground lg:hidden"
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Scroll progress - a thin oxblood rule along the masthead's lower edge */}
-      <motion.div
-        aria-hidden="true"
-        style={{ scaleX: progress }}
-        className="absolute inset-x-0 bottom-0 h-px origin-left bg-accent"
-      />
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="border-t border-[color:var(--hairline)] px-6 py-4 lg:hidden">
-          <div className="flex flex-col">
-            {navLinks.map((link, i) => {
-              const active = activeSection === link.href.slice(1);
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  aria-current={active ? "true" : undefined}
-                  className={`flex items-baseline gap-3 border-b border-[color:var(--hairline)] py-3 transition-colors ${
-                    active ? "text-accent" : "text-foreground hover:text-accent"
-                  }`}
-                >
-                  <span className="font-mono text-[0.65rem] text-faint">
-                    {String(i).padStart(2, "0")}
-                  </span>
-                  <span className="font-display text-xl">{link.label}</span>
-                </a>
-              );
-            })}
+            ))}
             <a
               href={resumeHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => {
-                setMenuOpen(false);
-                trackEvent("resume_view");
-              }}
-              className="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-accent"
+              onClick={() => trackEvent("resume_view")}
+              className="ml-1 px-3 py-1.5 text-base font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg"
             >
-              {t.nav.resume} &rarr;
+              {t.nav.resume}
             </a>
           </div>
+
+          <LanguageToggle />
+          <ThemeToggle />
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-surface transition-colors text-muted hover:text-foreground"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden border-t border-foreground/5 px-6 py-4 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              aria-current={
+                activeSection === link.href.slice(1) ? "true" : undefined
+              }
+              className={`px-3 py-2.5 text-sm transition-colors rounded-lg hover:bg-surface ${
+                activeSection === link.href.slice(1)
+                  ? "text-accent"
+                  : "text-muted hover:text-foreground"
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href={resumeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => { setMenuOpen(false); trackEvent("resume_view"); }}
+            className="mt-1 px-3 py-2.5 text-sm font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors rounded-lg text-center"
+          >
+            {t.nav.resume}
+          </a>
         </div>
       )}
-    </motion.header>
+    </nav>
   );
 }

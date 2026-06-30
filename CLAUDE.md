@@ -1,4 +1,4 @@
-# Portfolio v2 - Requirements & Spec
+# Portfolio v2 — Requirements & Spec
 
 ## Overview
 
@@ -19,87 +19,73 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 | Styling | Tailwind CSS v4 (CSS-based config via `@theme` in `globals.css`; no `tailwind.config`) |
 | Animations | Framer Motion |
 | Icons | Lucide React (UI icons) + react-icons (brand icons: GitHub, LinkedIn) |
-| Font | Archivo (display) + Geist (sans/body) + Geist Mono (labels) via `next/font/google` |
+| Font | Geist (sans) + Geist Mono via `next/font/google` |
 | Contact form | Netlify Forms |
 | Analytics | Google Analytics 4 (GA4) via `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Deployment config | `netlify.toml` in project root |
 
 ---
 
-## Design System - "The Monograph"
-
-The site is styled like a curated design monograph / arts publication: light, type-led, near-monochrome, carried by typography, structure, and whitespace rather than color.
+## Design System
 
 ### Theme
-- **SSR default**: light (the editorial primary impression)
-- **Time-based**: `TimeBasedTheme` sets light (6 am-6 pm) / dark (6 pm-6 am) on first load
-- **Override**: light/dark toggle in the masthead; once the user picks a theme it persists via `localStorage` (`theme-user-set` flag) and `next-themes`, overriding time-based logic
+- **Default**: Time-based — light (6 am–6 pm) / dark (6 pm–6 am), set by `TimeBasedTheme` component on first load
+- **Override**: Dark/light toggle in the nav bar; once the user picks a theme it is persisted via `localStorage` (`theme-user-set` flag) and `next-themes`, overriding time-based logic on future visits
 
 ### Color Palette
-Near-monochrome. One accent only: oxblood (a lit clay in the dark "ink edition"), used only for live marks (links, the eyebrow tick, the active nav link, the scroll rule, the drop cap, demo links). No blue, no purple, no gradient headings. Raw tokens live in `app/globals.css`, switched on the `.dark` class and exposed to Tailwind via `@theme inline`.
 
-```text
-Light (the page - warm newsprint paper):
-  background:   #efece4   (warm newsprint, desaturated - not a cream cliche)
-  surface:      #f6f4ee
-  surface-2:    #ffffff   (inputs / highest)
-  foreground:   #16140f   (warm near-black ink)
-  muted:        #6a6456
-  faint:        #97917f   (tertiary metadata)
-  accent:       #6e2a24   (oxblood)
-  accent-hover: #531c18
-  on-accent:    #f3efe6
-  hairline:        rgba(22,20,15,0.16)
-  hairline-strong: rgba(22,20,15,0.42)
+```
+Dark mode:
+  background:  #0a0a0f
+  surface:     #111827
+  accent:      #0ea5e9  (sky-500)
+  accent-hover:#0284c7  (sky-600)
+  text:        #f9fafb
+  muted:       #6b7280
 
-Dark (the "ink edition"):
-  background:   #131210   (warm near-black)
-  surface:      #1b1a16
-  surface-2:    #232118
-  foreground:   #ece6da   (warm bone)
-  muted:        #968f7f
-  faint:        #6a655a
-  accent:       #cf7257   (lit clay - the oxblood brightened for ink)
-  accent-hover: #e08a6f
-  on-accent:    #16140f
-  hairline:        rgba(236,230,218,0.14)
-  hairline-strong: rgba(236,230,218,0.40)
+Light mode:
+  background:  #ffffff
+  surface:     #f8fafc
+  accent:      #0ea5e9
+  accent-hover:#0284c7
+  text:        #0f172a
+  muted:       #64748b
 ```
 
 ### Typography
-- **Display**: `Archivo` (`--font-display` / the `.font-display` utility) - a clean, professional editorial grotesque used for the masthead, big section numerals, and headings; tight tracking. No serif.
-- **Body**: `Geist` (sans, `--font-geist-sans`), system-ui fallback
-- **Mono**: `Geist Mono` (`--font-mono`) via the `.label` utility - eyebrows, section/metadata labels, date ranges, tech specs, nav links, colophon
-- All three load via `next/font/google` in `app/layout.tsx`
-- Base font size: 112.5% (18px)
-- The masthead name renders without an `overflow:hidden` mask and with relaxed leading + bottom padding so descenders (the g/y in "Nguyen") never clip
+- Font family: `Geist` (sans), system-ui fallback; `Geist Mono` for tech-tag pills and date ranges (via the `font-mono` utility / `--font-mono` token)
+- Base font size: 112.5% (18px), scales all rem units up
+- Headings: font-bold, tracking-tight
+- Body: font-normal, leading-relaxed
 
-### Spacing & Layout
-- Standard section padding: `py-24 md:py-32`; Hero is `min-h-[100dvh]`
-- Container: `max-w-[78rem]` with `px-6`; sections use an asymmetric **12-column grid** (a 3-col marginalia rail of the numeral + label, a 9-col content column)
-- Corners are near-square: `rounded-sm` for image plates and the portrait; buttons are square (`rounded-[2px]`), not pills
-- Hairlines (`--hairline` / `--hairline-strong`) carry structure: the masthead underline, section dividers, ruled list rows, the experience entries, the form field underlines, the colophon
-- Section numerals **01-05** (big faint Archivo) sit in the marginalia rail as a real table-of-contents sequence (About 01 · Skills 02 · Experience 03 · Projects 04 · Contact 05; the hero is the unnumbered cover)
+### Spacing & Shape
+- Card border radius: `rounded-2xl`
+- Pill/tag border radius: `rounded-full`
+- Section padding: `py-24 md:py-32` for standard sections; Hero is `min-h-[100dvh]`
+- Tech-tag pills: one neutral style via `tagClass` in `lib/data.ts` (`bg-foreground/[0.04] text-foreground/70 border-foreground/10`) + `font-mono`; sky-blue stays the page's only accent color
 
-### Signature
-Editorial **reveals over effects**: masthead lines fade-rise on load; a hairline **rule draws from the left** (`.draw-line`) under the cover and as the nav scroll-progress bar; the opening About paragraph uses a **drop cap** (`.dropcap`, oxblood); links draw an **underline from the left** on hover (`.link-underline`). Big marginalia numerals are the structural motif.
-
-### Animation Rules (Framer Motion + CSS; restrained, all gated by `useReducedMotion` / `prefers-reduced-motion`)
-- **Hero load**: eyebrow, masthead lines, coverline, and CTAs fade-rise (`opacity` + `y`) with a stagger; portrait fades in
-- **Scroll entrance**: `whileInView` fade-up (`y: 20-36 -> 0`), once, light stagger per row/entry/plate
-- **Nav**: thin masthead slides down on mount; active section link in accent (IntersectionObserver, `-45% 0px -50%` band); scroll-progress drawn as an oxblood hairline on the masthead's lower edge (Framer `useScroll` + `useSpring`, no manual scroll listener)
-- **Buttons**: `.btn` press (`translateY(1px)`); primary fills with ink and inverts on hover
-- **Project plates**: image scales subtly on hover (`.plate-img` / `.plate:hover`)
-- **About stats**: count up from 0 on first scroll-into-view (Archivo numerals); instant under reduced motion
-- **Back to top**: editorial "Top" button appears after 700px (`useScroll` + `useMotionValueEvent`, no window scroll listeners)
-- **Material**: a fixed, `pointer-events-none` paper-grain overlay (`.grain`, ~3-5%)
-- **Reduced motion**: global `@media (prefers-reduced-motion: reduce)` block plus per-component `useReducedMotion`
+### Animation Rules
+- **Scroll entrance**: Framer Motion `whileInView` fade-up (`y: 40 → 0, opacity: 0 → 1`), gated by `useReducedMotion`
+- **Stagger**: 0.1s delay between sibling cards
+- **Hero subtitle**: Typing/cycling text effect (type → pause 2s → delete → next role); shows a static role under reduced motion
+- **Hero background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static accent wash (`.hero-glow`, two faint radial gradients, no animation) - replaces the old animated blobs
+- **Hero avatar ring**: slow-rotating sky conic arc around the portrait (`.avatar-ring`, CSS `@keyframes spin-slow`, 12s loop; freezes under reduced motion)
+- **Hero scroll hint**: mouse-pill indicator at the hero's bottom edge (desktop only) with a bouncing accent dot (`.animate-scroll-dot`); links to `#about`
+- **Skills marquee**: Auto-scrolling brand-logo strip (`.animate-marquee`, CSS `@keyframes marquee`); pauses on hover, static under reduced motion
+- **About stats**: numbers count up from 0 on first scroll-into-view (Framer `animate()` + `useInView`); set instantly under reduced motion
+- **Project card hover**: `whileHover` lift (`y: -4`) + border brightens to `accent/40` + image zoom (`group-hover:scale-[1.04]`) + cursor-following accent spotlight (`.card-spotlight`, hover-capable pointers only)
+- **Projects tab switch**: sliding `layoutId` sky pill on the segmented control + direction-aware `AnimatePresence mode="wait"` panel slide (see Projects section spec); instant opacity swap under reduced motion
+- **Experience timeline**: line fades out toward the bottom (gradient); the current ("Present") entry's dot has a slow `animate-ping` pulse
+- **Nav**: Transparent over hero → `backdrop-blur` glass solid after scrolling past 80px; thin sky-to-cyan scroll-progress bar along the top edge (Framer `useScroll` + `useSpring`); active section's link highlighted in accent (IntersectionObserver, middle-of-viewport band)
+- **Back to top**: floating button (bottom-right) fades/scales in after 600px scroll (`AnimatePresence`)
+- **Reduced motion**: global `@media (prefers-reduced-motion: reduce)` block stops loops/transitions; Framer entrances additionally gated via `useReducedMotion` per component
 
 ### Global UX polish (`globals.css`)
-- `::selection` tinted with the accent; thin theme-aware scrollbar; `:focus-visible` accent outline
-- `section[id] { scroll-margin-top: 5.5rem }` so anchored sections clear the fixed masthead
-- Utilities: `.font-display`, `.label`, `.link-underline`, `.draw-line`, `.dropcap`, `.mask` + `.rise`, `.btn` / `.btn-primary` / `.btn-ghost`, `.field`, `.plate-img`, `.grain`
-- Removed in the Monograph rebuild (vs the prior dark "Obsidian & Ember" design): the ember/bronze accent, `.nav-glass` floating island, `.card-spotlight`, the skills marquee (`.animate-marquee`), the experience ledger spine, the project tabs, the hero role cross-fade, and the duotone portrait treatment
+- `::selection` tinted with the accent color
+- Thin theme-aware scrollbar (`scrollbar-width: thin` + WebKit pseudo-elements)
+- `section[id] { scroll-margin-top: 4.5rem }` so anchored sections stop below the fixed nav
+- `:focus-visible` accent outline for keyboard navigation
+- `.text-gradient-accent`: sky-to-cyan gradient text with theme-aware endpoints (`--grad-from` / `--grad-to`); used on the hero name
 
 ---
 
@@ -108,28 +94,28 @@ Editorial **reveals over effects**: masthead lines fade-rise on load; a hairline
 ```
 portfolio-v2/
 ├── app/
-│   ├── icon.jpg            # Favicon - profile photo (overrides favicon.ico)
-│   ├── layout.tsx          # Root layout: fonts (Archivo/Geist/Geist Mono), grain overlay, ThemeProvider (default light), metadata
+│   ├── icon.jpg            # Favicon — profile photo (overrides favicon.ico)
+│   ├── layout.tsx          # Root layout: fonts, ThemeProvider, metadata
 │   ├── page.tsx            # Page: composes all section components
-│   └── globals.css         # Tailwind + "Monograph" tokens + editorial utilities (label/field/dropcap/draw-line/grain) + reduced-motion
+│   └── globals.css         # Tailwind directives + CSS tokens + dot-grid/marquee + reduced-motion
 ├── components/
-│   ├── nav.tsx             # Publication masthead: wordmark + mono nav links, scroll-progress rule, active-section, theme/language toggles, mobile menu
-│   ├── hero.tsx            # Cover: eyebrow, stacked masthead (fade-rise), drawn rule, coverline, CTAs, full-color portrait plate
-│   ├── about.tsx           # About (01): drop-cap editorial lead + count-up stats
-│   ├── skills.tsx          # Skills (02): typeset capability index (hairline-ruled rows)
-│   ├── experience.tsx      # Experience (03): ruled editorial CV (mono date column + clean bullets)
-│   ├── projects.tsx        # Projects (04): six full editorial plates, numbered, varied composition
-│   ├── contact.tsx         # Contact (05): ruled underline form + direct-contact column + colophon footer
-│   ├── back-to-top.tsx     # Floating editorial "Top" button (appears after 700px scroll)
+│   ├── nav.tsx             # Fixed nav, scroll behavior, theme/language toggles, mobile menu
+│   ├── hero.tsx            # Full-viewport hero: dot-grid bg, typing roles, tagline, photo
+│   ├── about.tsx           # About strip: full bio (relocated out of the hero)
+│   ├── skills.tsx          # Skills: brand-logo marquee + grouped category lists
+│   ├── experience.tsx      # Work experience timeline section
+│   ├── projects.tsx        # Projects: tabbed pages (3/tab, newest-first) + featured card + zigzag cards
+│   ├── contact.tsx         # Contact form + social links section
+│   ├── back-to-top.tsx     # Floating back-to-top button (appears after 600px scroll)
 │   ├── theme-toggle.tsx    # Dark/light icon button
 │   ├── language-toggle.tsx # EN/VI language switcher button
 │   ├── language-provider.tsx # LanguageProvider context + useLanguage hook
 │   └── time-based-theme.tsx # Sets theme on first load based on time of day
 ├── lib/
-│   ├── data.ts             # All static content: skillCards, projects, experiences (tagClass export is now legacy/unused)
+│   ├── data.ts             # All static content: skillCards, projects, experiences, tagClass pill style
 │   ├── translations.ts     # EN/VI translation strings for all sections
 │   ├── analytics.ts        # trackEvent() wrapper around window.gtag
-│   └── useInViewTracking.ts # IntersectionObserver hook - fires section_viewed GA4 event once
+│   └── useInViewTracking.ts # IntersectionObserver hook — fires section_viewed GA4 event once
 ├── public/
 │   ├── images/
 │   │   ├── pic00.jpg       # Profile photo
@@ -146,6 +132,7 @@ portfolio-v2/
 ├── CLAUDE.md
 ├── README.md
 ├── netlify.toml
+├── tailwind.config.ts
 ├── next.config.ts
 └── package.json
 ```
@@ -155,133 +142,156 @@ portfolio-v2/
 ## Section Specifications
 
 ### Navigation (`components/nav.tsx`)
-- A thin **publication masthead** fixed to the top (`max-w-[78rem]`, hairline bottom border, paper backdrop-blur, `z-50`); slides down on mount. Not a floating pill.
-- Wordmark "Tom Nguyen" (left, `.font-display`)
-- Nav links: Home · About · Skills · Experience · Projects · Contact, then a Resume link - all `font-mono` uppercase micro-labels
-  - Links show at `lg` and up; below `lg` they collapse to a hamburger menu (mobile menu lists numbered links + Resume)
+- Fixed to top, full width, z-50
+- Logo/name: "Tom Nguyen" (left side)
+- Nav links (right side): Home · About · Skills · Experience · Projects · Contact · Resume
   - All section links use smooth anchor scroll (`href="#section-id"`); About scrolls to `#about`
   - Resume opens `/resume.html` (EN) or `/resume-vi.html` (VI) in a new tab; fires `resume_view` GA4 event
-- **Scroll progress**: a thin oxblood hairline along the masthead's lower edge, `scaleX` driven by Framer `useScroll` + `useSpring`
-- **Active section highlight**: IntersectionObserver (rootMargin `-45% 0px -50% 0px`); active link renders in accent + `aria-current`
-- Language toggle (EN/VI, persists to localStorage) + theme toggle, separated by a hairline divider; hamburger has `aria-expanded`
+- **Scroll progress bar**: thin sky-to-cyan bar along the nav's top edge, `scaleX` driven by Framer `useScroll` + `useSpring`
+- **Active section highlight**: IntersectionObserver (rootMargin `-45% 0px -50% 0px`) tracks which section crosses mid-viewport; that link renders in accent + `aria-current` (desktop and mobile menus)
+- Scroll behavior: `bg-transparent` at top → `.nav-glass` (backdrop-blur + border-b) after 80px scroll; also activates when mobile menu is open
+- Inline nav links show at `md` and up; below `md` they collapse to a hamburger menu - closes only when a nav link is tapped (not on scroll)
+- Language toggle button (EN/VI) — switches locale, persists to localStorage; placed left of theme toggle
+- Theme toggle icon button (rightmost item)
 
 ---
 
-### Hero / Cover (`components/hero.tsx`)
-- `min-h-[100dvh]`, `justify-start` on mobile / `lg:justify-center`, so the masthead always leads (it is not vertically centered into clipping on mobile)
-- **Eyebrow**: `.label` `t.hero.availability` with a small oxblood square marker
-- **Masthead**: "Tom" / "Nguyen" stacked, `.font-display` (Archivo) `text-[16vw] sm:text-[13vw] lg:text-[9rem]`, `leading-[0.92]` + bottom padding so descenders never clip; lines fade-rise on load
-- **Rule**: a hairline `.draw-line` drawn across on load
-- **Coverline**: one positioning line (`t.hero.tagline`), set large and light
-- **CTAs**: primary "View work" (`t.hero.cta.work`) to `#projects` (square ink `.btn-primary`); "Get in touch" (`t.hero.cta.contact`) to `#contact` as a `.link-underline`; then GitHub + LinkedIn icon links (fire `github_click` / `linkedin_click` with `location: "hero"`)
-- **Portrait**: `images/pic00.jpg` - clear, **full-color** headshot in a `rounded-sm` hairline frame (no B&W/duotone, no dimming scrim); fades in. Sits right on desktop, below the CTAs on mobile.
+### Hero (`components/hero.tsx`)
+- `min-h-[100dvh]` full viewport, centered content
+- **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static `.hero-glow` accent wash - no animated blobs
+- **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
+- **Availability badge**: above the heading - mono pill with pulsing emerald status dot, text `t.hero.availability` ("Open to new opportunities")
+- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow + slow-rotating `.avatar-ring` conic accent arc
+- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in sky-to-cyan gradient (`.text-gradient-accent`, name kept on one line)
+- **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
+- **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
+- **CTA buttons**:
+  1. "About Me" → smooth scroll to `#about`
+  2. "LinkedIn" → `https://www.linkedin.com/in/tomnguyen103/` (new tab)
+  3. "GitHub" → `https://github.com/tomnguyen103` (new tab)
+- **Scroll hint**: centered at the hero's bottom edge (desktop only) - mono "Scroll" label (`t.hero.scrollHint`) + mouse pill with bouncing accent dot, links to `#about`
 
 ---
 
-### About (01) (`components/about.tsx`)
-- Section id: `#about`
-- Marginalia rail: big faint `01` numeral + `t.hero.aboutLabel` label
-- Editorial lead: the full bio (`t.hero.bio`) with a `.dropcap` first letter (oxblood)
-- **Stats row** (hairline top border): three count-up stats in `.font-display` numerals - `4+` Years Experience, Featured Projects (`projects.length`), Companies (`experiences.length`); labels from `t.about.stats`; animate 0 -> value once in view (instant under reduced motion)
+### About (`components/about.tsx`)
+- Section id: `#about`; reachable via the "About" nav link (smooth anchor scroll, same behavior as the other sections)
+- Sits between Hero and Skills; holds the full bio (`t.hero.bio`) relocated out of the hero
+- Layout: mono uppercase `About` label (`t.hero.aboutLabel`) beside the bio paragraph (`max-w-4xl`); reveal gated by `useReducedMotion`
+- **Stats row** below the bio (hairline top border): three count-up stats - `4+` Years Experience (static, matches the bio claim), Featured Projects (`projects.length` from `lib/data.ts`), Companies (`experiences.length`); labels from `t.about.stats`; numbers animate 0 → value once in view (instant under reduced motion)
 
 ---
 
-### Skills (02) (`components/skills.tsx`)
+### Skills (`components/skills.tsx`)
 - Section id: `#skills`
-- Marginalia rail: `02` numeral + heading "Skills" (`.font-display`) + subheading "Technologies I work with"
-- **Capability index**: the 6 `skillCards` as hairline-ruled rows - category title (`.font-display`) on the left, the skills typeset as right-aligned `font-mono` text on the right; staggered `whileInView` entrance. No marquee, no icons, no pills.
+- Heading: "Skills" + subheading: "Technologies I work with"
+- **Brand-logo marquee**: auto-scrolling strip of real `react-icons/si` logos + labels (`.animate-marquee`); theme-aware via `currentColor`, pauses on hover, static under reduced motion
+- **Grouped category lists** (below marquee): the 6 `skillCards` rendered as borderless groups (Lucide icon + title with a hairline underline + `tagClass` `font-mono` pills) in a `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`; staggered `whileInView` entrance
+- This borderless grouped style is intentionally distinct from the Projects cards
 
-**Card data** (defined in `lib/data.ts`; the `icon` field is now unused by the editorial layout):
+**Card data** (defined in `lib/data.ts`):
 
 ```ts
-{ title: "AI & LLM Integration",   skills: ["AI Agent Architecture", "Prompt Engineering", "Gemini SDK", "LLM Workflows"] },
-{ title: "Languages & Web",         skills: ["JavaScript", "TypeScript", "Python", "Java", "HTML5", "CSS3"] },
-{ title: "Frameworks",              skills: ["MEAN Stack", "Django", "Flask", "Spring Framework", "Mendix"] },
-{ title: "Databases & ORMs",        skills: ["MySQL", "MongoDB", "SQLite", "Prisma Postgres"] },
-{ title: "Cloud & DevOps",          skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub"] },
-{ title: "Modern Infrastructure",   skills: ["Clerk", "Liveblocks", "Stream Video SDK", "Zustand", "RESTful API Design"] },
+{ icon: Bot,      title: "AI & LLM Integration",   skills: ["AI Agent Architecture", "Prompt Engineering", "Gemini SDK", "LLM Workflows"] },
+{ icon: Code2,    title: "Languages & Web",         skills: ["JavaScript", "TypeScript", "Python", "Java", "HTML5", "CSS3"] },
+{ icon: Layers,   title: "Frameworks",              skills: ["MEAN Stack", "Django", "Flask", "Spring Framework", "Mendix"] },
+{ icon: Database, title: "Databases & ORMs",        skills: ["MySQL", "MongoDB", "SQLite", "Prisma Postgres"] },
+{ icon: Cloud,    title: "Cloud & DevOps",          skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub"] },
+{ icon: Zap,      title: "Modern Infrastructure",   skills: ["Clerk", "Liveblocks", "Stream Video SDK", "Zustand", "RESTful API Design"] },
 ```
 
 ---
 
-### Experience (03) (`components/experience.tsx`)
+### Experience (`components/experience.tsx`)
 - Section id: `#experience`
-- Marginalia rail: `03` numeral + heading "Experience" + subheading "Where I've worked"
-- Each role is a ruled editorial entry (hairline top border): a left mono column (date range in oxblood, location, type) and a right column (company in `.font-display`, job title, and bullets as clean spaced lines - no dash/tick markers)
-- Staggered fade-up entrance; uses `useInViewTracking("experience")` to fire `section_viewed`
+- Heading: "Experience" + subheading: "Where I've worked"
+- Layout: vertical timeline; the left line is a top-to-bottom gradient (`from-sky-500/50 via-sky-500/25 to-transparent`); each entry has a sky-500 dot marker
+- The entry whose `end` is `"Present"` gets a slow `animate-ping` pulse behind its dot
+- Each entry shows: company + type badge, date-range pill (sky-500 tint), job title, location, bullet list
+- Staggered fade-up entrance (0.1s delay per entry, `whileInView`)
+- Date-range pill uses `font-mono`
+- Uses `useInViewTracking("experience")` to fire `section_viewed` GA4 event
 
 **Experience data** (defined in `lib/data.ts` as `experiences: Experience[]`):
 
 | Company | Title | Period |
 |---|---|---|
-| Texas Regional Physicians | Software Developer | Apr 2024 - Present |
-| Memorial MRI and Diagnostic | Software Developer | Nov 2021 - Apr 2024 |
-| Coding Dojo | Resident Full Stack Developer | Sep 2019 - Nov 2021 |
+| Texas Regional Physicians | Software Developer | Apr 2024 – Present |
+| Memorial MRI and Diagnostic | Software Developer | Nov 2021 – Apr 2024 |
+| Coding Dojo | Resident Full Stack Developer | Sep 2019 – Nov 2021 |
 
 ---
 
-### Projects (04) (`components/projects.tsx`)
+### Projects (`components/projects.tsx`)
 - Section id: `#projects`
-- Marginalia rail: `04` numeral + heading "Projects" + subheading "Things I've built"
-- **Editorial plates**: all 6 projects render as large numbered plates (01-06) in a vertical sequence (no tabs). Composition varies per plate via a `LAYOUTS` array (`full` = full-bleed image with caption below, `left` / `right` = image and caption side by side) so no more than two side-by-side splits ever sit in a row.
-  - Image: `next/image` with `fill`; `object-cover` (or `object-contain` + `imageBg` for UI screenshots) in a `rounded-sm` hairline frame; scales subtly on hover (`.plate-img`)
-  - Caption: plate number + (on plate 01) a `Featured` label (`t.projects.featured`), title (`.font-display`), description bullets (clean spaced lines), tech as inline `font-mono` spec text, and `GitHub` + `Live demo` editorial links
-- The first plate is marked `Featured`. Everything stacks to a single column on mobile.
+- Heading: "Projects" + subheading: "Things I've built"
+- Background: `bg-surface/30` to differentiate from Skills section
+- **Tab pagination**: projects are kept newest-first in `lib/data.ts` and chunked into pages of 3 (`TAB_SIZE = 3`); a centered segmented tab control sits between the subheading and the cards
+  - Tab labels come from `t.projects.tabs` ("Latest" / "Earlier", VI: "Mới Nhất" / "Cũ Hơn"); extra pages beyond the label list fall back to zero-padded numbers ("03", "04", ...)
+  - Control style: `rounded-full` container (`bg-surface` + `border-foreground/10` + `p-1`); tab buttons are `font-mono` uppercase `text-xs tracking-wider`; the active tab is a solid sky pill (`bg-accent` + white text) that slides between tabs via Framer Motion `layoutId="projects-tab-pill"` (spring 400/32, duration 0 under reduced motion); inactive tabs are `text-muted hover:text-foreground`
+  - Accessibility: full WAI-ARIA tabs pattern - `role="tablist"/"tab"/"tabpanel"`, `aria-selected`, `aria-controls`/`aria-labelledby`, roving `tabIndex`, ArrowLeft/ArrowRight/Home/End keyboard navigation
+  - Tab switch fires `project_tab_click` GA4 event with `{ tab_label }`
+- **Tab-switch animation**: `AnimatePresence mode="wait"` swaps the page panel with a direction-aware horizontal slide - forward exits to x:-56 / enters from x:+56, backward mirrored (direction stored alongside the tab index in one state tuple); enter 0.4s `[0.16, 1, 0.3, 1]`, exit 0.22s; reduced motion collapses to an instant opacity swap
+- Layout per tab: on the first tab the first project is a larger **featured** card (`Featured` badge via `t.projects.featured`); the remaining cards **zigzag** - image side alternates each row within the tab (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile; later tabs are all zigzag (no featured card)
+  - Image: `next/image` with `fill` + `sizes="(min-width: 768px) 50vw, 100vw"` (container is full-width on mobile, `md:w-1/2` on desktop); `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
+  - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
+- Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)
+- Scroll-triggered fade-up entrance gated by `useReducedMotion`, staggered 0.1s per card; cards re-run the stagger when their tab mounts
 
-**Project data** (defined in `lib/data.ts` as `projects: Project[]`, newest-first - this order is the plate sequence 01-06):
+**Project data** (defined in `lib/data.ts` as `projects: Project[]`, ordered newest-first - this order drives the tab pages):
 
-| # | Title | Image | Tech | Links |
-|---|---|---|---|---|
-| 01 | Second Brain Portfolio Demo | `second-brain-portfolio-demo-chat.png` (contain, `#e8dfd1`) | Next.js 16, React 19, TypeScript, Tailwind CSS, TanStack Query, Framer Motion, Netlify | GitHub + demo (second-brain.tomnguyen.me) |
-| 02 | AI Financial Platform | `ai-financial-v2.png` (contain, `#0d1117`) | Python, FastAPI, scikit-learn, pandas, SQLite, Docker, RAG Retrieval | GitHub + demo (financial.tomnguyen.me) |
-| 03 | Sudoku Solver Visualizer | `sudoku-v2.png` (contain, `#ffffff`) | JavaScript, HTML/CSS, PWA, Service Worker, Algorithms, Netlify | GitHub + demo (sudoku.tomnguyen.me) |
-| 04 | Development Plan Tool | `pic04.png` (contain) | Next.js, TypeScript, Prisma Postgres, Liveblocks, Trigger.dev, Gemini, Clerk, Vercel | GitHub + demo (development-tool.tomnguyen.me) |
-| 05 | AI Language Learning App | `pic06.png` (cover) | React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand | GitHub |
-| 06 | AI Flappy Bird | `ai_flappy_bird_demo.png` (contain, `#1c8da5`) | JavaScript, HTML/CSS, Neural Network, Genetic Algorithm, Reinforcement Learning | GitHub + demo (bird.tomnguyen.me) |
+| # | Tab | Title | Image | Tech | Links |
+|---|---|---|---|---|---|
+| 1 | Latest (featured) | Second Brain Portfolio Demo | `second-brain-portfolio-demo-chat.png` (contain, `#e8dfd1`) | Next.js 16, React 19, TypeScript, Tailwind CSS, TanStack Query, Framer Motion, Netlify | GitHub + demo (second-brain.tomnguyen.me) |
+| 2 | Latest | AI Financial Platform | `ai-financial-v2.png` (contain, `#0d1117`) | Python, FastAPI, scikit-learn, pandas, SQLite, Docker, RAG Retrieval | GitHub + demo (financial.tomnguyen.me) |
+| 3 | Latest | Sudoku Solver Visualizer | `sudoku-v2.png` (contain, `#ffffff`) | JavaScript, HTML/CSS, PWA, Service Worker, Algorithms, Netlify | GitHub + demo (sudoku.tomnguyen.me) |
+| 4 | Earlier | Development Plan Tool | `pic04.png` (contain) | Next.js, TypeScript, Prisma Postgres, Liveblocks, Trigger.dev, Gemini, Clerk, Vercel | GitHub + demo (development-tool.tomnguyen.me) |
+| 5 | Earlier | AI Language Learning App | `pic06.png` (cover) | React Native, Expo, TypeScript, Stream Video SDK, Clerk, NativeWind, Zustand | GitHub |
+| 6 | Earlier | AI Flappy Bird | `ai_flappy_bird_demo.png` (contain, `#1c8da5`) | JavaScript, HTML/CSS, Neural Network, Genetic Algorithm, Reinforcement Learning | GitHub + demo (bird.tomnguyen.me) |
 
 Full descriptions live in `lib/data.ts` (EN) and `lib/translations.ts` (`projects.items`, EN/VI, indexed in the same order as the data array) - keep both in sync when editing.
 
 ---
 
-### Contact (05) (`components/contact.tsx`)
+### Contact (`components/contact.tsx`)
 - Section id: `#contact`
-- Marginalia rail: `05` numeral + `Contact` label
-- A large editorial headline "Let's Work Together" (`.font-display`) + subheading, then a two-column block: the form (left) and a direct-contact column (right, hairline divider)
-- **Form** (Netlify Forms - POST to `/__forms.html` with `application/x-www-form-urlencoded`):
-  - `data-netlify="true"`, `name="contact"`, hidden `form-name` input, honeypot `bot-field`
-  - Fields: Name, Email, Subject, Message (all required), each a **ruled underline field** (`.field`, no boxes) with a `.label` above
-  - Submit: square ink `.btn-primary` "Send Message" with arrow, disabled + opacity during loading
-  - Success state replaces the form; error state shows an inline `role="alert"` message
-- **Direct column**: a large `tom.nguyen.nht@gmail.com` link (`.link-underline`), then GitHub + LinkedIn text links (fire `email_click` / `github_click` / `linkedin_click` with `location: "contact"`)
-- **Colophon footer**: `© Tom Nguyen. All rights reserved.` + `Set in Archivo & Geist` (mono, hairline top border)
+- Heading: "Let's Work Together"
+- Subheading: "Have a project in mind? I'd love to hear about it."
+- **Form** (Netlify Forms — POST to `"/"` with `application/x-www-form-urlencoded`):
+  - `data-netlify="true"`, `name="contact"`, hidden `form-name` input
+  - Fields: Name, Email, Subject, Message (all required), laid out in 2-col grid (Name + Email)
+  - Submit button: "Send Message" with Send icon, full-width, disabled + opacity during loading
+  - Success state: replaces form with confirmation message
+  - Error state: inline red error message below submit button
+- **Email link**: `tom.nguyen.nht@gmail.com`
+- **Social links** below form: GitHub + LinkedIn icon buttons
+- **Footer**: `© Tom Nguyen. All rights reserved.`
 
 **Netlify Forms note**: `public/__forms.html` contains a static HTML stub of the form so Netlify's build bot can detect it at build time (required for Next.js App Router - the dynamic render is not scanned). The client submits to `/__forms.html`.
 
-A floating **back-to-top** button (`components/back-to-top.tsx`) renders site-wide from `app/page.tsx`: fixed bottom-right, appears after 700px of scroll (`useScroll` + `useMotionValueEvent`), smooth-scrolls to `#top`; aria-label from `t.nav.backToTop`.
+A floating **back-to-top** button (`components/back-to-top.tsx`) renders site-wide from `app/page.tsx`: fixed bottom-right, appears after 600px of scroll, smooth-scrolls to `#top`; aria-label from `t.nav.backToTop`.
 
 ---
 
 ## Analytics (GA4)
 
-GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractive">` and is gated on the `NEXT_PUBLIC_GA_MEASUREMENT_ID` env var - if the var is absent no scripts are injected and no events fire.
+GA4 is loaded in `app/layout.tsx` via Next.js `<Script strategy="afterInteractive">` and is gated on the `NEXT_PUBLIC_GA_MEASUREMENT_ID` env var — if the var is absent no scripts are injected and no events fire.
 
-**`lib/analytics.ts`** - exports a single `trackEvent(eventName, params?)` helper that calls `window.gtag("event", ...)` and is a no-op during SSR or when gtag is not initialized.
+**`lib/analytics.ts`** — exports a single `trackEvent(eventName, params?)` helper that calls `window.gtag("event", ...)` and is a no-op during SSR or when gtag is not initialized.
 
-**`lib/useInViewTracking.ts`** - React hook wrapping `IntersectionObserver` (threshold 0.3). Fires `section_viewed` once per section per page load, then disconnects.
+**`lib/useInViewTracking.ts`** — React hook wrapping `IntersectionObserver` (threshold 0.3). Fires `section_viewed` once per section per page load, then disconnects.
 
 ### Tracked events
 
 | Event | Where fired | Extra params |
 |---|---|---|
-| `resume_view` | Nav - Resume link (desktop + mobile) | - |
+| `resume_view` | Nav — Resume link (desktop + mobile) | — |
 | `section_viewed` | Skills, Experience, Projects, Contact | `{ section }` |
-| `linkedin_click` | Hero, Contact | `{ location }` |
-| `github_click` | Hero, Projects plates, Contact | `{ location }` or `{ project_title }` |
-| `project_demo_click` | Projects - Live demo link | `{ project_title }` |
-| `email_click` | Contact - mailto link | - |
-| `contact_form_submit` | Contact - form submit | - |
-
-(The `project_tab_click` event was removed with the project tabs in the Monograph rebuild.)
+| `linkedin_click` | Hero CTA, Contact social links | `{ location }` |
+| `github_click` | Hero CTA, Projects cards, Contact social links | `{ location }` |
+| `project_demo_click` | Projects — Demo button | `{ project_title }` |
+| `project_tab_click` | Projects — tab control (Latest/Earlier) | `{ tab_label }` |
+| `email_click` | Contact — mailto link | — |
+| `contact_form_submit` | Contact — form submit | — |
 
 ---
 
@@ -292,9 +302,9 @@ title: "Tom Nguyen | Full Stack & AI Developer"
 description: "Full Stack Developer & AI Engineer specializing in scalable web applications, AI agent architecture, and LLM workflows. Experienced with Next.js, React Native, Django, Mendix, and Gemini SDK. CS graduate from Cal State LA."
 ```
 
-Also set: `metadataBase` (`https://www.tomnguyen.me`), `keywords`, `authors`/`creator`, full `openGraph` (type website, siteName, locale `en_US`, image `/images/pic00.jpg`) and `twitter` (`summary` card) blocks, plus a `viewport` export with light/dark `themeColor` (`#efece4` / `#131210`).
+Also set: `metadataBase` (`https://www.tomnguyen.me`), `keywords`, `authors`/`creator`, full `openGraph` (type website, siteName, locale `en_US`, image `/images/pic00.jpg`) and `twitter` (`summary` card) blocks, plus a `viewport` export with light/dark `themeColor` (`#ffffff` / `#0a0a0f`).
 
-Favicon: `app/icon.jpg` (profile photo - App Router file-based icon convention, overrides any favicon.ico)
+Favicon: `app/icon.jpg` (profile photo — App Router file-based icon convention, overrides any favicon.ico)
 
 ---
 
@@ -352,33 +362,33 @@ Do not ask to push without confirming CLAUDE.md was updated first.
 
 ### Keep `resume.html` and `resume-vi.html` in sync
 Whenever any of the following are modified, **always update `public/resume.html`**, **`public/resume-vi.html`**, and the relevant strings in **`lib/translations.ts`** (`vi` key) at the end of the task:
-- `lib/data.ts` - experiences, projects, or skillCards
-- `components/hero.tsx` - bio text or subtitle roles
-- `components/contact.tsx` - email address or social links
+- `lib/data.ts` — experiences, projects, or skillCards
+- `components/hero.tsx` — bio text or subtitle roles
+- `components/contact.tsx` — email address or social links
 - Any other content that appears on the resume (phone number, summary, etc.)
 
 This ensures both resume pages and the live site always reflect the latest portfolio content without needing a manual reminder.
 
 ### Project links in `resume.html` and `resume-vi.html`
-Each project entry shows masked link text - never raw URLs:
+Each project entry shows masked link text — never raw URLs:
 - Always include a **GitHub** link labeled `"GitHub"`
 - If the project has a `demo` URL, include it after a `|` separator labeled `"Live Demo"` (or `"Demo Video"` for YouTube links)
 - Example: `GitHub | Live Demo`
 
 ### Use single dash everywhere
-Always use a plain hyphen `-` as a separator or dash in all files across the project - HTML, TSX, TS, and any other content. Never use an em dash or en dash (or their HTML entities) anywhere in visible content or string literals.
+Always use a plain hyphen `-` as a separator or dash in all files across the project — HTML, TSX, TS, and any other content. Never use `&mdash;`, `&ndash;`, `—`, or `–` (em dash / en dash) anywhere in visible content or string literals.
 
 ### All links in `resume.html` and `resume-vi.html` open in a new tab
-Both `resume.html` and `resume-vi.html` include an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script from either file - it ensures the resume page stays open when a visitor clicks any link.
+Both `resume.html` and `resume-vi.html` include an inline script at the bottom that sets `target="_blank"` and `rel="noopener noreferrer"` on every `<a>` tag automatically. Do not remove this script from either file — it ensures the resume page stays open when a visitor clicks any link.
 
 ### Print pagination in `resume.html` and `resume-vi.html`
 Both resume files include `@media print` rules to prevent awkward page breaks. Key rules:
-- `break-inside: avoid` + `page-break-inside: avoid` on `.entry` - keeps each job/project block whole (pushes it to the next page rather than splitting mid-entry)
-- `break-after: avoid` + `page-break-after: avoid` on `.section-title` - prevents section headings from orphaning at the bottom of a page
-- `break-inside: avoid` + `page-break-inside: avoid` on `.edu-entry` - keeps education entries whole
-- `orphans: 2; widows: 2` on `li` and `p` - prevents single lines stranding at page edges
+- `break-inside: avoid` + `page-break-inside: avoid` on `.entry` — keeps each job/project block whole (pushes it to the next page rather than splitting mid-entry)
+- `break-after: avoid` + `page-break-after: avoid` on `.section-title` — prevents section headings from orphaning at the bottom of a page
+- `break-inside: avoid` + `page-break-inside: avoid` on `.edu-entry` — keeps education entries whole
+- `orphans: 2; widows: 2` on `li` and `p` — prevents single lines stranding at page edges
 
-Always include both the modern (`break-*`) and legacy (`page-break-*`) properties - Chrome's print engine responds more reliably to the legacy form.
+Always include both the modern (`break-*`) and legacy (`page-break-*`) properties — Chrome's print engine responds more reliably to the legacy form.
 
 ---
 

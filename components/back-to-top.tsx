@@ -1,13 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useLanguage } from "./language-provider";
 
@@ -15,11 +9,13 @@ export default function BackToTop() {
   const [visible, setVisible] = useState(false);
   const { t } = useLanguage();
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (v) => {
-    setVisible(v > 700);
-  });
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -27,13 +23,13 @@ export default function BackToTop() {
         <motion.a
           href="#top"
           aria-label={t.nav.backToTop}
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduce ? undefined : { opacity: 0, y: 10 }}
+          initial={reduce ? false : { opacity: 0, y: 12, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={reduce ? undefined : { opacity: 0, y: 12, scale: 0.9 }}
           transition={{ duration: 0.25 }}
-          className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 border border-[color:var(--hairline-strong)] bg-[color-mix(in_srgb,var(--canvas)_80%,transparent)] px-3 py-2 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted backdrop-blur transition-colors hover:border-foreground hover:text-foreground"
+          className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-surface/80 backdrop-blur border border-foreground/10 text-muted shadow-lg hover:text-accent hover:border-accent/40 transition-colors"
         >
-          <ArrowUp className="h-3.5 w-3.5" strokeWidth={1.75} /> {t.nav.backToTop}
+          <ArrowUp className="w-5 h-5" />
         </motion.a>
       )}
     </AnimatePresence>

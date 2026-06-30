@@ -1,4 +1,4 @@
-# Language Toggle (EN ↔ VI) - Design Spec
+# Language Toggle (EN ↔ VI) — Design Spec
 
 **Date:** 2026-05-22  
 **Status:** Approved  
@@ -8,7 +8,7 @@
 
 ## Overview
 
-Add a language toggle to the portfolio nav that switches all visible text between English and Vietnamese. English is always the default. The user's choice is persisted to `localStorage` so it survives page refreshes and return visits. No URL routing changes - the page URL stays `/` regardless of locale.
+Add a language toggle to the portfolio nav that switches all visible text between English and Vietnamese. English is always the default. The user's choice is persisted to `localStorage` so it survives page refreshes and return visits. No URL routing changes — the page URL stays `/` regardless of locale.
 
 ---
 
@@ -18,7 +18,7 @@ Add a language toggle to the portfolio nav that switches all visible text betwee
 
 | File | Purpose |
 |---|---|
-| `lib/translations.ts` | Single source of truth for all translated strings - both `en` and `vi` keys |
+| `lib/translations.ts` | Single source of truth for all translated strings — both `en` and `vi` keys |
 | `components/language-provider.tsx` | `LanguageProvider` component and `useLanguage()` hook |
 | `components/language-toggle.tsx` | `EN / VI` toggle button rendered in the nav |
 | `public/resume-vi.html` | Full Vietnamese translation of `resume.html` |
@@ -57,11 +57,11 @@ const localizedExperiences = experiences.map((exp, i) => ({
 }));
 ```
 
-Skill tag names (`JavaScript`, `Python`, `Next.js`, etc.) stay in English in both locales - they are proper nouns in the tech industry.
+Skill tag names (`JavaScript`, `Python`, `Next.js`, etc.) stay in English in both locales — they are proper nouns in the tech industry.
 
 ---
 
-## `lib/translations.ts` - Structure
+## `lib/translations.ts` — Structure
 
 ```ts
 export const translations = {
@@ -141,7 +141,7 @@ export const translations = {
     },
     hero: {
       greeting: 'Xin chào. Tôi là Tom Nguyen.',
-      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack - từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful - luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
+      bio: 'Lập trình viên phần mềm với hơn 4 năm kinh nghiệm xây dựng và duy trì các ứng dụng thực tế cho các nhà cung cấp dịch vụ y tế tại Houston. Giải quyết vấn đề thực tế trên toàn bộ stack — từ giao diện lâm sàng và nền tảng doanh nghiệp đến ứng dụng di động và tích hợp RESTful — luôn tập trung vào việc cung cấp phần mềm đáng tin cậy, có khả năng mở rộng và hướng dẫn kỹ thuật rõ ràng cho người dùng và các bên liên quan.',
       roles: ['Lập Trình Viên Mendix', 'Lập Trình Viên Phần Mềm', 'Lập Trình Viên AI Agent', 'Lập Trình Viên Full Stack'],
       cta: { skills: 'Kỹ Năng Của Tôi', linkedin: 'LinkedIn', github: 'GitHub' },
     },
@@ -201,7 +201,7 @@ export const translations = {
         },
         {
           description: [
-            'Ứng dụng di động học ngôn ngữ bằng AI - giải pháp thay thế hiện đại cho Duolingo',
+            'Ứng dụng di động học ngôn ngữ bằng AI — giải pháp thay thế hiện đại cho Duolingo',
             'Cuộc gọi âm thanh thời gian thực với giáo viên AI, chú thích trực tiếp và phản hồi phát âm',
             'Hỗ trợ 4 ngôn ngữ với 12 bài học có cấu trúc và theo dõi chuỗi XP hàng ngày',
           ],
@@ -312,7 +312,7 @@ export default function LanguageToggle() {
 
 ---
 
-## Nav - Locale-aware resume link
+## Nav — Locale-aware resume link
 
 ```tsx
 // In nav.tsx
@@ -345,12 +345,12 @@ A full Vietnamese translation of `resume.html`:
 
 ## What does NOT change
 
-- `lib/data.ts` interfaces and exports - untouched
-- Skill tag names - English in both locales (proper nouns)
-- Tech stack pills on project cards - English in both locales
-- Company names, job titles, dates, locations in experience - English in both locales
-- All GA4 `trackEvent` calls - locale-agnostic, event names stay in English
-- Page URL - always `/`, no routing changes
+- `lib/data.ts` interfaces and exports — untouched
+- Skill tag names — English in both locales (proper nouns)
+- Tech stack pills on project cards — English in both locales
+- Company names, job titles, dates, locations in experience — English in both locales
+- All GA4 `trackEvent` calls — locale-agnostic, event names stay in English
+- Page URL — always `/`, no routing changes
 
 ---
 

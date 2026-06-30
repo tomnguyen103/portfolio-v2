@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Set the initial theme (light 6am-6pm, dark otherwise) from device time, respecting any manual preference the visitor has ever toggled.
+**Goal:** Set the initial theme (light 6am–6pm, dark otherwise) from device time, respecting any manual preference the visitor has ever toggled.
 
-**Architecture:** A new `TimeBasedTheme` client component mounts inside `ThemeProvider` and calls `setTheme` based on device hour - unless a `theme-user-set` flag exists in `localStorage`, indicating the visitor has already manually overridden the theme. `ThemeToggle` writes this flag on every manual toggle so subsequent visits skip time-based logic.
+**Architecture:** A new `TimeBasedTheme` client component mounts inside `ThemeProvider` and calls `setTheme` based on device hour — unless a `theme-user-set` flag exists in `localStorage`, indicating the visitor has already manually overridden the theme. `ThemeToggle` writes this flag on every manual toggle so subsequent visits skip time-based logic.
 
 **Tech Stack:** Next.js 14 App Router, next-themes (`useTheme`), React `useEffect`, `localStorage`
 
@@ -185,7 +185,7 @@ git commit -m "feat: persist manual theme preference on toggle"
 
 ### Task 4: Manual verification
 
-Start the dev server: `npm run dev` - navigate to `http://localhost:3000`.
+Start the dev server: `npm run dev` — navigate to `http://localhost:3000`.
 
 - [ ] **Step 1: Verify time-based theme applies on fresh visit**
 
@@ -193,8 +193,8 @@ Open browser DevTools → Console. Clear any saved state and reload:
 ```js
 localStorage.removeItem("theme-user-set"); localStorage.removeItem("theme"); location.reload();
 ```
-- If current device hour is 6-17: page should load in **light** theme.
-- If current device hour is 18-23 or 0-5: page should load in **dark** theme.
+- If current device hour is 6–17: page should load in **light** theme.
+- If current device hour is 18–23 or 0–5: page should load in **dark** theme.
 
 - [ ] **Step 2: Verify manual toggle saves the flag**
 
@@ -202,7 +202,7 @@ With no `theme-user-set` flag, click the theme toggle button once. Then in DevTo
 ```js
 localStorage.getItem("theme-user-set") // expected: "true"
 ```
-Reload the page - theme should remain as toggled, not reset by time.
+Reload the page — theme should remain as toggled, not reset by time.
 
 - [ ] **Step 3: Verify saved preference persists on return visit**
 
