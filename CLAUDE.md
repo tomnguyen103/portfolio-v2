@@ -38,19 +38,21 @@ This is a complete migration from a static HTML5/jQuery site to a modern Next.js
 Dark mode:
   background:  #0a0a0f
   surface:     #111827
-  accent:      #0ea5e9  (sky-500)
-  accent-hover:#0284c7  (sky-600)
+  accent:      #2f8fd0  (refined sky - deeper/less neon than stock sky-500)
+  accent-hover:#1c74b3
   text:        #f9fafb
   muted:       #6b7280
 
 Light mode:
   background:  #ffffff
   surface:     #f8fafc
-  accent:      #0ea5e9
-  accent-hover:#0284c7
+  accent:      #0f6fb8  (deepened for AA contrast on white)
+  accent-hover:#0b5990
   text:        #0f172a
   muted:       #64748b
 ```
+
+Accent is used deliberately sparingly ("quiet precision" pass) - reserved for the primary CTA fill, links/hover states, the nav active-link, focus rings, and a handful of other intentional moments. Surface-tinted fills (e.g. a pill's background) were replaced with hairline borders + accent text where that distinction matters - see Hero and Experience below.
 
 ### Typography
 - Font family: `Geist` (sans), system-ui fallback; `Geist Mono` for tech-tag pills and date ranges (via the `font-mono` utility / `--font-mono` token)
@@ -85,7 +87,6 @@ Light mode:
 - Thin theme-aware scrollbar (`scrollbar-width: thin` + WebKit pseudo-elements)
 - `section[id] { scroll-margin-top: 4.5rem }` so anchored sections stop below the fixed nav
 - `:focus-visible` accent outline for keyboard navigation
-- `.text-gradient-accent`: sky-to-cyan gradient text with theme-aware endpoints (`--grad-from` / `--grad-to`); used on the hero name
 
 ---
 
@@ -161,8 +162,8 @@ portfolio-v2/
 - **Background**: Subtle technical dot-grid field (`.bg-dot-grid`, theme-aware, edge-faded via mask) + static `.hero-glow` accent wash - no animated blobs
 - **Layout**: `flex-col-reverse md:flex-row` - photo right on desktop, stacked (photo top) on mobile; staggered entrance gated by `useReducedMotion`
 - **Availability badge**: above the heading - mono pill with pulsing emerald status dot, text `t.hero.availability` ("Open to new opportunities")
-- **Photo**: `images/pic00.jpg` - circular frame, `ring-2 ring-sky-500/30` + subtle shadow + slow-rotating `.avatar-ring` conic accent arc
-- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, name in sky-to-cyan gradient (`.text-gradient-accent`, name kept on one line)
+- **Photo**: `images/pic00.jpg` - circular frame, hairline `ring-1 ring-foreground/10` + minimal `shadow-sm` + slow-rotating `.avatar-ring` conic accent arc
+- **Heading**: `Hi. I'm Tom Nguyen.` - large, bold, solid `text-foreground` (no gradient); scales from `text-4xl` (mobile) up to `text-8xl` (`xl:`) with `xl:tracking-[-0.02em]` at the largest size; name kept on one line via `whitespace-nowrap` - this caps how large the mobile tier can go before the name clips, which is why the unprefixed/mobile size stays at `text-4xl` while larger breakpoints scale up more aggressively
 - **Subtitle**: Typing/cycling effect over `t.hero.roles` ("Software Engineer", "AI Agent Developer", "Mendix Engineer", "Full Stack Engineer"); shows a static role under reduced motion
 - **Tagline**: One sharp positioning line (`t.hero.tagline`, ≤20 words) - replaces the long bio that previously lived in the hero
 - **CTA buttons**:
@@ -206,7 +207,7 @@ portfolio-v2/
 - Heading: "Experience" + subheading: "Where I've worked"
 - Layout: vertical timeline; the left line is a top-to-bottom gradient (`from-sky-500/50 via-sky-500/25 to-transparent`); each entry has a sky-500 dot marker
 - The entry whose `end` is `"Present"` gets a slow `animate-ping` pulse behind its dot
-- Each entry shows: company + type badge, date-range pill (sky-500 tint), job title, location, bullet list
+- Each entry shows: company + type badge, date-range pill (hairline `accent/30` border + accent text, no fill), job title, location, bullet list
 - Staggered fade-up entrance (0.1s delay per entry, `whileInView`)
 - Date-range pill uses `font-mono`
 - Uses `useInViewTracking("experience")` to fire `section_viewed` GA4 event
@@ -231,7 +232,7 @@ portfolio-v2/
   - Accessibility: full WAI-ARIA tabs pattern - `role="tablist"/"tab"/"tabpanel"`, `aria-selected`, `aria-controls`/`aria-labelledby`, roving `tabIndex`, ArrowLeft/ArrowRight/Home/End keyboard navigation
   - Tab switch fires `project_tab_click` GA4 event with `{ tab_label }`
 - **Tab-switch animation**: `AnimatePresence mode="wait"` swaps the page panel with a direction-aware horizontal slide - forward exits to x:-56 / enters from x:+56, backward mirrored (direction stored alongside the tab index in one state tuple); enter 0.4s `[0.16, 1, 0.3, 1]`, exit 0.22s; reduced motion collapses to an instant opacity swap
-- Layout per tab: on the first tab the first project is a larger **featured** card (`Featured` badge via `t.projects.featured`); the remaining cards **zigzag** - image side alternates each row within the tab (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile; later tabs are all zigzag (no featured card)
+- Layout per tab: on the first tab the first project is a larger **featured** card (`Featured` badge via `t.projects.featured`, hairline `accent/30` border + accent text, no fill); the remaining cards **zigzag** - image side alternates each row within the tab (`md:flex-row` / `md:flex-row-reverse`), all stacking image-on-top on mobile; later tabs are all zigzag (no featured card)
   - Image: `next/image` with `fill` + `sizes="(min-width: 768px) 50vw, 100vw"` (container is full-width on mobile, `md:w-1/2` on desktop); `object-cover` (or `object-contain` + `imageBg` for UI screenshots); zooms `scale-[1.04]` on card hover (`group-hover`, container `overflow-hidden`)
   - Content: title, bullet list, `tagClass` `font-mono` tech pills, GitHub/Demo buttons
 - Card hover: lift `y: -4` + border brightens to `accent/40` (border-based elevation, no box-shadow glow) + `.card-spotlight` cursor-following accent glow (CSS vars `--spot-x`/`--spot-y` set via `onMouseMove`; hover-capable pointers only)

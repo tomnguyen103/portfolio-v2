@@ -89,7 +89,7 @@ export default function Projects() {
     >
       <div className="max-w-6xl mx-auto w-full">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-center mb-4 text-foreground"
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -219,7 +219,7 @@ export default function Projects() {
                   <div className="flex flex-col justify-between p-6 md:p-8 flex-1">
                     <div>
                       {featured && (
-                        <span className="inline-block mb-3 px-2.5 py-0.5 rounded-full text-xs font-mono uppercase tracking-wider bg-accent/10 text-accent border border-accent/30">
+                        <span className="inline-block mb-3 px-2.5 py-0.5 rounded-full text-xs font-mono uppercase tracking-wider bg-transparent text-accent border border-accent/30">
                           {t.projects.featured}
                         </span>
                       )}

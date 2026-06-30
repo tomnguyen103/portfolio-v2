@@ -108,7 +108,7 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-foreground"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight xl:tracking-[-0.02em] mb-4 text-foreground"
             >
               {t.hero.greeting.split("Tom Nguyen").map((part, i, arr) => {
                 if (i < arr.length - 1) {
@@ -119,7 +119,7 @@ export default function Hero() {
                         {sentences[0]}.{" "}
                         <span className="whitespace-nowrap">
                           {sentences[1]}
-                          <span className="text-gradient-accent font-extrabold">Tom Nguyen</span>
+                          <span className="font-extrabold">Tom Nguyen</span>
                         </span>
                       </span>
                     );
@@ -127,7 +127,7 @@ export default function Hero() {
                   return (
                     <span key={i} className="whitespace-nowrap">
                       {part}
-                      <span className="text-gradient-accent font-extrabold">Tom Nguyen</span>
+                      <span className="font-extrabold">Tom Nguyen</span>
                     </span>
                   );
                 }
@@ -198,7 +198,7 @@ export default function Hero() {
                 alt="Tom Nguyen"
                 width={256}
                 height={256}
-                className="rounded-full object-cover w-full h-full ring-2 ring-sky-500/30 shadow-2xl shadow-sky-950/20"
+                className="rounded-full object-cover w-full h-full ring-1 ring-foreground/10 shadow-sm"
                 priority
               />
             </div>

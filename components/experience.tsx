@@ -19,7 +19,7 @@ export default function Experience() {
     <section ref={sectionRef} id="experience" className="px-6 py-24 md:py-32">
       <div className="max-w-3xl mx-auto w-full">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4 text-foreground"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-center mb-4 text-foreground"
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -64,7 +64,7 @@ export default function Experience() {
                   {exp.company}{" "}
                   <span className="font-normal text-muted text-sm">· {exp.type}</span>
                 </span>
-                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-sky-500/10 text-sky-500 border border-sky-500/20">
+                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-transparent text-accent border border-accent/30">
                   {exp.start} - {exp.end}
                 </span>
               </div>
