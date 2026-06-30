@@ -77,6 +77,7 @@ export const translations = {
       heading: 'Projects',
       subheading: "Things I've built",
       featured: 'Featured',
+      liveDemo: 'Live demo',
       tabs: ['Latest', 'Earlier'],
       items: [
         {
@@ -217,6 +218,7 @@ export const translations = {
       heading: 'Dự Án',
       subheading: 'Những gì tôi đã xây dựng',
       featured: 'Nổi Bật',
+      liveDemo: 'Xem demo',
       tabs: ['Mới Nhất', 'Cũ Hơn'],
       items: [
         {

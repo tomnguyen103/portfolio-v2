@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
+import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import TimeBasedTheme from "@/components/time-based-theme";
 import { LanguageProvider } from "@/components/language-provider";
@@ -16,11 +16,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-// Display face: a confident editorial grotesque for the masthead and headings
-const bricolage = Bricolage_Grotesque({
+// Display face: Archivo - a clean, professional editorial grotesque
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-bricolage",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-archivo",
+  weight: ["600", "700", "800"],
 });
 
 const siteTitle = "Tom Nguyen | Full Stack & AI Developer";
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3f1ec" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0d" },
+    { media: "(prefers-color-scheme: light)", color: "#efece4" },
+    { media: "(prefers-color-scheme: dark)", color: "#131210" },
   ],
 };
 
@@ -77,11 +77,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
       suppressHydrationWarning
     >
       <body className="antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <LanguageProvider>
             <TimeBasedTheme />
             <div className="grain" aria-hidden="true" />

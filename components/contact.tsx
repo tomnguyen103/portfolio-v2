@@ -3,16 +3,10 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { Send } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { useInViewTracking } from "@/lib/useInViewTracking";
 import { useLanguage } from "./language-provider";
-
-const fieldClass =
-  "w-full rounded-xl border border-[color:var(--hairline-strong)] bg-[color:var(--surface-2)] px-4 py-3 text-sm text-foreground transition placeholder:text-muted/60 focus:border-accent/50 focus:outline-none focus:ring-2 focus:ring-accent/30";
-
-const labelClass =
-  "mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.15em] text-muted";
 
 export default function Contact() {
   const sectionRef = useInViewTracking("contact");
@@ -48,145 +42,137 @@ export default function Contact() {
   }
 
   return (
-    <section ref={sectionRef} id="contact" className="px-6 py-28 md:py-40">
-      <div className="mx-auto w-full max-w-2xl">
-        <motion.div
-          className="text-center"
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h2 className="font-display text-4xl font-semibold tracking-tight text-foreground md:text-6xl">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="mx-auto max-w-[78rem] px-6 py-24 md:py-32"
+    >
+      <motion.div
+        className="grid gap-x-10 gap-y-12 lg:grid-cols-12"
+        initial={reduce ? false : { opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="lg:col-span-3">
+          <div className="font-display text-6xl font-bold leading-none text-faint">05</div>
+          <div className="label mt-3">{t.nav.contact}</div>
+        </div>
+
+        <div className="lg:col-span-9">
+          <h2 className="max-w-[14ch] font-display text-5xl font-bold leading-[0.95] tracking-tight text-foreground md:text-7xl">
             {t.contact.heading}
           </h2>
-          {/* The ledger line, centered, beneath the closing headline */}
-          <span
-            aria-hidden="true"
-            className="mx-auto mt-6 block h-px w-16 bg-accent"
-          />
-          <p className="mx-auto mt-6 max-w-md text-lg text-muted">
-            {t.contact.subheading}
-          </p>
-        </motion.div>
+          <p className="mt-6 max-w-md text-lg text-muted">{t.contact.subheading}</p>
 
-        <motion.div
-          className="mt-12"
-          initial={reduce ? false : { opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {submitted ? (
-            <div className="rounded-2xl border border-[color:var(--hairline)] bg-[color:var(--surface)] py-16 text-center">
-              <p className="mb-2 font-display text-2xl font-semibold text-accent">
-                {t.contact.form.successTitle}
-              </p>
-              <p className="text-muted">{t.contact.form.successBody}</p>
-            </div>
-          ) : (
-            <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-              onSubmit={handleSubmit}
-              className="space-y-5"
-            >
-              <input type="hidden" name="form-name" value="contact" />
-              <p className="hidden">
-                <label>
-                  Do not fill this out: <input name="bot-field" />
-                </label>
-              </p>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="contact-name" className={labelClass}>
-                    {t.contact.form.namePlaceholder}
-                  </label>
-                  <input id="contact-name" type="text" name="name" required className={fieldClass} />
+          <div className="mt-12 grid gap-x-12 gap-y-12 md:grid-cols-2">
+            {/* Form */}
+            <div>
+              {submitted ? (
+                <div className="border-t border-[color:var(--hairline-strong)] pt-6">
+                  <p className="font-display text-2xl font-semibold text-accent">
+                    {t.contact.form.successTitle}
+                  </p>
+                  <p className="mt-2 text-muted">{t.contact.form.successBody}</p>
                 </div>
-                <div>
-                  <label htmlFor="contact-email" className={labelClass}>
-                    {t.contact.form.emailPlaceholder}
-                  </label>
-                  <input id="contact-email" type="email" name="email" required className={fieldClass} />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="contact-subject" className={labelClass}>
-                  {t.contact.form.subjectPlaceholder}
-                </label>
-                <input id="contact-subject" type="text" name="subject" required className={fieldClass} />
-              </div>
-              <div>
-                <label htmlFor="contact-message" className={labelClass}>
-                  {t.contact.form.messagePlaceholder}
-                </label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  required
-                  rows={5}
-                  className={`${fieldClass} resize-none`}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn btn-primary w-full justify-center py-3.5 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <Send className="h-4 w-4" strokeWidth={1.75} />
-                {loading ? t.contact.form.submitting : t.contact.form.submit}
-              </button>
-              {error && (
-                <p className="text-center text-sm text-red-500" role="alert">
-                  {t.contact.form.error}
-                </p>
+              ) : (
+                <form
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit}
+                  className="space-y-7"
+                >
+                  <input type="hidden" name="form-name" value="contact" />
+                  <p className="hidden">
+                    <label>
+                      Do not fill this out: <input name="bot-field" />
+                    </label>
+                  </p>
+                  <div>
+                    <label htmlFor="contact-name" className="label mb-2 block">
+                      {t.contact.form.namePlaceholder}
+                    </label>
+                    <input id="contact-name" type="text" name="name" required className="field" />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="label mb-2 block">
+                      {t.contact.form.emailPlaceholder}
+                    </label>
+                    <input id="contact-email" type="email" name="email" required className="field" />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-subject" className="label mb-2 block">
+                      {t.contact.form.subjectPlaceholder}
+                    </label>
+                    <input id="contact-subject" type="text" name="subject" required className="field" />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-message" className="label mb-2 block">
+                      {t.contact.form.messagePlaceholder}
+                    </label>
+                    <textarea id="contact-message" name="message" required rows={3} className="field resize-none" />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn btn-primary px-7 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {loading ? t.contact.form.submitting : t.contact.form.submit}
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
+                  </button>
+                  {error && (
+                    <p className="text-sm text-red-600 dark:text-red-400" role="alert">
+                      {t.contact.form.error}
+                    </p>
+                  )}
+                </form>
               )}
-            </form>
-          )}
+            </div>
 
-          <div className="mt-10 text-center">
-            <a
-              href="mailto:tom.nguyen.nht@gmail.com"
-              onClick={() => trackEvent("email_click")}
-              className="link-underline text-accent"
-            >
-              tom.nguyen.nht@gmail.com
-            </a>
-            <p className="mb-4 mt-6 font-mono text-xs uppercase tracking-[0.15em] text-muted">
-              {t.contact.orFindMe}
-            </p>
-            <div className="flex justify-center gap-3">
+            {/* Direct */}
+            <div className="md:border-l md:border-[color:var(--hairline)] md:pl-12">
+              <div className="label mb-3">Email</div>
               <a
-                href="https://github.com/tomnguyen103"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                onClick={() => trackEvent("github_click", { location: "contact" })}
-                className="rounded-full border border-[color:var(--hairline-strong)] p-3 text-muted transition-colors hover:border-accent/60 hover:text-accent"
+                href="mailto:tom.nguyen.nht@gmail.com"
+                onClick={() => trackEvent("email_click")}
+                className="link-underline font-display text-xl font-semibold text-foreground hover:text-accent md:text-2xl"
               >
-                <FaGithub className="h-5 w-5" />
+                tom.nguyen.nht@gmail.com
               </a>
-              <a
-                href="https://www.linkedin.com/in/tomnguyen103/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                onClick={() => trackEvent("linkedin_click", { location: "contact" })}
-                className="rounded-full border border-[color:var(--hairline-strong)] p-3 text-muted transition-colors hover:border-accent/60 hover:text-accent"
-              >
-                <FaLinkedinIn className="h-5 w-5" />
-              </a>
+
+              <div className="label mb-3 mt-10">{t.contact.orFindMe}</div>
+              <div className="flex flex-col gap-3">
+                <a
+                  href="https://github.com/tomnguyen103"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("github_click", { location: "contact" })}
+                  className="link-underline inline-flex w-fit items-center gap-2.5 text-foreground hover:text-accent"
+                >
+                  <FaGithub className="h-5 w-5" /> GitHub
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/tomnguyen103/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("linkedin_click", { location: "contact" })}
+                  className="link-underline inline-flex w-fit items-center gap-2.5 text-foreground hover:text-accent"
+                >
+                  <FaLinkedinIn className="h-5 w-5" /> LinkedIn
+                </a>
+              </div>
             </div>
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
-      <div className="mx-auto mt-20 max-w-6xl border-t border-[color:var(--hairline)] pt-8 text-center font-mono text-xs uppercase tracking-[0.15em] text-muted">
-        {t.contact.footer}
-      </div>
+      {/* Colophon */}
+      <footer className="mt-24 flex flex-col gap-2 border-t border-[color:var(--hairline)] pt-8 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-faint sm:flex-row sm:items-center sm:justify-between">
+        <span>{t.contact.footer}</span>
+        <span>Set in Archivo &amp; Geist</span>
+      </footer>
     </section>
   );
 }
