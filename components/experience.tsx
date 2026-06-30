@@ -64,7 +64,7 @@ export default function Experience() {
                   {exp.company}{" "}
                   <span className="font-normal text-muted text-sm">· {exp.type}</span>
                 </span>
-                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-sky-500/10 text-sky-500 border border-sky-500/20">
+                <span className="shrink-0 self-start px-2.5 py-0.5 rounded-full text-xs font-mono bg-transparent text-accent border border-accent/30">
                   {exp.start} - {exp.end}
                 </span>
               </div>
