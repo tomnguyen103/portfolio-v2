@@ -54,11 +54,13 @@ Geist (sans) + Geist Mono only — already the only fonts loaded in `app/layout.
 
 | Element | Current | New |
 |---|---|---|
-| Hero name (`hero.tsx` h1) | `text-4xl sm:text-5xl lg:text-6xl` | `text-5xl sm:text-6xl lg:text-7xl xl:text-8xl`, add `xl:tracking-[-0.02em]` |
+| Hero name (`hero.tsx` h1) | `text-4xl sm:text-5xl lg:text-6xl` | `text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl`, add `xl:tracking-[-0.02em]` |
 | Section h2 (Skills/Experience/Projects/Contact) | `text-3xl sm:text-4xl` | `text-3xl sm:text-4xl md:text-5xl` |
 | Mono usage (tags, dates, typed role) | already present | extend consistently; no new labeling/numbering system added anywhere |
 
 The goal is scale and weight *contrast* — the hero name and section headings should feel confidently large next to body copy, rather than the current fairly narrow range between them.
+
+The hero name's unprefixed (mobile, < 640px) tier stays at the original `text-4xl` rather than bumping with the rest of the scale: "Tom Nguyen" renders inside a `whitespace-nowrap` span (so the name never breaks mid-word, an existing, untouched constraint), and at `text-5xl` it overflows a 375px viewport and gets silently clipped by the hero section's `overflow-hidden`. Verified empirically at 320/375/640/768/1024/1280px that the corrected scale fits at every tier.
 
 ---
 

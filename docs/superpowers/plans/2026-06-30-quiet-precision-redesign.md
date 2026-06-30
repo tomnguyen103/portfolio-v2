@@ -153,8 +153,10 @@ In `components/hero.tsx:111`, replace:
 with:
 
 ```tsx
-              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight xl:tracking-[-0.02em] mb-4 text-foreground"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight xl:tracking-[-0.02em] mb-4 text-foreground"
 ```
+
+(The unprefixed/mobile tier stays `text-4xl` — unchanged from the original. "Tom Nguyen" renders in a `whitespace-nowrap` span, and at `text-5xl` it's wider than a 375px viewport and gets silently clipped by the hero section's `overflow-hidden`. Found and fixed during Task 6 verification by measuring the nowrap span's bounding box against the viewport at 320/375/640/768/1024/1280px.)
 
 - [ ] **Step 2: Drop the gradient treatment on both "Tom Nguyen" spans**
 

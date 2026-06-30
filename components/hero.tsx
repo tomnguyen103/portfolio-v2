@@ -108,7 +108,7 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight xl:tracking-[-0.02em] mb-4 text-foreground"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight xl:tracking-[-0.02em] mb-4 text-foreground"
             >
               {t.hero.greeting.split("Tom Nguyen").map((part, i, arr) => {
                 if (i < arr.length - 1) {
