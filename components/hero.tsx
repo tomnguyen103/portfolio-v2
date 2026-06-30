@@ -46,10 +46,14 @@ export default function Hero() {
       </motion.div>
 
       {/* Masthead - stacked, each line rises from behind a clipping rule */}
-      <h1 className="mt-5 pb-[0.12em] font-display text-[16vw] font-extrabold leading-[0.92] tracking-[-0.03em] text-foreground sm:text-[13vw] lg:text-[9rem]">
+      <h1
+        aria-label="Tom Nguyen"
+        className="mt-5 pb-[0.12em] font-display text-[16vw] font-extrabold leading-[0.92] tracking-[-0.03em] text-foreground sm:text-[13vw] lg:text-[9rem]"
+      >
         {["Tom", "Nguyen"].map((word, i) => (
           <motion.span
             key={word}
+            aria-hidden="true"
             className="block pb-[0.12em]"
             variants={rise}
             initial={initial}

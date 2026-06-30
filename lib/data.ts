@@ -1,15 +1,4 @@
-import {
-  Code2,
-  Layers,
-  Database,
-  Zap,
-  Bot,
-  Cloud,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-
 export interface SkillCard {
-  icon: LucideIcon;
   title: string;
   skills: string[];
 }
@@ -35,41 +24,28 @@ export interface Experience {
   bullets: string[];
 }
 
-// One restrained, consistent pill style for every tech tag.
-// Replaces the old per-technology rainbow map: a single neutral chip keeps
-// sky-blue as the page's only accent and reads cleaner / more professional.
-// Pair with `font-mono` at the call site for an engineering texture.
-export const tagClass =
-  "bg-foreground/[0.04] text-foreground/70 border-foreground/10";
-
 export const skillCards: SkillCard[] = [
   {
-    icon: Bot,
     title: "AI & LLM Integration",
     skills: ["AI Agent Architecture", "Prompt Engineering", "Gemini SDK", "LLM Workflows"],
   },
   {
-    icon: Code2,
     title: "Languages & Web",
     skills: ["JavaScript", "TypeScript", "Python", "Java", "HTML5", "CSS3"],
   },
   {
-    icon: Layers,
     title: "Frameworks",
     skills: ["MEAN Stack", "Django", "Flask", "Spring Framework", "Mendix"],
   },
   {
-    icon: Database,
     title: "Databases & ORMs",
     skills: ["MySQL", "MongoDB", "SQLite", "Prisma Postgres"],
   },
   {
-    icon: Cloud,
     title: "Cloud & DevOps",
     skills: ["AWS EC2", "Vercel", "Trigger.dev", "Git/GitHub"],
   },
   {
-    icon: Zap,
     title: "Modern Infrastructure",
     skills: ["Clerk", "Liveblocks", "Stream Video SDK", "Zustand", "RESTful API Design"],
   },

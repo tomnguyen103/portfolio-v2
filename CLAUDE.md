@@ -38,7 +38,7 @@ The site is styled like a curated design monograph / arts publication: light, ty
 ### Color Palette
 Near-monochrome. One accent only: oxblood (a lit clay in the dark "ink edition"), used only for live marks (links, the eyebrow tick, the active nav link, the scroll rule, the drop cap, demo links). No blue, no purple, no gradient headings. Raw tokens live in `app/globals.css`, switched on the `.dark` class and exposed to Tailwind via `@theme inline`.
 
-```
+```text
 Light (the page - warm newsprint paper):
   background:   #efece4   (warm newsprint, desaturated - not a cream cliche)
   surface:      #f6f4ee

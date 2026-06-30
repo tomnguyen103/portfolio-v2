@@ -41,11 +41,13 @@ function PlateCaption({
   n,
   featured,
   featuredLabel,
+  liveDemoLabel,
 }: {
   project: LocalProject;
   n: string;
   featured: boolean;
   featuredLabel: string;
+  liveDemoLabel: string;
 }) {
   return (
     <div>
@@ -88,7 +90,7 @@ function PlateCaption({
             onClick={() => trackEvent("project_demo_click", { project_title: project.title })}
             className="link-underline inline-flex items-center gap-1.5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent"
           >
-            Live demo <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+            {liveDemoLabel} <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
           </a>
         )}
       </div>
@@ -133,6 +135,7 @@ export default function Projects() {
               n={n}
               featured={i === 0}
               featuredLabel={t.projects.featured}
+              liveDemoLabel={t.projects.liveDemo}
             />
           );
           const image = <PlateImage project={project} />;
